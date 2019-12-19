@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>Privatkonto-Registrierung</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+	<h1>Registrierung <span class="badge badge-secondary">Privatkunde</span></h1>
+	<div th:if="${error == 0}" class="alert alert-danger" role="alert">
+		  Passworte stimmen nicht überein.
+	</div>
+	<div th:if="${error == 1}" class="alert alert-danger" role="alert">
+		  Eingegebene Formulardaten sind ungültig. Bitte überprüfen Sie ob die Daten ein gültiges Format besitzen oder ob Sie alle Daten ausgefüllt haben.
+	</div>
+	<form method="post" action="privatecustomer/register">
+	  <div class="row">
+	    <div class="col">
+	      	<label for="surname">Vorname</label>
+    		<input type="text" class="form-control" id="surname" name="surname" placeholder="Vorname eingeben">
+	    </div>
+	    <div class="col">
+	    	<label for="name">Nachname</label>
+    		<input type="text" class="form-control" id="name" name="name" placeholder="Nachname eingeben">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	  		<label for="telephone">Telefon</label>
+    		<input type="text" class="form-control" id="telephone" name="telephone" placeholder="Telefonnummer eingeben">
+	  </div>
+	  <div class="row">
+	    <div class="col">
+	      	<label for="street">Strasse</label>
+    		<input type="text" class="form-control" id="street" name="street" placeholder="Straße eingeben">
+	    </div>
+	    <div class="col">
+	    	<label for="streetnumber">Nummer</label>
+    		<input type="text" class="form-control" id="streetnumber" name="streetnumber" placeholder="Nummer eingeben">
+	    </div>
+	  </div>
+	  <div class="row">
+	    <div class="col">
+	      	<label for="postcode">Postleitzahl</label>
+    		<input type="text" class="form-control" id="postcode" name="postcode" placeholder="Postleitzahl eingeben">
+	    </div>
+	    <div class="col">
+	    	<label for="place">Ort</label>
+    		<input type="text" class="form-control" id="place" name="place" placeholder="Ort eingeben">
+	    </div>
+	  </div>
+	  <div class="form-group">
+	  		<label for="email">Email</label>
+    		<input type="text" class="form-control" id="email" name="email" placeholder="Email eingeben">
+	  </div>
+	  <div class="row">
+	    <div class="col">
+	      	<label for="password">Passwort</label>
+    		<input type="text" class="form-control" id="password" name="password" placeholder="Passwort eingeben">
+	    </div>
+	    <div class="col">
+	    	<label for="password2">Passwort bestätigen</label>
+    		<input type="text" class="form-control" id="password2" name="password2" placeholder="Passwort nochmal eingeben">
+	    </div>
+	  </div>
+	  <button type="submit" class="btn btn-primary">Privates Nutzerkonto registrieren</button>
+	</form>
+	<!--<a class="btn btn-primary btn-lg" href="/customers/new/privatecustomer/register" role="button">test</a> -->
+</body>
+</html>

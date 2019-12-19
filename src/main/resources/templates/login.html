@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+	<meta charset="UTF-8">
+	<title>Login</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <h3>Login</h3>
+    <form method="post" th:action="@{/customers/login}">
+    	<div th:if="${param.error}" class="alert alert-danger" role="alert">
+		  Ungültige Email oder ungültiges Passwort.
+		</div>
+		<div th:if="${param.logout}" class="alert alert-success" role="alert">
+		  Du wurdest erfolgreich ausgeloggt!
+		</div>
+  		<div class="form-group">
+    		<label for="email">Email</label>
+    		<input type="text" class="form-control" id="email" name="username" placeholder="Email eingeben">
+  		</div>
+  		<div class="form-group">
+    		<label for="password">Passwort</label>
+    		<input type="text" class="form-control" id="password" name="password" placeholder="Enter Nachname">
+  		</div>
+  		<button type="submit" class="btn btn-primary">Login</button>
+	</form>
+	<a href="/customers/new">Noch kein Kunde? Jetzt Registieren.</a>
+</body>
+</html>
