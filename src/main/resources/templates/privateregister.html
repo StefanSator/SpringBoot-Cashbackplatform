@@ -7,11 +7,8 @@
 </head>
 <body>
 	<h1>Registrierung <span class="badge badge-secondary">Privatkunde</span></h1>
-	<div th:if="${error == 0}" class="alert alert-danger" role="alert">
-		  Passworte stimmen nicht überein.
-	</div>
-	<div th:if="${error == 1}" class="alert alert-danger" role="alert">
-		  Eingegebene Formulardaten sind ungültig. Bitte überprüfen Sie ob die Daten ein gültiges Format besitzen oder ob Sie alle Daten ausgefüllt haben.
+	<div th:if="${error}" class="alert alert-danger" role="alert">
+		  <p th:text="${error}"/>
 	</div>
 	<form method="post" action="/customers/new/privatecustomer/register">
 	  <div class="row">

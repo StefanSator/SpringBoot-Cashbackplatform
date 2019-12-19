@@ -19,11 +19,17 @@
       <a class="nav-item nav-link" href="#">Account</a>
     </div>
   </div>
+  <form sec:authorize="isAnonymous()" class="form-inline my-2 my-lg-0" action="customers/new">
+      <button type="submit" class="btn btn-primary">Registrieren</button>
+  </form>
   <form sec:authorize="isAnonymous()" class="form-inline my-2 my-lg-0" action="customers/login">
       <button type="submit" class="btn btn-success">Login</button>
   </form>
   <form sec:authorize="isAuthenticated()" class="form-inline my-2 my-lg-0" action="customers/logout">
       <button type="submit" class="btn btn-danger">Logout</button>
+  </form>
+  <form class="form-inline my-2 my-lg-0" action="customers/getall">
+      <button type="submit" class="btn btn-danger">Get All</button>
   </form>
 </nav>
 </body>

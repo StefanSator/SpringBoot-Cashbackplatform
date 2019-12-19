@@ -14,6 +14,7 @@ import de.othr.sw.cashbackplatform.entity.Category;
 import de.othr.sw.cashbackplatform.entity.Customer;
 import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
 import de.othr.sw.cashbackplatform.entity.Shop;
+import de.othr.sw.cashbackplatform.exceptions.UserAlreadyRegisteredException;
 import de.othr.sw.cashbackplatform.service.CustomerServiceIF;
 
 @Controller
@@ -55,17 +56,22 @@ public class CustomerController {
 										  @ModelAttribute("password2") String password2,
 										  Model model) {
 		if (!password.equals(password2)) {
-			model.addAttribute("error", 0);
+			model.addAttribute("error", "Passworte stimmen nicht überein.");
 			return "privateregister";
 		}
 		try {
 			Adress adress = new Adress(street, streetnumber, place, Integer.parseInt(postcode));
 			Customer customer = new PrivateCustomer(email, password, telephone, adress, surname, name);
 			customer = customerService.registerCustomer(customer);
-			model.addAttribute("custemail", customer.getEmail());
-			return "account";
+			//model.addAttribute("custemail", customer.getEmail());
+			model.addAttribute("registration", "Du wurdest erfolgreich als Privatkunde registriert.");
+			return "login";
 		} catch (Exception error) {
-			model.addAttribute("error", 1);
+			if (error instanceof UserAlreadyRegisteredException) {
+				model.addAttribute("error", error.getMessage());
+			} else {
+				model.addAttribute("error", 1);
+			}
 			return "privateregister";
 		}
 	}
@@ -88,7 +94,7 @@ public class CustomerController {
 			  				   @ModelAttribute("categories") String categories,
 			  				   Model model) {
 		if (!password.equals(password2)) {
-			model.addAttribute("error", 0);
+			model.addAttribute("error", "Passworte stimmen nicht überein.");
 			return "shopregister";
 		}
 		try {
@@ -97,14 +103,29 @@ public class CustomerController {
 			List<Category> shopcategories = parseCategoryList(categories, customer);
 			customer.setCategories(shopcategories);
 			customer = (Shop) customerService.registerCustomer(customer);
-			model.addAttribute("custemail", customer.getEmail());
-			model.addAttribute("custcategories", customer.getCategories());
-			return "account";
+			//model.addAttribute("custemail", customer.getEmail());
+			//model.addAttribute("custcategories", customer.getCategories());
+			model.addAttribute("registration", "Du wurdest erfolgreich als Geschäftskunde registriert.");
+			return "login";
 		} catch (Exception error) {
-			error.printStackTrace();
-			model.addAttribute("error", 1);
+			if (error instanceof UserAlreadyRegisteredException) {
+				model.addAttribute("error", error.getMessage());
+			} else {
+				model.addAttribute("error", "Eingegebene Formulardaten sind ungültig. Bitte überprüfen Sie ob die Daten ein gültiges Format besitzen oder ob Sie alle Daten ausgefüllt haben.");
+			}
 			return "shopregister";
 		}
+	}
+	
+	@RequestMapping("/getall")
+	public String getAllCustomers() {
+		List<Customer> customers = customerService.getAllCustomer();
+		for (Customer customer : customers) {
+			System.out.println(customer.getEmail());
+			System.out.println(customer instanceof Shop);
+			System.out.println(customer instanceof PrivateCustomer);
+		}
+		return "index";
 	}
 	
 	// Private Functions
