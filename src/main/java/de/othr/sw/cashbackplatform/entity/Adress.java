@@ -1,27 +1,20 @@
 package de.othr.sw.cashbackplatform.entity;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
 @Access(AccessType.FIELD)
-public class Adress implements Serializable {
+public class Adress extends GeneratedIdEntity implements Serializable {
 	
 	private static final long serialVersionUID = -2129653198171527470L;
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
 	@NotNull
 	@Size(max=60)
 	@Pattern(regexp="^[A-Z][a-z]+[.]{0,1}")
@@ -37,17 +30,14 @@ public class Adress implements Serializable {
 	@NotNull
 	private Integer postcode;
 	
-	public Adress() {};
+	public Adress() { super(); };
 	
 	public Adress(String street, String streetNumber, String place, int postcode) {
+		super();
 		this.street = street;
 		this.streetNumber = streetNumber;
 		this.place = place;
 		this.postcode = postcode;
-	}
-	
-	public Long getId() {
-		return id;
 	}
 	
 	public String getStreet() {
@@ -80,24 +70,6 @@ public class Adress implements Serializable {
 	
 	public void setPostcode(int postcode) {
 		this.postcode = postcode;
-	}
-	
-	@Override
-	public boolean equals(Object o) {
-		if (o == null) return false;
-		if (getClass() != o.getClass()) return false;
-		final Adress other = (Adress) o;
-		if (!Objects.equals(this.id, other.id)) return false;
-		return true;
-	}
-	
-	@Override
-	public int hashCode() {
-		if (this.id == null) {
-			return 0;
-		} else {
-			return this.id.hashCode();
-		}
 	}
 	
 }

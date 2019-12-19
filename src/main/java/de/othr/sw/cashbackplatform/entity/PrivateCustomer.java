@@ -1,7 +1,6 @@
 package de.othr.sw.cashbackplatform.entity;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -63,24 +62,6 @@ public class PrivateCustomer extends Customer implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 		this.updateAccountIdentification();
-	}
-	
-	@Override
-	public boolean equals(Object o) {
-		if (o == null) return false;
-		if (getClass() != o.getClass()) return false;
-		final PrivateCustomer other = (PrivateCustomer) o;
-		if (!Objects.equals(this.getEmail(), other.getEmail())) return false;
-		return true;
-	}
-	
-	@Override
-	public int hashCode() {
-		if (this.getEmail() == null) {
-			return 0;
-		} else {
-			return this.getEmail().hashCode();
-		}
 	}
 
 }

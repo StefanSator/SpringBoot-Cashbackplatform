@@ -2,14 +2,12 @@ package de.othr.sw.cashbackplatform.entity;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -63,24 +61,6 @@ public class Shop extends Customer implements Serializable {
 	
 	public boolean appendCategory(Category category) {
 		return this.categories.add(category);
-	}
-	
-	@Override
-	public boolean equals(Object o) {
-		if (o == null) return false;
-		if (getClass() != o.getClass()) return false;
-		final Shop other = (Shop) o;
-		if (!Objects.equals(this.getEmail(), other.getEmail())) return false;
-		return true;
-	}
-	
-	@Override
-	public int hashCode() {
-		if (this.getEmail() == null) {
-			return 0;
-		} else {
-			return this.getEmail().hashCode();
-		}
 	}
 
 }

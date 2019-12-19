@@ -8,7 +8,6 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
@@ -22,14 +21,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 @Access(AccessType.FIELD)
-public abstract class Customer implements UserDetails {
+public abstract class Customer extends EmailIdEntity implements UserDetails {
 	
 	private static final long serialVersionUID = -3859631257104556158L;
-	
+	/*
 	@Id
 	@NotNull
 	@Pattern(regexp="^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")
-	private String email;
+	private String email; */
 	/*  Be between 8 and 40 characters long
 		Contain at least one digit.
 		Contain at least one lower case character.
@@ -46,21 +45,21 @@ public abstract class Customer implements UserDetails {
 	@Valid
 	private Adress adress;
 	
-	public Customer() {}
+	public Customer() { super(); }
 	
 	public Customer(String email, String password, String telephone, Adress adress) {
-		this.email = email;
+		super(email);
 		this.password = password;
 		this.telephone = telephone;
 		this.adress = adress;
 	}
 	
 	public String getEmail() {
-		return email;
+		return super.getId();
 	}
 	
 	public void setEmail(String email) {
-		this.email = email;
+		super.setId(email);
 	}
 	
 	public void setPassword(String password) {

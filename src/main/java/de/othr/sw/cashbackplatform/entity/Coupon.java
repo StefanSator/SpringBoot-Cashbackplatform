@@ -2,14 +2,10 @@ package de.othr.sw.cashbackplatform.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -19,13 +15,10 @@ import javax.validation.constraints.Size;
 
 @Entity
 @Access(AccessType.FIELD)
-public class Coupon implements Serializable {
+public class Coupon extends GeneratedIdEntity implements Serializable {
 	
 	private static final long serialVersionUID = -915398441144397322L;
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long couponId;
 	@NotNull
 	@Size(max = 50)
 	@Pattern(regexp="\\w+")
@@ -45,19 +38,16 @@ public class Coupon implements Serializable {
 	@ManyToOne
 	private Shop owner;
 	
-	public Coupon() {}
+	public Coupon() { super(); }
 	
 	public Coupon(String couponName, Date beginDate, Date endDate, double pointsMultiplicator, Category couponCategory, Shop owner) {
+		super();
 		this.couponName = couponName;
 		this.beginDate = beginDate;
 		this.endDate = endDate;
 		this.cashbackPointsMultiplicator = pointsMultiplicator;
 		this.couponCategory = couponCategory;
 		this.owner = owner;
-	}
-	
-	public long getCouponId() {
-		return this.couponId;
 	}
 	
 	public String getCouponName() {
@@ -106,24 +96,6 @@ public class Coupon implements Serializable {
 	
 	public void setOwner(Shop owner) {
 		this.owner = owner;
-	}
-	
-	@Override
-	public boolean equals(Object o) {
-		if (o == null) return false;
-		if (getClass() != o.getClass()) return false;
-		final Coupon other = (Coupon) o;
-		if (!Objects.equals(this.couponId, other.couponId)) return false;
-		return true;
-	}
-	
-	@Override
-	public int hashCode() {
-		if (this.couponId == null) {
-			return 0;
-		} else {
-			return this.couponId.hashCode();
-		}
 	}
 	
 }
