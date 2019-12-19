@@ -13,7 +13,7 @@
 	<div th:if="${error == 1}" class="alert alert-danger" role="alert">
 		  Eingegebene Formulardaten sind ungültig. Bitte überprüfen Sie ob die Daten ein gültiges Format besitzen oder ob Sie alle Daten ausgefüllt haben.
 	</div>
-	<form method="post" action="privatecustomer/register">
+	<form method="post" action="/customers/new/privatecustomer/register">
 	  <div class="row">
 	    <div class="col">
 	      	<label for="surname">Vorname</label>
@@ -64,6 +64,5 @@
 	  </div>
 	  <button type="submit" class="btn btn-primary">Privates Nutzerkonto registrieren</button>
 	</form>
-	<!--<a class="btn btn-primary btn-lg" href="/customers/new/privatecustomer/register" role="button">test</a> -->
 </body>
 </html>

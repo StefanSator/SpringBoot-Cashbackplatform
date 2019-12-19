@@ -8,5 +8,8 @@
     <h1>Kundenkonto erfolgreich angelegt</h1>
     <span>mit Kundennummer </span>
     <span th:text="${custemail}"/>
+    <div th:each="category : ${custcategories}">
+        <p th:text="${category.category}">1</p>
+    </div>
 </body>
 </html>

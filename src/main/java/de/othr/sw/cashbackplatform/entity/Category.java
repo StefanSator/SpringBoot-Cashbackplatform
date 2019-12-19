@@ -6,6 +6,7 @@ import java.util.Objects;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,9 +27,9 @@ public class Category implements Serializable {
 	@NotNull
 	@Size(max = 50)
 	@Pattern(regexp="\\w+")
-	private String category;
+	public String category;
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	private Shop owner;
 	
 	public Category() {}

@@ -1,9 +1,13 @@
 package de.othr.sw.cashbackplatform.entity;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -15,8 +19,10 @@ public class Shop extends Customer implements Serializable {
 	
 	@NotNull
 	@Size(max = 60)
-	@Pattern(regexp="\\w+")
+	//@Pattern(regexp="\\w+")
 	private String shopname;
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<Category> categories;
 	
 	public Shop() {
 		super();
@@ -33,6 +39,30 @@ public class Shop extends Customer implements Serializable {
 	
 	public void setShopname(String shopname) {
 		this.shopname = shopname;
+	}
+	
+	public List<Category> getCategories() {
+		return this.categories;
+	}
+	
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
+	}
+	
+	public Category getCategory(int index) {
+		return this.categories.get(index);
+	}
+	
+	public void setCategory(int index, Category category) {
+		this.categories.set(index, category);
+	}
+	
+	public Category removeCategory(int index) {
+		return this.categories.remove(index);
+	}
+	
+	public boolean appendCategory(Category category) {
+		return this.categories.add(category);
 	}
 	
 	@Override
