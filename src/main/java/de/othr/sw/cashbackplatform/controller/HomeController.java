@@ -15,7 +15,8 @@ public class HomeController {
 	private KundeServiceIF kundeService;
 	
 	@RequestMapping("/")
-    public String starten() {
+    public String starten(Model model) {
+		model.addAttribute("isActive", 0);
         return "index";
     }
 	

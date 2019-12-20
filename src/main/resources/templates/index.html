@@ -6,31 +6,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="/">Cashback</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <div class="navbar-nav">
-      <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-      <a class="nav-item nav-link" href="/coupon">Coupons</a>
-      <a class="nav-item nav-link" href="#">Cashback</a>
-      <a class="nav-item nav-link" href="#">Account</a>
-    </div>
-  </div>
-  <form sec:authorize="isAnonymous()" class="form-inline my-2 my-lg-0" action="customers/new">
-      <button type="submit" class="btn btn-primary">Registrieren</button>
-  </form>
-  <form sec:authorize="isAnonymous()" class="form-inline my-2 my-lg-0" action="customers/login">
-      <button type="submit" class="btn btn-success">Login</button>
-  </form>
-  <form sec:authorize="isAuthenticated()" class="form-inline my-2 my-lg-0" action="customers/logout">
-      <button type="submit" class="btn btn-danger">Logout</button>
-  </form>
-  <form class="form-inline my-2 my-lg-0" action="customers/getall">
-      <button type="submit" class="btn btn-danger">Get All</button>
-  </form>
-</nav>
+<div th:replace="common/navbar :: navigation"/>
 </body>
 </html>
