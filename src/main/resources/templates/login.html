@@ -6,27 +6,34 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-    <h3>Login</h3>
-    <form method="post" th:action="@{/customers/login}">
-    	<div th:if="${param.error}" class="alert alert-danger" role="alert">
-		  Ungültige Email oder ungültiges Passwort.
+	<div th:replace="common/navbar :: navigation"/>
+    <div class="container-fluid h-100 mt-5">
+    	<div class="row justify-content-center align-items-center h-100">
+    		<div class="jumbotron bg-primary col col-sm-6 col-md-6 col-lg-4 col-xl-3">
+    			<h1 class="text-white mb-5 text-center">Login</h1>
+    			<form method="post" th:action="@{/customers/login}">
+  					<div class="form-group">
+    					<label for="email" class="text-white">Email</label>
+    					<input type="email" class="form-control" id="email" name="username" placeholder="Email eingeben">
+  					</div>
+  					<div class="form-group">
+    					<label for="password" class="text-white">Passwort</label>
+    					<input type="password" class="form-control" id="password" name="password" placeholder="Passwort eingeben">
+  					</div>
+  					<button type="submit" class="btn btn-success w-100 mb-2">Login</button>
+				</form>
+				<a href="/customers/new " class="text-white">Noch kein Kunde? Jetzt Registieren.</a>
+				<div th:if="${param.error}" class="alert alert-danger text-center mt-3 mb-0" role="alert">
+					Ungültige Email oder ungültiges Passwort.
+				</div>
+				<div th:if="${param.logout}" class="alert alert-success m-2 text-center" role="alert">
+					Du wurdest erfolgreich ausgeloggt!
+				</div>
+				<div th:if="${registration != null}" class="alert alert-success m-2 text-center" role="alert">
+					<p th:text="${registration}"/>
+				</div>
+			</div>
 		</div>
-		<div th:if="${param.logout}" class="alert alert-success" role="alert">
-		  Du wurdest erfolgreich ausgeloggt!
-		</div>
-		<div th:if="${registration != null}" class="alert alert-success" role="alert">
-		  <p th:text="${registration}"/>
-		</div>
-  		<div class="form-group">
-    		<label for="email">Email</label>
-    		<input type="text" class="form-control" id="email" name="username" placeholder="Email eingeben">
-  		</div>
-  		<div class="form-group">
-    		<label for="password">Passwort</label>
-    		<input type="text" class="form-control" id="password" name="password" placeholder="Enter Nachname">
-  		</div>
-  		<button type="submit" class="btn btn-primary">Login</button>
-	</form>
-	<a href="/customers/new">Noch kein Kunde? Jetzt Registieren.</a>
+	</div>
 </body>
 </html>
