@@ -6,6 +6,106 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<div th:replace="common/navbar :: navigation"/>
+	<div th:replace="common/navbar :: navigation"/>
+	<div class="row">
+		<div class="jumbotron bg-primary mx-5 mt-5 col">
+	  	  <h1 class="display-4 text-white">Möchtest du unsere Platform privat nutzen?</h1>
+		  <p class="lead text-white">Bei uns können Sie von Ihren Einkäufen profitieren. Sammeln Sie für jeden Ihrer Einkäufe Cashback-Punkte, die sie wiederrum bei 
+		  teilnehmenden Onlineshops einsetzen können um bei Ihren Einkäufen zu sparen. Aktivieren Sie außerdem eCoupons um noch mehr Cashback-Punkte für
+		  Ihre Einkäufe wiederzuerlangen. Unser Dienst ist vollkommen kostenlos, also fang jetzt gleich zum Sammeln an.</p>
+		  <hr class="my-4 bg-white">
+		  <a class="btn btn-primary btn-lg" href="customers/new/privatecustomer" role="button">Als Privatkunde Registrieren</a>
+		  <a class="btn btn-success btn-lg" href="customers/login" role="button">Einloggen</a>
+		</div>
+		<div class="jumbotron bg-info mx-5 mt-5 col">
+	  	  <h1 class="display-4 text-white">Möchtest du unsere Platform geschäftlich nutzen?</h1>
+		  <p class="lead text-white">Als Online-Shop können Sie von uns reichhaltig profitieren. Lassen Sie Ihre Kunden Cashback-Punkte sammeln. 
+		  Unsere Nutzer können Sie zudem in unserem Firmenkatalog finden, wodurch Sie neue Nutzer generieren können. Sehen sie sich außerdem Nutzungsstatistiken zu Ihrem Shop an.
+		  Durch das Erstellen von eCoupons können Sie Nutzer besonders zum Einkauf anregen.</p>
+		  <hr class="my-4 bg-white">
+		  <a class="btn btn-info btn-lg" href="customers/new/shop/" role="button">Als Onlineshop Registrieren</a>
+		  <a class="btn btn-success btn-lg" href="customers/login" role="button">Einloggen</a>
+		</div>
+	</div>
+	<div class="m-5">
+	  	<h1 class="display-4 text-primary">Ihre Vorzüge als Privatkunde</h1>
+	  	<hr class="my-4 bg-primary">
+	  	<div class="row">
+			<div class="card mt-2 mr-5" style="width: 18rem;">
+				<img src="https://images.unsplash.com/photo-1561414927-6d86591d0c4f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3366&q=80" class="card-img-top" alt="...">
+				<div class="card-body bg-primary">
+				  <h5 class="card-title text-white">Punkte sammeln</h5>
+				  <p class="card-text text-white">Sammeln Sie Punkte auf Ihren Einkauf in allen bei uns teilnehmenden Onlineshops.</p>
+				</div>
+			</div>
+			<div class="card mt-2 mr-5" style="width: 18rem;">
+				<img src="https://images.unsplash.com/photo-1530037768512-3c9a22715452?ixlib=rb-1.2.1&auto=format&fit=crop&w=2250&q=80" class="card-img-top" alt="...">
+				<div class="card-body bg-primary">
+				  <h5 class="card-title text-white">Punkte nutzen</h5>
+				  <p class="card-text text-white">Nutzen Sie Ihre Punkte in allen bei uns teilnehmenden Online-shops oder lassen Sie sich Ihre Punkte einfach auf Ihr Konto überweisen.</p>
+				</div>
+			 </div>
+			 <div class="card mt-2 mr-5" style="width: 18rem;">
+				<img src="https://images.unsplash.com/photo-1542744095-291d1f67b221?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80" class="card-img-top" alt="...">
+				<div class="card-body bg-primary">
+				  <h5 class="card-title text-white">eCoupons</h5>
+				  <p class="card-text text-white">Durchstöbern und Aktivieren Sie eCoupons um noch mehr auf Ihren Einkauf zu sparen.</p>
+				</div>
+			 </div>
+			 <div class="card mt-2 mr-5" style="width: 18rem;">
+				<img src="https://images.unsplash.com/photo-1556155092-490a1ba16284?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80" class="card-img-top" alt="...">
+				<div class="card-body bg-primary">
+				  <h5 class="card-title text-white">Cashback</h5>
+				  <p class="card-text text-white">Sehen Sie jederzeit wie viele Punkte sie gesammelt haben und Ihre dazugehörigen Umsätze an. Behalten Sie ganz einfach den Überblick.</p>
+				</div>
+			 </div>
+		</div>
+	</div>
+	<div class="m-5">
+	  	<h1 class="display-4 text-info">Ihre Vorzüge als Geschäftskunde</h1>
+	  	<hr class="my-4 bg-info">
+	  	<div class="row">
+			<div class="card mt-2 mr-4" style="width: 18rem;">
+				<img src="https://images.unsplash.com/photo-1530037768512-3c9a22715452?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80" class="card-img-top" alt="...">
+				<div class="card-body bg-info">
+				  <h5 class="card-title text-white">Geld zurück</h5>
+				  <p class="card-text text-white">Geben Sie Ihren Kunden die Möglichkeit Cashback-Punkte durch Ihren Einkauf in Ihrem Online-Shop zu erhalten.</p>
+				</div>
+			</div>
+			<div class="card mt-2 mr-4" style="width: 18rem;">
+				<img src="https://images.unsplash.com/photo-1459257831348-f0cdd359235f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3300&q=80" class="card-img-top" alt="...">
+				<div class="card-body bg-info">
+				  <h5 class="card-title text-white">Sparen</h5>
+				  <p class="card-text text-white">Wir bieten Ihnen unsere Schnittstellen an mit der Nutzer Ihre Cashback-Punkte benutzen können um in Ihrem Online-Shop zu sparen.</p>
+				</div>
+			</div>
+			<div class="card mt-2 mr-4" style="width: 18rem;">
+				<img src="https://images.unsplash.com/photo-1542744173-05336fcc7ad4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1982&q=80" class="card-img-top" alt="...">
+				<div class="card-body bg-info">
+				  <h5 class="card-title text-white">Statistiken</h5>
+				  <p class="card-text text-white">Wir bieten Ihnen die Möglichkeit verschiedene Nutzungsstatistiken einzusehen. Seien Sie so immer am laufenden was bei den Kunden am Besten ankommt.</p>
+				</div>
+			</div>
+			<div class="card mt-2 mr-4" style="width: 18rem;">
+				<img src="https://images.unsplash.com/photo-1542744095-291d1f67b221?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80" class="card-img-top" alt="...">
+				<div class="card-body bg-info">
+				  <h5 class="card-title text-white">eCoupons</h5>
+				  <p class="card-text text-white">Wir bieten Ihnen die Möglichkeit eigene Coupons bei uns einzustellen. Nutzen Sie dies um unsere Nutzer auf Ihren Shop aufmerksam zu machen und diese zum Einkauf zu überreden.</p>
+				</div>
+			</div>
+			<div class="card mt-2" style="width: 18rem;">
+				<img src="https://images.unsplash.com/photo-1518458028785-8fbcd101ebb9?ixlib=rb-1.2.1&auto=format&fit=crop&w=2250&q=80" class="card-img-top" alt="...">
+				<div class="card-body bg-info">
+				  <h5 class="card-title text-white">Einkäufergenerierung</h5>
+				  <p class="card-text text-white">Wenn Sie sich bei uns registrieren, tauchen Sie bei uns im Shopkatalog auf. Dies führt dazu, dass Sie reichlich neue Einkäufer in Ihrem Online-Shop zu verzeichnen haben werden.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="m-5">
+		<h1 class="display-10 text-primary">Teilnehmende Shops</h1>
+	  	<hr class="my-4 bg-primary">
+	  	<a class="btn btn-success btn-lg" href="customers/new/shop/" role="button">Shopkatalog ></a>
+	</div>
 </body>
 </html>

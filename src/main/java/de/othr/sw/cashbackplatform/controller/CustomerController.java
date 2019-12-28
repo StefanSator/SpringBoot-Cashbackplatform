@@ -92,6 +92,7 @@ public class CustomerController {
 			  				   @ModelAttribute("password") String password,
 			  				   @ModelAttribute("password2") String password2,
 			  				   @ModelAttribute("categories") String categories,
+			  				   @ModelAttribute("cashbackpoints") String cashbackpointsPerSale,
 			  				   Model model) {
 		if (!password.equals(password2)) {
 			model.addAttribute("error", "Passworte stimmen nicht überein.");
@@ -99,7 +100,7 @@ public class CustomerController {
 		}
 		try {
 			Adress adress = new Adress(street, streetnumber, place, Integer.parseInt(postcode));
-			Shop customer = new Shop(email, password, telephone, adress, shopname);
+			Shop customer = new Shop(email, password, telephone, adress, shopname, Integer.parseInt(cashbackpointsPerSale));
 			List<Category> shopcategories = parseCategoryList(categories, customer);
 			customer.setCategories(shopcategories);
 			customer = (Shop) customerService.registerCustomer(customer);

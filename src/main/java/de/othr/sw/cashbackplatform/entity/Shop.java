@@ -19,6 +19,7 @@ public class Shop extends Customer implements Serializable {
 	@Size(max = 60)
 	//@Pattern(regexp="\\w+")
 	private String shopname;
+	private Integer defaultCashbackPerSale;
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<Category> categories;
 	
@@ -26,9 +27,10 @@ public class Shop extends Customer implements Serializable {
 		super();
 	}
 
-	public Shop(String email, String password, String telephone, Adress adress, String shopname) {
+	public Shop(String email, String password, String telephone, Adress adress, String shopname, Integer defaultCashbackPerSale) {
 		super(email, password, telephone, adress);
 		this.shopname = shopname;
+		this.defaultCashbackPerSale = defaultCashbackPerSale;
 	}
 	
 	public String getShopname() {
@@ -37,6 +39,14 @@ public class Shop extends Customer implements Serializable {
 	
 	public void setShopname(String shopname) {
 		this.shopname = shopname;
+	}
+	
+	public Integer getDefaultCashbackPointsPerSale() {
+		return this.defaultCashbackPerSale;
+	}
+	
+	public void setDefaultCashbackPointsPerSale(Integer defaultCashbackPerSale) {
+		this.defaultCashbackPerSale = defaultCashbackPerSale;
 	}
 	
 	public List<Category> getCategories() {
