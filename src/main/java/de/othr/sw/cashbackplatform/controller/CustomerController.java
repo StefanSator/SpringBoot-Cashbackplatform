@@ -70,7 +70,7 @@ public class CustomerController {
 			if (error instanceof UserAlreadyRegisteredException) {
 				model.addAttribute("error", error.getMessage());
 			} else {
-				model.addAttribute("error", 1);
+				model.addAttribute("error", "Eingegebene Formulardaten sind ungültig. Bitte überprüfen Sie ob die Daten ein gültiges Format besitzen oder ob Sie alle Daten ausgefüllt haben.");
 			}
 			return "privateregister";
 		}

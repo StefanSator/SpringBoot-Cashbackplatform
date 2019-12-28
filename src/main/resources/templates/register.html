@@ -6,13 +6,16 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-	<div class="jumbotron">
-	  <h1 class="display-4">Registierung</h1>
-	  <p class="lead">Es freut uns sehr, dass Sie bei uns Kunde werden wollen.</p>
-	  <hr class="my-4">
-	  <p>Wollen Sie ein privates Nutzerkonto einrichten oder besitzen Sie einen Onlineshop und wollen als Geschäftskunde registriert werden.</p>
-	  <a class="btn btn-primary btn-lg" href="/customers/new/privatecustomer" role="button">Privatkonto</a>
-	  <a class="btn btn-primary btn-lg" href="/customers/new/shop" role="button">Geschäftskonto</a>
+	<div th:replace="common/navbar :: navigation"/>
+	<div class="jumbotron bg-primary mx-5 my-5">
+	  <h1 class="display-4 text-center text-white">Registierung</h1>
+	  <p class="lead text-center text-white">Es freut uns sehr, dass Sie bei uns Kunde werden wollen.</p>
+	  <hr class="my-4 bg-white">
+	  <p class="text-white text-center">Wollen Sie ein privates Nutzerkonto einrichten oder besitzen Sie einen Onlineshop und wollen als Geschäftskunde registriert werden.</p>
+	  <div class="col text-center text-white">
+	  	<a class="btn btn-success btn-lg" href="/customers/new/privatecustomer" role="button">Privatkonto</a>
+	  	<a class="btn btn-success btn-lg" href="/customers/new/shop" role="button">Geschäftskonto</a>
+	  </div>
 	</div>
 </body>
 </html>

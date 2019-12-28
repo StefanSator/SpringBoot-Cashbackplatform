@@ -6,82 +6,84 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-	<h1>Registrierung <span class="badge badge-secondary">Shop</span></h1>
-	
-	<div th:if="${error}" class="alert alert-danger" role="alert">
+	<div th:replace="common/navbar :: navigation"/>
+	<h1 class="text-center mx-5 mt-5 mb-3">Registrierung <span class="badge badge-info">Shop</span></h1>
+	<div th:if="${error}" class="alert alert-danger mx-5 text-center" role="alert">
 		  <p th:text="${error}"/>
 	</div>
-	<form method="post" action="/customers/new/shop/register">
-	  <div class="form-group">
-	  		<label for="shopname">Shopname</label>
-    		<input type="text" class="form-control" id="shopname" name="shopname" placeholder="Shopname eingeben">
-	  </div>
-	  <div class="form-group">
-	  		<label for="telephone">Telefon</label>
-    		<input type="text" class="form-control" id="telephone" name="telephone" placeholder="Telefonnummer eingeben">
-	  </div>
-	  <div class="row">
-	    <div class="col">
-	      	<label for="street">Strasse</label>
-    		<input type="text" class="form-control" id="street" name="street" placeholder="Straße eingeben">
-	    </div>
-	    <div class="col">
-	    	<label for="streetnumber">Nummer</label>
-    		<input type="text" class="form-control" id="streetnumber" name="streetnumber" placeholder="Nummer eingeben">
-	    </div>
-	  </div>
-	  <div class="row">
-	    <div class="col">
-	      	<label for="postcode">Postleitzahl</label>
-    		<input type="text" class="form-control" id="postcode" name="postcode" placeholder="Postleitzahl eingeben">
-	    </div>
-	    <div class="col">
-	    	<label for="place">Ort</label>
-    		<input type="text" class="form-control" id="place" name="place" placeholder="Ort eingeben">
-	    </div>
-	  </div>
-	  <div class="form-group">
-	  		<label for="email">Email</label>
-    		<input type="text" class="form-control" id="email" name="email" placeholder="Email eingeben">
-	  </div>
-	  <div class="row">
-	    <div class="col">
-	      	<label for="password">Passwort</label>
-    		<input type="text" class="form-control" id="password" name="password" placeholder="Passwort eingeben">
-	    </div>
-	    <div class="col">
-	    	<label for="password2">Passwort bestätigen</label>
-    		<input type="text" class="form-control" id="password2" name="password2" placeholder="Passwort nochmal eingeben">
-	    </div>
-	  </div>
-	  <hr class="my-4">
-	  <div class="jumbotron jumbotron-fluid">
-		  <div class="container">
-		    <h1 class="display-4">Kategorien</h1>
-		    <p class="lead">Bitte teilen Sie uns mit welche Kategorien Sie in Ihrem Shop anbieten. Trennen Sie die einzelnen Kategorien dabei indem Sie für jede Kategorie eine neue Zeile beginnen.</p>
-		    <div class="input-group">
-			  <div class="input-group-prepend">
-			    <span class="input-group-text">Meine Shopkategorien</span>
+	<div class="mx-5">
+		<form method="post" action="/customers/new/shop/register">
+		  <div class="form-group my-1">
+		  		<label for="shopname">Shopname</label>
+	    		<input type="text" class="form-control" id="shopname" name="shopname" placeholder="Shopname eingeben">
+		  </div>
+		  <div class="form-group my-1">
+		  		<label for="telephone">Telefon</label>
+	    		<input type="text" class="form-control" id="telephone" name="telephone" placeholder="Telefonnummer eingeben">
+		  </div>
+		  <div class="row my-1">
+		    <div class="col">
+		      	<label for="street">Strasse</label>
+	    		<input type="text" class="form-control" id="street" name="street" placeholder="Straße eingeben">
+		    </div>
+		    <div class="col">
+		    	<label for="streetnumber">Nummer</label>
+	    		<input type="text" class="form-control" id="streetnumber" name="streetnumber" placeholder="Nummer eingeben">
+		    </div>
+		  </div>
+		  <div class="row my-1">
+		    <div class="col">
+		      	<label for="postcode">Postleitzahl</label>
+	    		<input type="text" class="form-control" id="postcode" name="postcode" placeholder="Postleitzahl eingeben">
+		    </div>
+		    <div class="col">
+		    	<label for="place">Ort</label>
+	    		<input type="text" class="form-control" id="place" name="place" placeholder="Ort eingeben">
+		    </div>
+		  </div>
+		  <div class="form-group my-1">
+		  		<label for="email">Email</label>
+	    		<input type="text" class="form-control" id="email" name="email" placeholder="Email eingeben">
+		  </div>
+		  <div class="row my-1">
+		    <div class="col">
+		      	<label for="password">Passwort</label>
+	    		<input type="text" class="form-control" id="password" name="password" placeholder="Passwort eingeben">
+		    </div>
+		    <div class="col">
+		    	<label for="password2">Passwort bestätigen</label>
+	    		<input type="text" class="form-control" id="password2" name="password2" placeholder="Passwort nochmal eingeben">
+		    </div>
+		  </div>
+		  <hr class="my-4 bg-info">
+		  <div class="jumbotron jumbotron-fluid bg-info">
+			  <div class="container">
+			    <h1 class="display-4 text-white">Kategorien</h1>
+			    <p class="lead text-white">Bitte teilen Sie uns mit welche Kategorien Sie in Ihrem Shop anbieten. Trennen Sie die einzelnen Kategorien dabei indem Sie für jede Kategorie eine neue Zeile beginnen.</p>
+			    <div class="input-group">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text bg-success text-white border-0">Meine Shopkategorien</span>
+				  </div>
+				  <textarea class="form-control" aria-label="With textarea" id="categories" name="categories"></textarea>
+				</div>
 			  </div>
-			  <textarea class="form-control" aria-label="With textarea" id="categories" name="categories"></textarea>
-			</div>
+			  <div class="container">
+			    <h1 class="display-4 text-white">Cashback-Punke pro Umsatz</h1>
+			    <p class="lead text-white">Bitte teilen Sie uns kurz mit wie viel Punkte Sie pro 1€ Umsatz Sie Ihren Kunden gewähren möchten.</p>
+			    <div class="form-group">
+				    <label for="cashbackpoints" class="text-white">Cashback-Punkte pro 1€ Umsatz</label>
+					    <select class="form-control" id="cashbackpoints" name="cashbackpoints">
+					      <option>1</option>
+					      <option>2</option>
+					      <option>3</option>
+					      <option>4</option>
+					      <option>5</option>
+					    </select>
+				</div>
+			  </div>
 		  </div>
-		  <div class="container">
-		    <h1 class="display-4">Cashback-Punke pro Umsatz</h1>
-		    <p class="lead">Bitte teilen Sie uns kurz mit wie viel Punkte Sie pro 1€ Umsatz Sie Ihren Kunden gewähren möchten.</p>
-		    <div class="form-group">
-			    <label for="cashbackpoints">Cashback-Punkte pro 1€ Umsatz</label>
-				    <select class="form-control" id="cashbackpoints" name="cashbackpoints">
-				      <option>1</option>
-				      <option>2</option>
-				      <option>3</option>
-				      <option>4</option>
-				      <option>5</option>
-				    </select>
-			</div>
-		  </div>
-	  </div>
-	  <button type="submit" class="btn btn-primary">Shop registrieren</button>
-	</form>
+		  <button type="submit" class="btn btn-primary">Shop registrieren</button>
+		</form>
+	</div>
 </body>
 </html>
