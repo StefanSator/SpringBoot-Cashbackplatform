@@ -30,7 +30,7 @@ public class Coupon extends GeneratedIdEntity implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date endDate;
 	@NotNull
-	private Double cashbackPointsMultiplicator;
+	private Integer cashbackPointsMultiplicator;
 	@NotNull
 	@ManyToOne
 	private Category couponCategory;
@@ -40,7 +40,7 @@ public class Coupon extends GeneratedIdEntity implements Serializable {
 	
 	public Coupon() { super(); }
 	
-	public Coupon(String couponName, Date beginDate, Date endDate, double pointsMultiplicator, Category couponCategory, Shop owner) {
+	public Coupon(String couponName, Date beginDate, Date endDate, Integer pointsMultiplicator, Category couponCategory, Shop owner) {
 		super();
 		this.couponName = couponName;
 		this.beginDate = beginDate;
@@ -74,11 +74,11 @@ public class Coupon extends GeneratedIdEntity implements Serializable {
 		this.endDate = date;
 	}
 	
-	public double getCashbackPointsMultiplicator() {
+	public Integer getCashbackPointsMultiplicator() {
 		return this.cashbackPointsMultiplicator;
 	}
 	
-	public void setCashbackPointsMultiplicator(double multiplicator) {
+	public void setCashbackPointsMultiplicator(Integer multiplicator) {
 		this.cashbackPointsMultiplicator = multiplicator;
 	}
 	

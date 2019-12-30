@@ -2,11 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
 	<meta charset="UTF-8">
-	<title>Home</title>
+	<title>eCoupons</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
 	<div th:replace="common/navbar :: navigation"/>
 	<h1>Coupons</h1>
+	<p th:each="coupon : ${coupons}" th:text="${coupon.getCouponName()}"></p>
+	<a href="/coupons/manage" class="btn btn-success">Meine eCoupons verwalten</a>
 </body>
 </html>

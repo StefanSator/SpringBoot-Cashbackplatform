@@ -10,16 +10,20 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import de.othr.sw.cashbackplatform.entity.Category;
 import de.othr.sw.cashbackplatform.entity.Customer;
 import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
 import de.othr.sw.cashbackplatform.entity.Shop;
 import de.othr.sw.cashbackplatform.exceptions.UserAlreadyRegisteredException;
+import de.othr.sw.cashbackplatform.repository.CategoryRepository;
 import de.othr.sw.cashbackplatform.repository.CustomerRepository;
 
 @Service
 public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	@Autowired
 	private CustomerRepository customerRepo;
+	@Autowired
+	private CategoryRepository categoryRepo;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
@@ -60,6 +64,12 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 		} else {
 			throw new NoSuchElementException();
 		}
+	}
+	
+	@Override
+	public Category getShopCategory(Long categoryId) {
+		Category category = categoryRepo.findById(categoryId).orElseThrow();
+		return category;
 	}
 	
 	@Override

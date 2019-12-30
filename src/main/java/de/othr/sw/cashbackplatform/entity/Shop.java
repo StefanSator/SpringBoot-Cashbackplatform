@@ -21,7 +21,7 @@ public class Shop extends Customer implements Serializable {
 	private String shopname;
 	private Integer defaultCashbackPerSale;
 	private String shopinfo;
-	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Category> categories;
 	
 	public Shop() {
