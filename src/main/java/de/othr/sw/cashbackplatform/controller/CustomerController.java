@@ -2,12 +2,15 @@ package de.othr.sw.cashbackplatform.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import de.othr.sw.cashbackplatform.entity.Adress;
 import de.othr.sw.cashbackplatform.entity.Category;
@@ -91,6 +94,7 @@ public class CustomerController {
 			  				   @ModelAttribute("email") String email,
 			  				   @ModelAttribute("password") String password,
 			  				   @ModelAttribute("password2") String password2,
+			  				   @ModelAttribute("shopinfo") String shopinfo,
 			  				   @ModelAttribute("categories") String categories,
 			  				   @ModelAttribute("cashbackpoints") String cashbackpointsPerSale,
 			  				   Model model) {
@@ -100,7 +104,7 @@ public class CustomerController {
 		}
 		try {
 			Adress adress = new Adress(street, streetnumber, place, Integer.parseInt(postcode));
-			Shop customer = new Shop(email, password, telephone, adress, shopname, Integer.parseInt(cashbackpointsPerSale));
+			Shop customer = new Shop(email, password, telephone, adress, shopname, shopinfo, Integer.parseInt(cashbackpointsPerSale));
 			List<Category> shopcategories = parseCategoryList(categories, customer);
 			customer.setCategories(shopcategories);
 			customer = (Shop) customerService.registerCustomer(customer);
@@ -116,6 +120,29 @@ public class CustomerController {
 			}
 			return "shopregister";
 		}
+	}
+	
+	@RequestMapping("/shops")
+	public String displayShopCatalog(Model model) {
+		List<Shop> shops = customerService.getAllShops();
+		for (Shop shop : shops) {
+			System.out.println(shop.getShopname());
+		}
+		model.addAttribute("shops", shops);
+		model.addAttribute("isActive", 1);
+		return "shopcatalog";
+	}
+	
+	@RequestMapping("/shops/detail/{email}")
+	public String displayShopInformation(@PathVariable("email") String email, Model model) {
+		try {
+			Shop shop = customerService.getShop(email);
+			model.addAttribute("shop", shop);
+		} catch (NoSuchElementException ex) {
+			model.addAttribute("shop", null);
+		}
+		model.addAttribute("isActive", 1);
+		return "shopdetail";
 	}
 	
 	@RequestMapping("/getall")

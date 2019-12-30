@@ -57,7 +57,17 @@
 		  </div>
 		  <hr class="my-4 bg-info">
 		  <div class="jumbotron jumbotron-fluid bg-info">
-			  <div class="container">
+		  	  <div class="container mb-2">
+			    <h1 class="display-4 text-white">Über Ihr Geschäft</h1>
+			    <p class="lead text-white">Bitte schreiben Sie hier kurz etwas über Ihr Geschäft. Dies ist sehr wichtig um neue Kunden für Ihren Shop zu generieren.</p>
+			    <div class="input-group">
+				  <div class="input-group-prepend">
+				    <span class="input-group-text bg-success text-white border-0">Über uns</span>
+				  </div>
+				  <textarea class="form-control" aria-label="With textarea" id="shopinfo" name="shopinfo"></textarea>
+				</div>
+			  </div>
+			  <div class="container mb-2">
 			    <h1 class="display-4 text-white">Kategorien</h1>
 			    <p class="lead text-white">Bitte teilen Sie uns mit welche Kategorien Sie in Ihrem Shop anbieten. Trennen Sie die einzelnen Kategorien dabei indem Sie für jede Kategorie eine neue Zeile beginnen.</p>
 			    <div class="input-group">
@@ -70,7 +80,7 @@
 			  <div class="container">
 			    <h1 class="display-4 text-white">Cashback-Punke pro Umsatz</h1>
 			    <p class="lead text-white">Bitte teilen Sie uns kurz mit wie viel Punkte Sie pro 1€ Umsatz Sie Ihren Kunden gewähren möchten.</p>
-			    <div class="form-group">
+			    <div class="form-group mb-5">
 				    <label for="cashbackpoints" class="text-white">Cashback-Punkte pro 1€ Umsatz</label>
 					    <select class="form-control" id="cashbackpoints" name="cashbackpoints">
 					      <option>1</option>
@@ -80,9 +90,11 @@
 					      <option>5</option>
 					    </select>
 				</div>
+				<div class="col text-center">
+					<button type="submit" class="btn btn-primary p-2">Shop registrieren</button>
+				</div>
 			  </div>
 		  </div>
-		  <button type="submit" class="btn btn-primary">Shop registrieren</button>
 		</form>
 	</div>
 </body>

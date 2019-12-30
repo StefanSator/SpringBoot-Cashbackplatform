@@ -19,7 +19,7 @@ public class Category extends GeneratedIdEntity implements Serializable {
 	
 	@NotNull
 	@Size(max = 50)
-	@Pattern(regexp="\\w+")
+	//@Pattern(regexp="\\w+")
 	public String category;
 	@NotNull
 	@ManyToOne(fetch=FetchType.LAZY)

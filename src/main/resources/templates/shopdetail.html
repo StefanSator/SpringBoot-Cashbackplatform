@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+	<meta charset="UTF-8">
+	<title>Home</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</head>
+<body>
+	<div th:replace="common/navbar :: navigation"/>
+	<div th:if="${shop == null}" class="alert alert-danger m-5" role="alert">
+	  Dieser Shop ist uns leider nicht bekannt!
+	</div>
+	<div th:if="${shop}" class="m-5">
+		<h1 class="display-10 text-primary"><span th:text="${shop.getShopname()}"></span></h1>
+		<hr class="my-4 bg-primary">
+		<div class="jumbotron jumbotron-fluid bg-primary">
+		  <div class="container">
+		  	<div class="row">
+		  		<div class="col">
+		  			<h1 class="display-4 text-white">Über uns:</h1>
+		    		<p class="lead text-white"><span th:text="${shop.getShopinfo()}"></span></p>
+		  		</div>
+		  		<div class="col">
+		  			<div class="card float-right" style="width: 18rem;">
+					  <div class="card-body">
+					    <h5 class="display-4 card-title"><span th:text="${shop.getDefaultCashbackPointsPerSale()}"></span> °P</h5>
+					    <p class="card-text">pro 1 € Umsatz auf jeden ihrer Einkäufe.</p>
+					    <!-- Button trigger modal -->
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#pointsModal">
+						  Mehr Informationen
+						</button>
+					  </div>
+					</div>
+		  		</div>
+		  	</div>
+		  </div>
+		</div>
+		<div class="jumbotron jumbotron-fluid bg-light">
+		  <div class="container">
+		    <h1 class="display-6 text-primary">In folgenden Kategorien könnt Ihr bei uns Punkte sammeln:</h1>
+		    <div class="row">
+		    	<div th:each="category : ${shop.getCategories()}" class="card col m-2 bg-primary" style="width: 18rem;">
+				  <div class="card-body">
+				    <h5 class="card-title text-white"><span th:text="${category.getCategory()}"></span></h5>
+				  </div>
+				</div>
+		    </div>
+		  </div>
+		</div>
+		<div class="jumbotron jumbotron-fluid bg-primary">
+		  <div class="container">
+		    <h1 class="display-4 text-white">eCoupons:</h1>
+		    <p class="lead text-white">Informieren Sie sich doch am besten gleich was wir aktuell für eCoupons für Sie anbieten.</p>
+		    <hr class="my-4 bg-light">
+		    <a href="/coupons/display" class="btn btn-success">Unsere aktuellen eCoupons</a>
+		  </div>
+		</div>
+	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="pointsModal" tabindex="-1" role="dialog" aria-labelledby="pointsModalLabel" aria-hidden="true">
+	  <div class="modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="pointsModalLabel">Punkte sammeln</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        Die Ihnen hier angezeigten Punkte bekommen Sie immer auf Ihren Einkauf. Allerdings können wir als Shop zu gewissen Zeiten eCoupons für bestimmte
+	        Kategorien einstellen, welche die Anzahl der Punkte für diese Kategorie noch mal multiplizieren kann, sodass Sie mehr Punkte auf diese Kategorie
+	        sammeln können. Schauen Sie deshalb doch gerne immer mal wieder was für Angebote wir Ihnen als eCoupons unterbreiten.
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+</body>
+</html>

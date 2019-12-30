@@ -20,25 +20,8 @@ public class HomeController {
         return "index";
     }
 	
-	@RequestMapping("/login")
-    public String loginUser() {
-        return "login";
-    }
-	
 	@RequestMapping("/coupon")
     public String coupon() {
         return "coupon";
     }
-	
-	@RequestMapping("/registrieren")
-	public String registrieren(@ModelAttribute("vorname") String vorname,
-							   @ModelAttribute("nachname") String nachname,
-							   Model model) {
-		Kunde kunde = new Kunde();
-		kunde.setVorname(vorname);
-		kunde.setNachname(nachname);
-		kunde = kundeService.kundeAnlegen(kunde);
-		model.addAttribute("kundennr", kunde.getKundenNr());
-		return "kundenkonto";
-	}
 }

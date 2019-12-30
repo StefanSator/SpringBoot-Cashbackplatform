@@ -1,6 +1,7 @@
 package de.othr.sw.cashbackplatform.service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +11,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import de.othr.sw.cashbackplatform.entity.Customer;
+import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
+import de.othr.sw.cashbackplatform.entity.Shop;
 import de.othr.sw.cashbackplatform.exceptions.UserAlreadyRegisteredException;
 import de.othr.sw.cashbackplatform.repository.CustomerRepository;
 
@@ -40,6 +43,23 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 		customer.setPassword(passwordEncoder.encode(customer.getPassword()));
 		Customer registeredCustomer = customerRepo.save(customer);
 		return registeredCustomer;
+	}
+	
+	@Override
+	public List<Shop> getAllShops() {
+		List<Shop> shops = customerRepo.getAllShops();
+		System.out.println(shops.size());
+		return shops;
+	}
+	
+	@Override
+	public Shop getShop(String email) {
+		Customer shop = customerRepo.findById(email).orElseThrow();
+		if (shop instanceof Shop) {
+			return (Shop) shop;
+		} else {
+			throw new NoSuchElementException();
+		}
 	}
 	
 	@Override
