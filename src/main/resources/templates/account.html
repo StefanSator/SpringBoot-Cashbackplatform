@@ -1,15 +1,178 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-    <meta charset="UTF-8">
-    <title>Kundenkonto</title>
+	<meta charset="UTF-8">
+	<title>Account</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Kundenkonto erfolgreich angelegt</h1>
-    <span>mit Kundennummer </span>
-    <span th:text="${custemail}"/>
-    <div th:each="category : ${custcategories}">
-        <p th:text="${category.category}">1</p>
-    </div>
+	<div th:replace="common/navbar :: navigation"/>
+	<div class="m-5">
+		<h1 class="display-10 text-primary">Euer Account</h1>
+		<hr class="my-4 bg-primary">
+		
+		<div sec:authorize="hasRole('CUSTOMER')" class="jumbotron jumbotron-fluid bg-primary">
+		  <div class="container">
+		    <h1 class="display-4 text-white">Eure Kontonummer:</h1>
+		    <p class="lead text-white" th:text="${customer.getAccountIdentification()}"></p>
+		    <!-- Button trigger modal -->
+			<button type="button" class="btn btn-info" data-toggle="modal" data-target="#idinformationModal">
+				Mehr Informationen
+			</button>
+		  </div>
+		</div>
+		
+		<div sec:authorize="hasRole('SHOP')" class="jumbotron jumbotron-fluid bg-primary">
+		  <div class="container">
+		    <h1 class="display-4 text-white">Eure Statistiken:</h1>
+		    <p class="lead text-white">Schauen Sie ein paar Statistiken zu Ihrem Shop an. Dies kann Ihnen helfen das Angebot Ihres Shops zu verbessern.</p>
+		    <a class="btn btn-info" href="/" role="button">Nutzungstatistiken einsehen</a>
+		  </div>
+		</div>
+		
+		<div sec:authorize="hasRole('CUSTOMER')" class="row mb-3">
+			<div class="col">
+				<p class="font-weight-bold text-primary">Name:</p>
+			</div>
+			<div class="col">
+				<p><span th:text="${customer.getSurname()}"></span> <span th:text="${customer.getName()}"></span></p>
+			</div>
+			<div class="col">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#changenameModal">
+				  Name ändern
+				</button>
+			</div>
+		</div>
+		<div sec:authorize="hasRole('SHOP')" class="row mb-3">
+			<div class="col">
+				<p class="font-weight-bold text-primary">Name Ihres Geschäfts:</p>
+			</div>
+			<div class="col">
+				<p><span th:text="${customer.getShopname()}"></span></p>
+			</div>
+			<div class="col">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#changeshopnameModal">
+				  Shopname ändern
+				</button>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col">
+				<p class="font-weight-bold text-primary">Email:</p>
+			</div>
+			<div class="col">
+				<p><span th:text="${customer.getEmail()}"></span></p>
+			</div>
+			<div class="col">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#changeemailModal">
+				  Email ändern
+				</button>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col">
+				<p class="font-weight-bold text-primary">Passwort:</p>
+			</div>
+			<div class="col">
+				<p>*************************</p>
+			</div>
+			<div class="col">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#changepasswordModal">
+				  Passwort ändern
+				</button>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col">
+				<p class="font-weight-bold text-primary">Telefonnummer:</p>
+			</div>
+			<div class="col">
+				<p><span th:text="${customer.getTelephoneNumber()}"></span></p>
+			</div>
+			<div class="col">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#changetelephoneModal">
+				  Telefonnummer ändern
+				</button>
+			</div>
+		</div>
+		<div class="row mb-3">
+			<div class="col">
+				<p class="font-weight-bold text-primary">Adresse:</p>
+			</div>
+			<div class="col">
+				<p>
+					<span th:text="${customer.getAdress().getStreet()}"></span> <span th:text="${customer.getAdress().getStreetNumber()}"></span>
+					, <span th:text="${customer.getAdress().getPostcode()}"></span> <span th:text="${customer.getAdress().getPlace()}"></span>
+				</p>
+			</div>
+			<div class="col">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#changeadressModal">
+				  Adresse ändern
+				</button>
+			</div>
+		</div>
+		<div sec:authorize="hasRole('SHOP')" class="row mb-3">
+			<div class="col">
+				<p class="font-weight-bold text-primary">Cashbackpunkte:</p>
+			</div>
+			<div class="col">
+				<p><span th:text="${customer.getDefaultCashbackPointsPerSale()}"></span>°P pro 1 € Umsatz</p>
+			</div>
+			<div class="col">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#changepointsModal">
+				  Punkte ändern
+				</button>
+			</div>
+		</div>
+		<div sec:authorize="hasRole('SHOP')" class="row mb-3">
+			<div class="col">
+				<p class="font-weight-bold text-primary">Über uns:</p>
+			</div>
+			<div class="col">
+				<p><span th:text="${customer.getShopinfo()}"></span></p>
+			</div>
+			<div class="col">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#changeshopinfoModal">
+				  Über uns abändern
+				</button>
+			</div>
+		</div>
+		<div sec:authorize="hasRole('SHOP')" class="row mb-3">
+			<div class="col">
+				<p class="font-weight-bold text-primary">Kategorien:</p>
+			</div>
+			<div class="col">
+				<p th:each="category : ${customer.getCategories()}"><span th:text="${category.getCategory()}"></span></p>
+			</div>
+			<div class="col">
+				<!-- Button trigger modal -->
+				<button type="button" class="btn btn-success" data-toggle="modal" data-target="#changecategoriesModal">
+				  Kategorien ändern
+				</button>
+			</div>
+		</div>
+	</div>
+	
+	<div th:replace="common/accountdialogs :: idinformationdialog"/>
+	<div th:replace="common/accountdialogs :: changeemaildialog"/>
+	<div th:replace="common/accountdialogs :: changepassworddialog"/>
+	<div th:replace="common/accountdialogs :: changetelephonedialog"/>
+	<div th:replace="common/accountdialogs :: changeadressdialog"/>
+	<div th:replace="common/accountdialogs :: changenamedialog"/>
+	<div th:replace="common/accountdialogs :: changeshopnamedialog"/>
+	<div th:replace="common/accountdialogs :: changepointsdialog"/>
+	<div th:replace="common/accountdialogs :: changeshopinfodialog"/>
+	<div th:replace="common/accountdialogs :: changecategoriesdialog"/>
 </body>
 </html>

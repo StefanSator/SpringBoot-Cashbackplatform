@@ -12,19 +12,21 @@
 	</div>
 	<div class="jumbotron jumbotron-fluid bg-primary p-3">
 	  <h1 class="display-4 text-white">Unsere Empfehlung des Tages!</h1>
-	  <p class="lead text-white">
-	  	Der Shop <span class="font-weight-bold" th:text="${dailyrecommendation.getRecommendedCoupon().getOwner().getShopname()}"></span>
-	  	bietet Ihnen aktuell dieses tolle Angebot an. Schlagen Sie zu solange der eCoupon noch gültig ist.
-	  </p>
-	  <hr class="my-4 bg-white">
-	  <div th:if="${dailyrecommendation != null}" class="card mx-2" style="width: 18rem;">
-			<div class="card-body">
-			    <h5 class="card-title text-primary" th:text="${dailyrecommendation.getRecommendedCoupon().getCouponName()}"></h5>
-			    <hr class="bg-primary">
-			    <p class="card-text">Shop: <span class="font-weight-bold" th:text="${dailyrecommendation.getRecommendedCoupon().getOwner().getShopname()}"></span></p>
-			    <p class="card-text"><span class="font-weight-bold" th:text="${dailyrecommendation.getRecommendedCoupon().getBeginDate().toString()}"></span> - <span class="font-weight-bold" th:text="${dailyrecommendation.getRecommendedCoupon().getEndDate().toString()}"></span></p>
-				<p class="card-text"><span class="font-weight-bold" th:text="${dailyrecommendation.getRecommendedCoupon().getCashbackPointsMultiplicator()}"></span>-fache Punkte auf <span class="font-weight-bold" th:text="${dailyrecommendation.getRecommendedCoupon().getCouponCategory().getCategory()}"></span></p>
-			</div>
+	  <div th:if="${dailyrecommendation != null}">
+	  	<p class="lead text-white">
+		  	Der Shop <span class="font-weight-bold" th:text="${dailyrecommendation.getRecommendedCoupon().getOwner().getShopname()}"></span>
+		  	bietet Ihnen aktuell dieses tolle Angebot an. Schlagen Sie zu solange der eCoupon noch gültig ist.
+		  </p>
+		  <hr class="my-4 bg-white">
+		  <div class="card mx-2" style="width: 18rem;">
+				<div class="card-body">
+				    <h5 class="card-title text-primary" th:text="${dailyrecommendation.getRecommendedCoupon().getCouponName()}"></h5>
+				    <hr class="bg-primary">
+				    <p class="card-text">Shop: <span class="font-weight-bold" th:text="${dailyrecommendation.getRecommendedCoupon().getOwner().getShopname()}"></span></p>
+				    <p class="card-text"><span class="font-weight-bold" th:text="${dailyrecommendation.getRecommendedCoupon().getBeginDate().toString()}"></span> - <span class="font-weight-bold" th:text="${dailyrecommendation.getRecommendedCoupon().getEndDate().toString()}"></span></p>
+					<p class="card-text"><span class="font-weight-bold" th:text="${dailyrecommendation.getRecommendedCoupon().getCashbackPointsMultiplicator()}"></span>-fache Punkte auf <span class="font-weight-bold" th:text="${dailyrecommendation.getRecommendedCoupon().getCouponCategory().getCategory()}"></span></p>
+				</div>
+		  </div>
 	  </div>
 	  <p th:if="${dailyrecommendation == null}">Aktuell keine Empfehlung von unserer Seite vorhanden!</p>
 	</div>

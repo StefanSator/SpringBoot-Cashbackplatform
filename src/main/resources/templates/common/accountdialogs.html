@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<!-- Modal Dialog for changing Email Adress -->
+<div th:fragment="changeemaildialog">
+		<!-- Modal -->
+		<form method="post" action="/">
+			<div class="modal fade" id="changeemailModal" tabindex="-1" role="dialog" aria-labelledby="changeemailModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="changeemailModalLabel">Neue Emailadresse eingeben</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <div class="form-group my-1">
+				  		<label for="email">Email</label>
+			    		<input type="email" class="form-control" id="email" name="email" placeholder="Neue Emailadresse eingeben">
+				  	</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal">Abbrechen</button>
+			        <button type="submit" class="btn btn-primary">Speichern</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</form>
+</div>
+
+<!-- Modal Dialog for changing customers password -->
+<div th:fragment="changepassworddialog">
+		<!-- Modal -->
+		<form method="post" action="/">
+			<div class="modal fade" id="changepasswordModal" tabindex="-1" role="dialog" aria-labelledby="changepasswordModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="changepasswordModalLabel">Neues Passwort eingeben</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <div class="form-group my-1">
+				  		<label for="password">Passwort</label>
+			    		<input type="password" class="form-control" id="password" name="password" placeholder="Neues Passwort eingeben">
+				  	</div>
+				  	<div class="form-group my-1">
+				  		<label for="passwordcheck">Passwort bestätigen</label>
+			    		<input type="password" class="form-control" id="passwordcheck" name="passwordcheck" placeholder="Passwort bestätigen">
+				  	</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal">Abbrechen</button>
+			        <button type="submit" class="btn btn-primary">Speichern</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</form>
+</div>
+
+<!-- Modal Dialog for changing customers telephone number -->
+<div th:fragment="changetelephonedialog">
+		<!-- Modal -->
+		<form method="post" action="/">
+			<div class="modal fade" id="changetelephoneModal" tabindex="-1" role="dialog" aria-labelledby="changetelephoneModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="changetelephoneModalLabel">Neue Telefonnummer eingeben</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <div class="form-group my-1">
+				  		<label for="telephone">Telefonnummer</label>
+			    		<input type="text" class="form-control" id="telephone" name="telephone" placeholder="Neue Telefonnummer eingeben">
+				  	</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal">Abbrechen</button>
+			        <button type="submit" class="btn btn-primary">Speichern</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</form>
+</div>
+
+<!-- Modal Dialog for changing customers adress -->
+<div th:fragment="changeadressdialog">
+		<!-- Modal -->
+		<form method="post" action="/">
+			<div class="modal fade" id="changeadressModal" tabindex="-1" role="dialog" aria-labelledby="changeadressModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="changeadressModalLabel">Neue Adresse eingeben</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <div class="row my-1">
+					    <div class="col">
+					      	<label for="street">Strasse</label>
+				    		<input type="text" class="form-control" id="street" name="street" placeholder="Straße eingeben">
+					    </div>
+					    <div class="col">
+					    	<label for="streetnumber">Nummer</label>
+				    		<input type="text" class="form-control" id="streetnumber" name="streetnumber" placeholder="Nummer eingeben">
+					    </div>
+					  </div>
+					  <div class="row my-1">
+					    <div class="col">
+					      	<label for="postcode">Postleitzahl</label>
+				    		<input type="text" class="form-control" id="postcode" name="postcode" placeholder="Postleitzahl eingeben">
+					    </div>
+					    <div class="col">
+					    	<label for="place">Ort</label>
+				    		<input type="text" class="form-control" id="place" name="place" placeholder="Ort eingeben">
+					    </div>
+					  </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal">Abbrechen</button>
+			        <button type="submit" class="btn btn-primary">Speichern</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</form>
+</div>
+
+
+<!-- Modal Dialog for changing customers name -->
+<div th:fragment="changenamedialog">
+		<!-- Modal -->
+		<form method="post" action="/">
+			<div class="modal fade" id="changenameModal" tabindex="-1" role="dialog" aria-labelledby="changenameModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="changenameModalLabel">Neuen Namen eingeben</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <div class="row my-1">
+					    <div class="col">
+					      	<label for="surname">Vorname</label>
+				    		<input type="text" class="form-control" id="surname" name="surname" placeholder="Vorname eingeben">
+					    </div>
+					    <div class="col">
+					    	<label for="name">Nachname</label>
+				    		<input type="text" class="form-control" id="name" name="name" placeholder="Nachname eingeben">
+					    </div>
+					  </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal">Abbrechen</button>
+			        <button type="submit" class="btn btn-primary">Speichern</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</form>
+</div>
+
+<!-- Modal Dialog for accountid informations -->
+<div th:fragment="idinformationdialog">
+		<!-- Modal -->
+			<div class="modal fade" id="idinformationModal" tabindex="-1" role="dialog" aria-labelledby="idinformationModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="idinformationModalLabel">Ihre Kontonummer</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <p>
+			        	Ihre Kontonummer müssen Sie überall da angeben wo Sie Punkte sammeln oder nutzen möchten. Die Kontonummer identifiziert eindeutig
+			        	Ihren Account und macht es uns somit möglich Ihnen die Punkte auf Ihr Konto gutzuschreiben oder abzubuchen.
+			        </p>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal">Schließen</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		  </div>
+</div>
+
+<!-- Modal Dialog for changing shopname of a shop -->
+<div th:fragment="changeshopnamedialog">
+		<!-- Modal -->
+		<form method="post" action="/">
+			<div class="modal fade" id="changeshopnameModal" tabindex="-1" role="dialog" aria-labelledby="changeshopnameModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="changeshopnameModalLabel">Neuen Namen Ihres Shops eingeben</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <div class="form-group my-1">
+				  		<label for="shopname">Shopname</label>
+			    		<input type="text" class="form-control" id="shopname" name="shopname" placeholder="Shopname eingeben">
+				  	</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal">Abbrechen</button>
+			        <button type="submit" class="btn btn-primary">Speichern</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</form>
+</div>
+
+<!-- Modal Dialog for changing shops default cashback points -->
+<div th:fragment="changepointsdialog">
+		<!-- Modal -->
+		<form method="post" action="/">
+			<div class="modal fade" id="changepointsModal" tabindex="-1" role="dialog" aria-labelledby="changepointsModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="changepointsModalLabel">Neue Anzahl an Punkten auswählen</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <div class="form-group mb-5">
+					    <label for="cashbackpoints">Cashback-Punkte pro 1€ Umsatz</label>
+						    <select class="form-control" id="cashbackpoints" name="cashbackpoints">
+						      <option>1</option>
+						      <option>2</option>
+						      <option>3</option>
+						      <option>4</option>
+						      <option>5</option>
+						    </select>
+					</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal">Abbrechen</button>
+			        <button type="submit" class="btn btn-primary">Speichern</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</form>
+</div>
+
+<!-- Modal Dialog for changing informations about a shop -->
+<div th:fragment="changeshopinfodialog">
+		<!-- Modal -->
+		<form method="post" action="/">
+			<div class="modal fade" id="changeshopinfoModal" tabindex="-1" role="dialog" aria-labelledby="changeshopinfoModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="changeshopinfoModalLabel">Neue Informationen zu Ihrem Shop eingeben</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			        <div class="input-group">
+					  <div class="input-group-prepend">
+					    <span class="input-group-text bg-success text-white border-0">Über uns</span>
+					  </div>
+					  <textarea class="form-control" aria-label="With textarea" id="shopinfo" name="shopinfo"></textarea>
+					</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal">Abbrechen</button>
+			        <button type="submit" class="btn btn-primary">Speichern</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</form>
+</div>
+
+<!-- Modal Dialog for changing categories of a shop -->
+<div th:fragment="changecategoriesdialog">
+		<!-- Modal -->
+		<form method="post" action="/">
+			<div class="modal fade" id="changecategoriesModal" tabindex="-1" role="dialog" aria-labelledby="changecategoriesModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <h5 class="modal-title" id="changecategoriesModalLabel">Neue Kategorien eingeben</h5>
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			          <span aria-hidden="true">&times;</span>
+			        </button>
+			      </div>
+			      <div class="modal-body">
+			      	<p>Keine Kommas verwenden. Einzelne Kategorien trennen indem Sie eine neue Zeile beginnen.</p>
+			        <div class="input-group">
+					  <div class="input-group-prepend">
+					    <span class="input-group-text bg-success text-white border-0">Meine Shopkategorien</span>
+					  </div>
+					  <textarea class="form-control" aria-label="With textarea" id="categories" name="categories"></textarea>
+					</div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-danger" data-dismiss="modal">Abbrechen</button>
+			        <button type="submit" class="btn btn-primary">Speichern</button>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</form>
+</div>
+
+</html>

@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import de.othr.sw.cashbackplatform.entity.Adress;
@@ -34,6 +36,17 @@ public class CustomerController {
 	@RequestMapping("/logout")
 	public String logoutUser() {
 		return "login";
+	}
+	
+	@RequestMapping(value = "/account", method=RequestMethod.GET)
+	public String displayAccountInformation(@AuthenticationPrincipal Customer customer, Model model) {
+		model.addAttribute("isActive", 4);
+		if (customer instanceof PrivateCustomer) {
+			model.addAttribute("customer", (PrivateCustomer) customer);
+		} else {
+			model.addAttribute("customer", (Shop) customer);
+		}
+		return "account";
 	}
 	
 	@RequestMapping("/new")

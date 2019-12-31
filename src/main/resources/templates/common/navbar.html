@@ -12,7 +12,7 @@
       <a class="nav-item nav-link" th:classappend="${isActive} == 1 ? active" href="/customers/shops">Shops</a>
       <a class="nav-item nav-link" th:classappend="${isActive} == 2 ? active" href="/coupons/display">eCoupons</a>
       <a class="nav-item nav-link" th:classappend="${isActive} == 3 ? active" href="/">Cashback</a>
-      <a class="nav-item nav-link" th:classappend="${isActive} == 4 ? active" href="/">Account</a>
+      <a class="nav-item nav-link" th:classappend="${isActive} == 4 ? active" href="/customers/account">Account</a>
     </div>
   </div>
   <form sec:authorize="isAnonymous()" class="form-inline my-2 my-lg-0" action="/customers/new">

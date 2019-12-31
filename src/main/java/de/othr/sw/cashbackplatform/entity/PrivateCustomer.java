@@ -33,7 +33,7 @@ public class PrivateCustomer extends Customer implements Serializable {
 
 	public PrivateCustomer(String email, String password, String telephone, Adress adress, String surname, String name) {
 		super(email, password, telephone, adress);
-		this.accountIdentification = "ID" + surname + name + this.accountNumber;
+		this.accountIdentification = "ID" + surname.toUpperCase() + name.toUpperCase() + this.accountNumber;
 		this.surname = surname;
 		this.name = name;
 	}
@@ -43,7 +43,7 @@ public class PrivateCustomer extends Customer implements Serializable {
 	}
 	
 	public void updateAccountIdentification() {
-		this.accountIdentification = "ID" + surname + name + this.accountNumber;
+		this.accountIdentification = "ID" + surname.toUpperCase() + name.toUpperCase() + this.accountNumber;
 	}
 	
 	public String getSurname() {
