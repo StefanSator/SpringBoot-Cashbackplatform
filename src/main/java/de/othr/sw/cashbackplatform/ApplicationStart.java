@@ -1,6 +1,8 @@
 package de.othr.sw.cashbackplatform;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,18 +11,23 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import de.othr.sw.cashbackplatform.entity.Adress;
 import de.othr.sw.cashbackplatform.entity.Category;
+import de.othr.sw.cashbackplatform.entity.Coupon;
 import de.othr.sw.cashbackplatform.entity.Customer;
 import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
 import de.othr.sw.cashbackplatform.entity.Shop;
+import de.othr.sw.cashbackplatform.service.CouponServiceIF;
 import de.othr.sw.cashbackplatform.service.CustomerServiceIF;
 
 @SpringBootApplication
 public class ApplicationStart implements CommandLineRunner {
 	@Autowired
 	private CustomerServiceIF customerService;
+	@Autowired
+	private CouponServiceIF couponService;
 
 	@Override
 	public void run(String... args) throws Exception {
+		/* Generate Users */
 		// Generate Shop Customers
 		// Shop 1
 		Adress adress1 = new Adress("Musterstr.", "1", "Musterstadt", 99999);
@@ -61,7 +68,33 @@ public class ApplicationStart implements CommandLineRunner {
 		Adress adress4 = new Adress("Musterstr.", "4", "Musterstadt", 99999);
 		Customer privateCustomer = new PrivateCustomer("max.private@email.de", "1234", "09999999999", adress4, "Max", "Privat");
 		privateCustomer = customerService.registerCustomer(privateCustomer);
-		System.out.println("Applicationstart Initialization completed.");
+		System.out.println("Customer Accounts created.");
+		
+		/* Generate eCoupons */
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		// Coupon 1
+		Date begin1 = formatter.parse("2019-12-10");
+		Date end1 = formatter.parse("2020-01-25");
+		Category cat1 = shop1.getCategory(0);
+		Coupon coupon1 = new Coupon("Jahresendeverkauf", begin1, end1, 2, cat1, shop1);
+		coupon1 = couponService.registerCoupon(coupon1);
+		// Coupon 2
+		Date begin2 = formatter.parse("2020-02-01");
+		Date end2 = formatter.parse("2020-02-10");
+		Category cat2 = shop2.getCategory(0);
+		Coupon coupon2 = new Coupon("HappyNewYear", begin2, end2, 5, cat2, shop2);
+		coupon2 = couponService.registerCoupon(coupon2);
+		// Coupon 3
+		Date begin3 = formatter.parse("2019-12-10");
+		Date end3 = formatter.parse("2020-02-01");
+		Category cat3 = shop3.getCategory(0);
+		Coupon coupon3 = new Coupon("Sale", begin3, end3, 3, cat3, shop3);
+		coupon3 = couponService.registerCoupon(coupon3);
+		System.out.println("Coupons created.");
+		// Choose at beginning daily recommendation
+		couponService.recommendRandomDailyCoupon();
+		System.out.println("Daily Recommendation saved.");
+		System.out.println("Application Initialization completed.");
 	}
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import de.othr.sw.cashbackplatform.entity.Category;
 import de.othr.sw.cashbackplatform.entity.Coupon;
 import de.othr.sw.cashbackplatform.entity.Customer;
+import de.othr.sw.cashbackplatform.entity.DailyRecommendation;
 import de.othr.sw.cashbackplatform.entity.Shop;
 import de.othr.sw.cashbackplatform.exceptions.CouponInvalidException;
 import de.othr.sw.cashbackplatform.service.CouponService;
@@ -31,8 +32,12 @@ public class CouponController {
 	@RequestMapping("/display")
 	public String displayCoupons(Model model) {
 		model.addAttribute("isActive", 2);
-		List<Coupon> coupons = couponService.getAllCouponsAfterDate(new Date());
-		model.addAttribute("coupons", coupons);
+		DailyRecommendation recommended = couponService.getDailyRecommendation(new Date());
+		model.addAttribute("dailyrecommendation", recommended);
+		List<Coupon> current = couponService.getAllCurrentCoupons(new Date());
+		model.addAttribute("currentcoupons", current);
+		List<Coupon> upcoming = couponService.getAllUpcomingCoupons(new Date());
+		model.addAttribute("upcomingcoupons", upcoming);
 		return "coupon";
 	}
 	
