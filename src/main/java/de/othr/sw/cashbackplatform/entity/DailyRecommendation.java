@@ -9,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Access(AccessType.FIELD)
 public class DailyRecommendation extends DateIdEntity implements Serializable {
@@ -17,6 +20,7 @@ public class DailyRecommendation extends DateIdEntity implements Serializable {
 
 	@NotNull
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Coupon recommendedCoupon;
 	
 	public DailyRecommendation() { super(); }

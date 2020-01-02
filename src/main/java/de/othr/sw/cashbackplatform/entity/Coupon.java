@@ -13,6 +13,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Access(AccessType.FIELD)
 public class Coupon extends GeneratedIdEntity implements Serializable {
@@ -33,9 +36,11 @@ public class Coupon extends GeneratedIdEntity implements Serializable {
 	private Integer cashbackPointsMultiplicator;
 	@NotNull
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE) // TODO: Ask Prof
 	private Category couponCategory;
 	@NotNull
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE) // TODO: Ask Prof
 	private Shop owner;
 	
 	public Coupon() { super(); }

@@ -49,6 +49,26 @@ public class CustomerController {
 		return "account";
 	}
 	
+	@RequestMapping(value = "/account", method=RequestMethod.POST)
+	public String updateAccountInformation(@ModelAttribute("email") String email,
+										   @ModelAttribute("password") String password1,
+										   @ModelAttribute("passwordcheck") String password2,
+										   @ModelAttribute("telephone") String telephone,
+										   @ModelAttribute("street") String street,
+										   @ModelAttribute("streetnumber") String streetnumber,
+										   @ModelAttribute("postcode") String postcode,
+										   @ModelAttribute("place") String place,
+										   @ModelAttribute("surname") String surname,
+										   @ModelAttribute("name") String name,
+										   @ModelAttribute("shopname") String shopname,
+										   @ModelAttribute("cashbackpoints") String cashbackpoints,
+										   @ModelAttribute("shopinfo") String shopinfo,
+										   @ModelAttribute("categories") String categories,
+										   @AuthenticationPrincipal Customer customer,
+										   Model model) {
+		return "account";
+	}
+	
 	@RequestMapping("/new")
 	public String displayRegisterWindow() {
 		return "register";

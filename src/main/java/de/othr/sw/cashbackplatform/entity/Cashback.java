@@ -13,6 +13,9 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 @Entity
 @Access(AccessType.FIELD)
 public class Cashback extends GeneratedIdEntity implements Serializable {
@@ -23,13 +26,15 @@ public class Cashback extends GeneratedIdEntity implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date date;
 	@NotNull
-	@OneToMany
+	@OneToMany( orphanRemoval = true )
 	private List<Cashbackposition> cashbackpositions;
 	@NotNull
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE) // TODO: Ask Prof
 	private PrivateCustomer receiver;
 	@NotNull
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE) // TODO: Ask Prof
 	private Shop sender;
 	
 	public Cashback() { super(); };

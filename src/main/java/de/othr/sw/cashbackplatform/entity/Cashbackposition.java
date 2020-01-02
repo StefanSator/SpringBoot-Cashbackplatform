@@ -16,7 +16,6 @@ public class Cashbackposition extends GeneratedIdEntity implements Serializable 
 	
 	@NotNull
 	private Integer singleCashbackPoints;
-	@NotNull
 	@ManyToOne
 	private Category cashbackCategory;
 	
