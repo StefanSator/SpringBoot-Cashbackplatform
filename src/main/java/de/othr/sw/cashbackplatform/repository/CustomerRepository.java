@@ -1,6 +1,7 @@
 package de.othr.sw.cashbackplatform.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,8 @@ public interface CustomerRepository extends JpaRepository<Customer, String> {
 	
 	@Query("Select p From PrivateCustomer AS p")
 	List<PrivateCustomer> getAllPrivateCustomers();
+	
+	Optional<Customer> findByEmail(String email);
+	
+	Optional<PrivateCustomer> findByAccountIdentification(String accountIdentification);
 }

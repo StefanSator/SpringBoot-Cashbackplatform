@@ -26,6 +26,8 @@ public class Cashback extends GeneratedIdEntity implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date date;
 	@NotNull
+	private String purchaseIdentification;
+	@NotNull
 	@OneToMany( orphanRemoval = true )
 	private List<Cashbackposition> cashbackpositions;
 	@NotNull
@@ -36,15 +38,19 @@ public class Cashback extends GeneratedIdEntity implements Serializable {
 	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE) // TODO: Ask Prof
 	private Shop sender;
+	@NotNull
+	private boolean transferIsPositive;
 	
 	public Cashback() { super(); };
 	
-	public Cashback(Date date, List<Cashbackposition> cashbackpositions, PrivateCustomer receiver, Shop sender) {
+	public Cashback(Date date, String purchaseIdentification, List<Cashbackposition> cashbackpositions, PrivateCustomer receiver, Shop sender, boolean transferIsPositive) {
 		super();
 		this.date = date;
+		this.purchaseIdentification = purchaseIdentification;
 		this.cashbackpositions = cashbackpositions;
 		this.receiver = receiver;
 		this.sender = sender;
+		this.transferIsPositive = transferIsPositive;
 	}
 	
 	public Date getDate() {
@@ -53,6 +59,14 @@ public class Cashback extends GeneratedIdEntity implements Serializable {
 	
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	
+	public String getPurchaseIdentification() {
+		return this.purchaseIdentification;
+	}
+	
+	public void setPurchaseIdentification(String purchaseIdentification) {
+		this.purchaseIdentification = purchaseIdentification;
 	}
 	
 	public PrivateCustomer getReceiver() {
@@ -93,6 +107,14 @@ public class Cashback extends GeneratedIdEntity implements Serializable {
 	
 	public void addCashbackposition(Cashbackposition cashbackposition) {
 		this.cashbackpositions.add(cashbackposition);
+	}
+	
+	public void transferIsPositive(boolean transferIsPositive) {
+		this.transferIsPositive = transferIsPositive;
+	}
+	
+	public boolean isTransferPositive() {
+		return this.transferIsPositive;
 	}
 	
 }

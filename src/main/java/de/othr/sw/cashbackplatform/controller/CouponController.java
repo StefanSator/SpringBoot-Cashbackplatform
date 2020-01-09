@@ -18,16 +18,16 @@ import de.othr.sw.cashbackplatform.entity.Customer;
 import de.othr.sw.cashbackplatform.entity.DailyRecommendation;
 import de.othr.sw.cashbackplatform.entity.Shop;
 import de.othr.sw.cashbackplatform.exceptions.CouponInvalidException;
-import de.othr.sw.cashbackplatform.service.CouponService;
-import de.othr.sw.cashbackplatform.service.CustomerService;
+import de.othr.sw.cashbackplatform.service.CouponServiceIF;
+import de.othr.sw.cashbackplatform.service.CustomerServiceIF;
 
 @Controller
 @RequestMapping("/coupons")
 public class CouponController {
 	@Autowired
-	private CustomerService customerService;
+	private CustomerServiceIF customerService;
 	@Autowired
-	private CouponService couponService;
+	private CouponServiceIF couponService;
 	
 	@RequestMapping("/display")
 	public String displayCoupons(Model model) {
@@ -66,6 +66,7 @@ public class CouponController {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Date beginDateObject = formatter.parse(beginDate);
 			Date endDateObject = formatter.parse(endDate);
+			System.out.println(categoryId);
 			Category couponCategory = customerService.getShopCategory(categoryId);
 			Coupon coupon = new Coupon(couponname, beginDateObject, endDateObject, multiplicator, couponCategory, categoryOwner);
 			Coupon registeredCoupon = couponService.registerCoupon(coupon);

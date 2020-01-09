@@ -24,18 +24,19 @@ public class PrivateCustomer extends Customer implements Serializable {
 	private String name;
 	@NotNull
 	private String accountIdentification;
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int accountNumber;
+	@NotNull
+	private Long accountBalance;
 	
 	public PrivateCustomer() {
 		super();
 	}
 
-	public PrivateCustomer(String email, String password, String telephone, Adress adress, String surname, String name) {
+	public PrivateCustomer(String email, String password, String telephone, Adress adress, String surname, String name, long accountBalance) {
 		super(email, password, telephone, adress);
-		this.accountIdentification = "ID" + surname.toUpperCase() + name.toUpperCase() + this.accountNumber;
+		this.accountIdentification = "ID" + surname.toUpperCase() + name.toUpperCase() + super.getId();
 		this.surname = surname;
 		this.name = name;
+		this.accountBalance = accountBalance;
 	}
 	
 	public String getAccountIdentification() {
@@ -43,7 +44,7 @@ public class PrivateCustomer extends Customer implements Serializable {
 	}
 	
 	public void updateAccountIdentification() {
-		this.accountIdentification = "ID" + surname.toUpperCase() + name.toUpperCase() + this.accountNumber;
+		this.accountIdentification = "ID" + surname.toUpperCase() + name.toUpperCase() + super.getId();
 	}
 	
 	public String getSurname() {
@@ -62,6 +63,22 @@ public class PrivateCustomer extends Customer implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 		this.updateAccountIdentification();
+	}
+	
+	public Long getAccountBalance() {
+		return this.accountBalance;
+	}
+	
+	public void setAccountBalance(long balance) {
+		this.accountBalance = balance;
+	}
+	
+	public void addToAccountBalance(long points) {
+		this.accountBalance += points;
+	}
+	
+	public void subtractFromAccountBalance(long points) {
+		this.accountBalance -= points;
 	}
 
 }

@@ -7,8 +7,10 @@ import java.util.Set;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
@@ -23,7 +25,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Inheritance(strategy=InheritanceType.JOINED)
 @DiscriminatorColumn(name = "customertype")
 @Access(AccessType.FIELD)
-public abstract class Customer extends EmailIdEntity implements UserDetails {
+public abstract class Customer extends GeneratedIdEntity implements UserDetails {
 	
 	private static final long serialVersionUID = -3859631257104556158L;
 	/*
@@ -36,6 +38,11 @@ public abstract class Customer extends EmailIdEntity implements UserDetails {
 		Contain at least one lower case character.
 		Contain at least one upper case character.
 		Contain at least on special character from [ @ # $ % ! . ] */
+	
+	@NotNull
+	@Column(unique = true)
+	@Pattern(regexp="^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")
+	private String email;
 	@NotNull
 	//@Pattern(regexp="((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})")
 	private String password;
@@ -50,18 +57,19 @@ public abstract class Customer extends EmailIdEntity implements UserDetails {
 	public Customer() { super(); }
 	
 	public Customer(String email, String password, String telephone, Adress adress) {
-		super(email);
+		super();
+		this.email = email;
 		this.password = password;
 		this.telephone = telephone;
 		this.adress = adress;
 	}
 	
 	public String getEmail() {
-		return super.getId();
+		return this.email;
 	}
 	
 	public void setEmail(String email) {
-		super.setId(email);
+		this.email = email;
 	}
 	
 	public void setPassword(String password) {

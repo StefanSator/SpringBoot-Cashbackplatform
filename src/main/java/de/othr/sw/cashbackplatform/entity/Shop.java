@@ -79,6 +79,10 @@ public class Shop extends Customer implements Serializable {
 		return this.categories.remove(index);
 	}
 	
+	public boolean removeAllCategories() {
+		return this.categories.removeAll(this.categories);
+	}
+	
 	public boolean appendCategory(Category category) {
 		return this.categories.add(category);
 	}

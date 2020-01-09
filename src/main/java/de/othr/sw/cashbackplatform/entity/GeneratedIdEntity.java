@@ -11,7 +11,7 @@ import javax.persistence.MappedSuperclass;
 public abstract class GeneratedIdEntity extends SingleIdEntity<Long> {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long id;
+	private long id;
 	
 	public GeneratedIdEntity() {
 		super();
@@ -32,10 +32,10 @@ public abstract class GeneratedIdEntity extends SingleIdEntity<Long> {
 	
 	@Override
 	public int hashCode() {
-		if (this.id == null) {
+		if (this.getId() == null) {
 			return 0;
 		} else {
-			return this.id.hashCode();
+			return this.getId().hashCode();
 		}
 	}
 }

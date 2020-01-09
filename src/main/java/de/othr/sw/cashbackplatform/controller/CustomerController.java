@@ -50,7 +50,8 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value = "/account", method=RequestMethod.POST)
-	public String updateAccountInformation(@ModelAttribute("email") String email,
+	public String updateAccountInformation(@RequestParam(name = "update") String update,
+										   @ModelAttribute("email") String email,
 										   @ModelAttribute("password") String password1,
 										   @ModelAttribute("passwordcheck") String password2,
 										   @ModelAttribute("telephone") String telephone,
@@ -66,7 +67,70 @@ public class CustomerController {
 										   @ModelAttribute("categories") String categories,
 										   @AuthenticationPrincipal Customer customer,
 										   Model model) {
-		return "account";
+		model.addAttribute("isActive", 4);
+		/* Update Account Information of Customer */
+		try {
+			// Update Email
+			if (update.equals("email")) {
+				customer = customerService.updateCustomerEmail(customer, email);
+			}
+			// Update Password
+			if (update.equals("password")) {
+				if (!password1.equals(password2)) {
+					model.addAttribute("error", "Passworte stimmen nicht überein.");
+				} else if (password1.isBlank() || password2.isBlank()) {
+					model.addAttribute("error", "Passwortfelder dürfen nicht leer sein.");
+				} else {
+					customer = customerService.updateCustomerPassword(customer, password1);
+				}
+			}
+			// Update Telephone Number
+			if (update.equals("telephone")) {
+					customer = customerService.updateCustomerTelephoneNumber(customer, telephone);	
+			}
+			// Update Adress
+			if (update.equals("adress")) {
+				Adress updatedAdress = new Adress(street, streetnumber, place, Integer.parseInt(postcode));
+				customer = customerService.updateCustomerAdress(customer, updatedAdress);
+			}
+			if (customer instanceof PrivateCustomer) {
+				// Update Customer Name
+				if (update.equals("name")) {
+					customer = customerService.updatePrivateCustomerName((PrivateCustomer) customer, name, surname);
+				}
+			} else if (customer instanceof Shop) {
+				customer = (Shop) customer;
+				// Update Shopname
+				if (update.equals("name")) {
+					customer = customerService.updateShopName((Shop) customer, shopname);
+				}
+				// Update Default Cashbackpoints per Sale
+				if (update.equals("points")) {
+					customer = customerService.updateShopDefaultCashbackpoints((Shop) customer, Integer.parseInt(cashbackpoints));
+				}
+				// Update Shop Information
+				if (update.equals("shopinfo")) {
+					customer = customerService.updateShopInformation((Shop) customer, shopinfo);
+				}
+				// Update Shop Categories
+				if (update.equals("categories")) {
+					List<Category> shopcategories = parseCategoryList(categories, (Shop) customer);
+					customer = customerService.updateShopCategories((Shop) customer, shopcategories);
+				}
+			}
+			if (model.getAttribute("error") == null) model.addAttribute("registration", "Änderungen erfolgreich geupdated.");
+			model.addAttribute("customer", customer);
+			return "account";
+		} catch (Exception error) {
+			if (error instanceof UserAlreadyRegisteredException) {
+				model.addAttribute("error", error.getMessage());
+			} else {
+				model.addAttribute("error", "Eingegebene Formulardaten sind ungültig. Bitte überprüfen Sie ob die Daten ein gültiges Format besitzen oder ob Sie alle Daten ausgefüllt haben.");
+			}
+			model.addAttribute("customer", customer);
+			error.printStackTrace();
+			return "account";
+		}
 	}
 	
 	@RequestMapping("/new")
@@ -94,10 +158,13 @@ public class CustomerController {
 		if (!password.equals(password2)) {
 			model.addAttribute("error", "Passworte stimmen nicht überein.");
 			return "privateregister";
+		} else if (password.isBlank() || password2.isBlank()) {
+			model.addAttribute("error", "Passwortfelder dürfen nicht leer sein.");
+			return "privateregister";
 		}
 		try {
 			Adress adress = new Adress(street, streetnumber, place, Integer.parseInt(postcode));
-			Customer customer = new PrivateCustomer(email, password, telephone, adress, surname, name);
+			Customer customer = new PrivateCustomer(email, password, telephone, adress, surname, name, 0);
 			customer = customerService.registerCustomer(customer);
 			//model.addAttribute("custemail", customer.getEmail());
 			model.addAttribute("registration", "Du wurdest erfolgreich als Privatkunde registriert.");
@@ -133,6 +200,9 @@ public class CustomerController {
 			  				   Model model) {
 		if (!password.equals(password2)) {
 			model.addAttribute("error", "Passworte stimmen nicht überein.");
+			return "shopregister";
+		} else if (password.isBlank() || password2.isBlank()) {
+			model.addAttribute("error", "Passwortfelder dürfen nicht leer sein.");
 			return "shopregister";
 		}
 		try {
