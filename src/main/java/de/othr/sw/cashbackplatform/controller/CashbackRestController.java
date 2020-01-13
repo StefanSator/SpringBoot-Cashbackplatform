@@ -3,7 +3,11 @@ package de.othr.sw.cashbackplatform.controller;
 import java.util.Date;
 import java.util.NoSuchElementException;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,23 +17,33 @@ import org.springframework.web.bind.annotation.RestController;
 import de.othr.sw.cashbackplatform.dto.BalanceDTO;
 import de.othr.sw.cashbackplatform.dto.CashbackDTO;
 import de.othr.sw.cashbackplatform.dto.PurchaseDTO;
+import de.othr.sw.cashbackplatform.entity.Authority;
+import de.othr.sw.cashbackplatform.entity.Cashback;
+import de.othr.sw.cashbackplatform.entity.Cashbackposition;
 import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
 import de.othr.sw.cashbackplatform.service.CashbackServiceIF;
 import de.othr.sw.cashbackplatform.service.CustomerServiceIF;
 
 @RestController
+@RequestMapping("/restapi")
 public class CashbackRestController {
 	@Autowired
 	private CashbackServiceIF cashbackService;
 	@Autowired
 	private CustomerServiceIF customerService;
 	
+	/* @RequestMapping(value="/cashback", method = RequestMethod.GET)
+	public Authority test() {
+		System.out.println("Test funktioniert.");
+		return new Authority("Hallo.");
+	} */
 	
-	@RequestMapping(value="/restapi/cashback/{accountnr}", method = RequestMethod.GET)
+	@RequestMapping(value="/cashback/{accountnr}", method = RequestMethod.GET)
 	public BalanceDTO getCashbackBalance(@PathVariable("accountnr") String accountidentification) {
 		try {
 			PrivateCustomer customer = customerService.getPrivateCustomerWithAccountIdentification(accountidentification);
-			return new BalanceDTO(new Date(), customer.getAccountIdentification(), customer.getSurname(), customer.getName(), customer.getAccountBalance());
+			BalanceDTO balance = new BalanceDTO(new Date(), customer.getAccountIdentification(), customer.getSurname(), customer.getName(), customer.getAccountBalance());
+			return balance;
 		} catch (Exception ex) {
 			// TODO: Ask Prof how to send error to rest client
 			ex.printStackTrace();
@@ -37,15 +51,26 @@ public class CashbackRestController {
 		}
 	}
 	
-	@RequestMapping(value="/restapi/cashback/debit", method = RequestMethod.POST)
+	@RequestMapping(value="/cashback/debit", method = RequestMethod.POST)
 	public CashbackDTO debitCashbackAccount(@RequestBody PurchaseDTO purchase) {
 		//return cashbackService.debitCashbackAccount(purchase);
 		return null;
 	}
 	
-	@RequestMapping(value="/restapi/cashback/accredit", method = RequestMethod.POST)
+	@RequestMapping(value="/cashback/accredit", method = RequestMethod.POST)
+	@Transactional
 	public CashbackDTO accreditCashbackAccount(@RequestBody PurchaseDTO purchase) {
-		//return cashbackService.accreditCashbackAccount(purchase);
-		return null;
+		try {
+			Cashback cashback = cashbackService.accreditCashbackAccount(purchase);
+			int grantedPoints = 0;
+			for (Cashbackposition cashbackposition : cashback.getCashbackpositions()) {
+				grantedPoints += cashbackposition.getSingleCashbackPoints();
+			}
+			return new CashbackDTO(cashback.getReceiver().getAccountIdentification(), grantedPoints, cashback.isTransferPositive());
+		} catch (Exception ex) {
+			// TODO
+			ex.printStackTrace();
+			return null;
+		}
 	}
 }

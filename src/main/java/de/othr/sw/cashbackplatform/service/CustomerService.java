@@ -1,6 +1,8 @@
 package de.othr.sw.cashbackplatform.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +53,7 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	}
 	
 	@Override
-	public Customer updateCustomerEmail(Customer customer, String email) throws UserAlreadyRegisteredException {
+	public String updateCustomerEmail(Customer customer, String email) throws UserAlreadyRegisteredException {
 		// Check if user already exists
 		Customer availableCustomer = customerRepo.findByEmail(email).orElse(null);
 		if (availableCustomer != null) {
@@ -59,69 +61,88 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 		}
 		customer.setEmail(email);
 		Customer updatedCustomer = customerRepo.save(customer);
-		return updatedCustomer;
+		return updatedCustomer.getEmail();
 	}
 	
 	@Override
-	public Customer updateCustomerPassword(Customer customer, String password) throws Exception {
+	public String updateCustomerPassword(Customer customer, String password) throws Exception {
 		customer.setPassword(passwordEncoder.encode(password));
 		Customer updatedCustomer = customerRepo.save(customer);
-		return updatedCustomer;
+		return updatedCustomer.getPassword();
 	}
 	
 	@Override
-	public Customer updateCustomerTelephoneNumber(Customer customer, String telephoneNumber) throws Exception {
+	public String updateCustomerTelephoneNumber(Customer customer, String telephoneNumber) throws Exception {
 		customer.setTelephoneNumber(telephoneNumber);
 		Customer updatedCustomer = customerRepo.save(customer);
-		return updatedCustomer;
+		return updatedCustomer.getTelephoneNumber();
 	}
 	
 	@Override
-	public Customer updateCustomerAdress(Customer customer, Adress adress) {
+	public Adress updateCustomerAdress(Customer customer, Adress adress) {
 		customer.setAdress(adress);
 		Customer updatedCustomer = customerRepo.save(customer);
-		return updatedCustomer;
+		return updatedCustomer.getAdress();
 	}
 	
 	@Override
-	public PrivateCustomer updatePrivateCustomerName(PrivateCustomer customer, String name, String surname) throws Exception {
+	public Map<String, String> updatePrivateCustomerName(PrivateCustomer customer, String name, String surname) throws Exception {
 		customer.setName(name);
 		customer.setSurname(surname);
 		PrivateCustomer updatedCustomer = customerRepo.save(customer);
-		return updatedCustomer;
+		HashMap<String, String> names = new HashMap<>();
+		names.put("name", updatedCustomer.getName());
+		names.put("surname", updatedCustomer.getSurname());
+		return names; 
 	}
 	
 	@Override
-	public Shop updateShopName(Shop customer, String shopname) throws Exception {
+	public String updateShopName(Shop customer, String shopname) throws Exception {
 		customer.setShopname(shopname);
 		Shop updatedCustomer = customerRepo.save(customer);
-		return updatedCustomer;
+		return updatedCustomer.getShopname();
 	}
 	
 	@Override
-	public Shop updateShopDefaultCashbackpoints(Shop customer, int cashbackpoints) {
+	public int updateShopDefaultCashbackpoints(Shop customer, int cashbackpoints) {
 		customer.setDefaultCashbackPointsPerSale(cashbackpoints);
 		Shop updatedCustomer = customerRepo.save(customer);
-		return updatedCustomer;
+		return updatedCustomer.getDefaultCashbackPointsPerSale();
 	}
 	
 	@Override
-	public Shop updateShopInformation(Shop customer, String shopinfo) throws Exception {
+	public String updateShopInformation(Shop customer, String shopinfo) throws Exception {
 		customer.setShopinfo(shopinfo);
 		Shop updatedCustomer = customerRepo.save(customer);
-		return updatedCustomer;
+		return updatedCustomer.getShopinfo();
 	}
 	
 	// TODO: Ask Prof
 	@Override
-	public Shop updateShopCategories(Shop customer, List<Category> categories) {
+	public List<Category> updateShopCategories(Shop customer, List<Category> categories) {
 		List<Category> prevcategories = customer.getCategories();
 		for (Category category : prevcategories) {
 			categoryRepo.delete(category);
 		}
 		customer.setCategories(categories);
 		Shop updatedCustomer = customerRepo.save(customer);
-		return updatedCustomer;
+		return updatedCustomer.getCategories();
+	}
+	
+	@Override
+	public Customer getCustomerByID(long id) throws NoSuchElementException {
+		Customer customer = customerRepo.findById(id).orElseThrow(() -> {
+			throw new NoSuchElementException("Kunde mit angegebener ID existiert nicht!");
+		});
+		return customer;
+	}
+	
+	@Override
+	public Customer getCustomerByEmail(String email) throws NoSuchElementException {
+		Customer customer = customerRepo.findByEmail(email).orElseThrow(() -> {
+			throw new NoSuchElementException("Kunde mit angegebener Email existiert nicht!");
+		});
+		return customer;
 	}
 	
 	@Override
@@ -132,8 +153,10 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	}
 	
 	@Override
-	public Shop getShop(String email) {
-		Customer shop = customerRepo.findByEmail(email).orElseThrow();
+	public Shop getShop(Long id) throws NoSuchElementException {
+		Customer shop = customerRepo.findById(id).orElseThrow(() -> {
+			throw new NoSuchElementException();
+		});
 		if (shop instanceof Shop) {
 			return (Shop) shop;
 		} else {

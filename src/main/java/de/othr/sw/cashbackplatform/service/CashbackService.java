@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import de.othr.sw.cashbackplatform.dto.PurchaseDTO;
@@ -27,8 +28,13 @@ public class CashbackService implements CashbackServiceIF {
 	private CustomerRepository customerRepo;
 	@Autowired
 	private CustomerService customerService;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
-	// TODO
+	@Override
+	public List<Cashback> getAllCashbacksOfPrivateCustomer(PrivateCustomer customer) {
+		return cashbackRepo.findByReceiver(customer);
+	}
 	
 	@Override
 	public Cashback debitCashbackAccount(PurchaseDTO purchase) throws Exception {
@@ -43,7 +49,8 @@ public class CashbackService implements CashbackServiceIF {
 		System.out.println("Accredit Account.");
 		PrivateCustomer receiver = customerRepo.findByAccountIdentification(purchase.getCustomerAccountIdentification()).orElseThrow();
 		Shop sender = (Shop) customerRepo.findByEmail(purchase.getShopEmail()).orElseThrow();
-		if (receiver.getPassword() != purchase.getCustomerPassword() || sender.getPassword() != purchase.getShopPassword()) {
+		if (!passwordEncoder.matches(purchase.getCustomerPassword(), receiver.getPassword())
+				|| !passwordEncoder.matches(purchase.getShopPassword(), sender.getPassword())) {
 			throw new Exception("Zugriff verweigert, da Authentifizierung fehlgeschlagen.");
 		}
 		List<Cashbackposition> cashbackpositions = new ArrayList<>();
@@ -57,7 +64,7 @@ public class CashbackService implements CashbackServiceIF {
 		}
 		Cashback cashback = new Cashback(purchase.getDate(), purchase.getPurchaseIdentification(), cashbackpositions, receiver, sender, true);
 		cashbackRepo.save(cashback);
-		customerRepo.save(receiver);
+		customerRepo.save(receiver); // TODO Ask Prof: Muss ich save aufrufen.
 		
 		return cashback;
 	}

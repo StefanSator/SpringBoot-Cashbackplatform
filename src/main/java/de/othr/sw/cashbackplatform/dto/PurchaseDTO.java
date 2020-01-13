@@ -15,7 +15,7 @@ public class PurchaseDTO {
 	
 	public PurchaseDTO() {}
 	
-	public PurchaseDTO(Date date, String customerAccountIdentification, String purchaseIdentification, String customerPassword,
+	public PurchaseDTO(Date date, String purchaseIdentification, String customerAccountIdentification, String customerPassword,
 					   String shopEmail, String shopPassword, Map<String, Double> prices, Double totalPrice) {
 		this.date = date;
 		this.purchaseIdentification = purchaseIdentification;

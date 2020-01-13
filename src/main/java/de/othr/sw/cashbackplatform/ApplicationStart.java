@@ -17,6 +17,7 @@ import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
 import de.othr.sw.cashbackplatform.entity.Shop;
 import de.othr.sw.cashbackplatform.service.CouponServiceIF;
 import de.othr.sw.cashbackplatform.service.CustomerServiceIF;
+import de.othr.sw.cashbackplatform.service.ShopTestService;
 
 @SpringBootApplication
 public class ApplicationStart implements CommandLineRunner {
@@ -24,6 +25,8 @@ public class ApplicationStart implements CommandLineRunner {
 	private CustomerServiceIF customerService;
 	@Autowired
 	private CouponServiceIF couponService;
+	@Autowired
+	private ShopTestService cashbackTestService;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -66,7 +69,7 @@ public class ApplicationStart implements CommandLineRunner {
 		shop3 = (Shop) customerService.registerCustomer(shop3);
 		// Generate a default private Customer
 		Adress adress4 = new Adress("Musterstr.", "4", "Musterstadt", 99999);
-		Customer privateCustomer = new PrivateCustomer("max.private@email.de", "1234", "09999999999", adress4, "Max", "Privat");
+		Customer privateCustomer = new PrivateCustomer("max.private@email.de", "1234", "09999999999", adress4, "Max", "Privat", 0);
 		privateCustomer = customerService.registerCustomer(privateCustomer);
 		System.out.println("Customer Accounts created.");
 		
@@ -94,6 +97,14 @@ public class ApplicationStart implements CommandLineRunner {
 		// Choose at beginning daily recommendation
 		couponService.recommendRandomDailyCoupon();
 		System.out.println("Daily Recommendation saved.");
+		
+		/* Generate Cashback from Online Shop */
+		cashbackTestService.testForGettingCustomerAccountBalance((PrivateCustomer) privateCustomer);
+		cashbackTestService.testForAccreditingCustomerAccountForPurchase((PrivateCustomer) privateCustomer, "1234", shop1, "1234");
+		cashbackTestService.testForAccreditingCustomerAccountForPurchase((PrivateCustomer) privateCustomer, "1234", shop2, "1234");
+		cashbackTestService.testForAccreditingCustomerAccountForPurchase((PrivateCustomer) privateCustomer, "1234", shop3, "1234");
+		cashbackTestService.testForGettingCustomerAccountBalance((PrivateCustomer) privateCustomer);
+		System.out.println("Cashback for Purchase accredited.");
 		System.out.println("Application Initialization completed.");
 	}
 

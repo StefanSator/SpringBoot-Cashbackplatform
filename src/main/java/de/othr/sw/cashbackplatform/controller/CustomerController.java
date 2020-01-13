@@ -1,7 +1,9 @@
 package de.othr.sw.cashbackplatform.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +41,8 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value = "/account", method=RequestMethod.GET)
-	public String displayAccountInformation(@AuthenticationPrincipal Customer customer, Model model) {
+	public String displayAccountInformation(Principal principal, Model model) {
+		Customer customer = customerService.getCustomerByEmail(principal.getName());
 		model.addAttribute("isActive", 4);
 		if (customer instanceof PrivateCustomer) {
 			model.addAttribute("customer", (PrivateCustomer) customer);
@@ -65,14 +68,16 @@ public class CustomerController {
 										   @ModelAttribute("cashbackpoints") String cashbackpoints,
 										   @ModelAttribute("shopinfo") String shopinfo,
 										   @ModelAttribute("categories") String categories,
-										   @AuthenticationPrincipal Customer customer,
+										   @AuthenticationPrincipal Customer principal,
 										   Model model) {
 		model.addAttribute("isActive", 4);
+		Customer customer = customerService.getCustomerByEmail(principal.getUsername());
 		/* Update Account Information of Customer */
 		try {
 			// Update Email
 			if (update.equals("email")) {
-				customer = customerService.updateCustomerEmail(customer, email);
+				String updatedEmail = customerService.updateCustomerEmail(customer, email);
+				principal.setEmail(updatedEmail);
 			}
 			// Update Password
 			if (update.equals("password")) {
@@ -81,44 +86,53 @@ public class CustomerController {
 				} else if (password1.isBlank() || password2.isBlank()) {
 					model.addAttribute("error", "Passwortfelder dürfen nicht leer sein.");
 				} else {
-					customer = customerService.updateCustomerPassword(customer, password1);
+					String updatedPassword = customerService.updateCustomerPassword(customer, password1);
+					principal.setPassword(updatedPassword);
 				}
 			}
 			// Update Telephone Number
 			if (update.equals("telephone")) {
-					customer = customerService.updateCustomerTelephoneNumber(customer, telephone);	
+					String updatedTelephone = customerService.updateCustomerTelephoneNumber(customer, telephone);
+					principal.setTelephoneNumber(updatedTelephone);
 			}
 			// Update Adress
 			if (update.equals("adress")) {
 				Adress updatedAdress = new Adress(street, streetnumber, place, Integer.parseInt(postcode));
-				customer = customerService.updateCustomerAdress(customer, updatedAdress);
+				updatedAdress = customerService.updateCustomerAdress(customer, updatedAdress);
+				principal.setAdress(updatedAdress);
 			}
-			if (customer instanceof PrivateCustomer) {
+			if (principal instanceof PrivateCustomer) {
 				// Update Customer Name
 				if (update.equals("name")) {
-					customer = customerService.updatePrivateCustomerName((PrivateCustomer) customer, name, surname);
+					Map<String, String> updatedNames = customerService.updatePrivateCustomerName((PrivateCustomer) customer, name, surname);
+					((PrivateCustomer) principal).setName(updatedNames.getOrDefault("name", ((PrivateCustomer) principal).getName()));
+					((PrivateCustomer) principal).setSurname(updatedNames.getOrDefault("surname", ((PrivateCustomer) principal).getSurname()));
 				}
-			} else if (customer instanceof Shop) {
-				customer = (Shop) customer;
+			} else if (principal instanceof Shop) {
 				// Update Shopname
 				if (update.equals("name")) {
-					customer = customerService.updateShopName((Shop) customer, shopname);
+					String updatedShopname = customerService.updateShopName((Shop) customer, shopname);
+					((Shop) principal).setShopname(updatedShopname);
 				}
 				// Update Default Cashbackpoints per Sale
 				if (update.equals("points")) {
-					customer = customerService.updateShopDefaultCashbackpoints((Shop) customer, Integer.parseInt(cashbackpoints));
+					int updatedDefaultPoints = customerService.updateShopDefaultCashbackpoints((Shop) customer, Integer.parseInt(cashbackpoints));
+					((Shop) principal).setDefaultCashbackPointsPerSale(updatedDefaultPoints);
 				}
 				// Update Shop Information
 				if (update.equals("shopinfo")) {
-					customer = customerService.updateShopInformation((Shop) customer, shopinfo);
+					String updatedShopinfo = customerService.updateShopInformation((Shop) customer, shopinfo);
+					((Shop) principal).setShopinfo(updatedShopinfo);
 				}
 				// Update Shop Categories
 				if (update.equals("categories")) {
 					List<Category> shopcategories = parseCategoryList(categories, (Shop) customer);
-					customer = customerService.updateShopCategories((Shop) customer, shopcategories);
+					List<Category> updatedcategories = customerService.updateShopCategories((Shop) customer, shopcategories);
+					((Shop) principal).setCategories(updatedcategories);
 				}
 			}
 			if (model.getAttribute("error") == null) model.addAttribute("registration", "Änderungen erfolgreich geupdated.");
+			customer = customerService.getCustomerByID(principal.getId());
 			model.addAttribute("customer", customer);
 			return "account";
 		} catch (Exception error) {
@@ -127,7 +141,7 @@ public class CustomerController {
 			} else {
 				model.addAttribute("error", "Eingegebene Formulardaten sind ungültig. Bitte überprüfen Sie ob die Daten ein gültiges Format besitzen oder ob Sie alle Daten ausgefüllt haben.");
 			}
-			model.addAttribute("customer", customer);
+			model.addAttribute("customer", principal);
 			error.printStackTrace();
 			return "account";
 		}
@@ -211,8 +225,6 @@ public class CustomerController {
 			List<Category> shopcategories = parseCategoryList(categories, customer);
 			customer.setCategories(shopcategories);
 			customer = (Shop) customerService.registerCustomer(customer);
-			//model.addAttribute("custemail", customer.getEmail());
-			//model.addAttribute("custcategories", customer.getCategories());
 			model.addAttribute("registration", "Du wurdest erfolgreich als Geschäftskunde registriert.");
 			return "login";
 		} catch (Exception error) {
@@ -236,10 +248,10 @@ public class CustomerController {
 		return "shopcatalog";
 	}
 	
-	@RequestMapping("/shops/detail/{email}")
-	public String displayShopInformation(@PathVariable("email") String email, Model model) {
+	@RequestMapping("/shops/detail/{shopid}")
+	public String displayShopInformation(@PathVariable("shopid") long shopid, Model model) {
 		try {
-			Shop shop = customerService.getShop(email);
+			Shop shop = customerService.getShop(shopid);
 			model.addAttribute("shop", shop);
 		} catch (NoSuchElementException ex) {
 			model.addAttribute("shop", null);

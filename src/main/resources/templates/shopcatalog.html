@@ -20,7 +20,7 @@
 			    <hr class="bg-primary">
 			    <p class="card-text text-center"><span th:text="${shop.getDefaultCashbackPointsPerSale()}"></span> °P pro 1 € Umsatz</p>
 			    <div class="text-center col">
-			    	<a th:text="Detailansicht" th:href="@{'/customers/shops/detail/' + ${shop.getEmail()}}" class="btn btn-primary"></a>
+			    	<a th:text="Detailansicht" th:href="@{'/customers/shops/detail/' + ${shop.getId()}}" class="btn btn-primary"></a>
 			    	<div class="btn-group">
 					  <button type="button" class="btn btn-success dropdown-toggle mt-2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					    Kategorien

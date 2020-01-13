@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -28,7 +29,7 @@ public class Cashback extends GeneratedIdEntity implements Serializable {
 	@NotNull
 	private String purchaseIdentification;
 	@NotNull
-	@OneToMany( orphanRemoval = true )
+	@OneToMany( orphanRemoval = true, cascade = { CascadeType.PERSIST, CascadeType.REMOVE } )
 	private List<Cashbackposition> cashbackpositions;
 	@NotNull
 	@ManyToOne
