@@ -1,6 +1,7 @@
 package de.othr.sw.cashbackplatform.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -32,13 +33,13 @@ public class CashbackService implements CashbackServiceIF {
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
-	public List<Cashback> getAllCashbacksOfPrivateCustomer(PrivateCustomer customer) {
-		return cashbackRepo.findByReceiver(customer);
+	public List<Cashback> getAllCashbacksOfPrivateCustomer(PrivateCustomer customer, Date from, Date to) {
+		return cashbackRepo.findByReceiverAndDateBetween(customer, from, to);
 	}
 	
 	@Override
-	public List<Cashback> getAllCashbacksOfShop(Shop shop) {
-		return cashbackRepo.findBySender(shop);
+	public List<Cashback> getAllCashbacksOfShop(Shop shop, Date from, Date to) {
+		return cashbackRepo.findBySenderAndDateBetween(shop, from, to);
 	}
 	
 	@Override
