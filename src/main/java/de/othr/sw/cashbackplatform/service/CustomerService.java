@@ -17,6 +17,7 @@ import de.othr.sw.cashbackplatform.entity.Category;
 import de.othr.sw.cashbackplatform.entity.Customer;
 import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
 import de.othr.sw.cashbackplatform.entity.Shop;
+import de.othr.sw.cashbackplatform.exceptions.CategoryAlreadyRegisteredException;
 import de.othr.sw.cashbackplatform.exceptions.UserAlreadyRegisteredException;
 import de.othr.sw.cashbackplatform.repository.CategoryRepository;
 import de.othr.sw.cashbackplatform.repository.CustomerRepository;
@@ -117,14 +118,14 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 		return updatedCustomer.getShopinfo();
 	}
 	
-	// TODO: Ask Prof
 	@Override
-	public List<Category> updateShopCategories(Shop customer, List<Category> categories) {
-		List<Category> prevcategories = customer.getCategories();
-		for (Category category : prevcategories) {
-			categoryRepo.delete(category);
+	public List<Category> addShopCategories(Shop customer, List<Category> categories) throws CategoryAlreadyRegisteredException {
+		boolean duplicates = categories.stream().anyMatch(category -> customer.getCategories().contains(category));
+		System.out.println("duplicates: " + duplicates);
+		if (duplicates) throw new CategoryAlreadyRegisteredException("Duplikate vorhanden. Bitte achten Sie darauf, dass Sie keine Kategorien hinzufügen wollen, die bereits vorhanden sind.");
+		for (Category category : categories) {
+			customer.appendCategory(category);
 		}
-		customer.setCategories(categories);
 		Shop updatedCustomer = customerRepo.save(customer);
 		return updatedCustomer.getCategories();
 	}
@@ -171,8 +172,8 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	}
 	
 	@Override
-	public Category getShopCategoryByName(String categoryName) {
-		Category category = categoryRepo.findByCategory(categoryName).orElseThrow();
+	public Category getShopCategory(String categoryName, Shop owner) {
+		Category category = categoryRepo.findByCategoryAndOwner(categoryName, owner).orElseThrow();
 		return category;
 	}
 	

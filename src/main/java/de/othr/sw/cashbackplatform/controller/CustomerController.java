@@ -21,6 +21,7 @@ import de.othr.sw.cashbackplatform.entity.Category;
 import de.othr.sw.cashbackplatform.entity.Customer;
 import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
 import de.othr.sw.cashbackplatform.entity.Shop;
+import de.othr.sw.cashbackplatform.exceptions.CategoryAlreadyRegisteredException;
 import de.othr.sw.cashbackplatform.exceptions.UserAlreadyRegisteredException;
 import de.othr.sw.cashbackplatform.service.CustomerServiceIF;
 
@@ -124,10 +125,10 @@ public class CustomerController {
 					String updatedShopinfo = customerService.updateShopInformation((Shop) customer, shopinfo);
 					((Shop) principal).setShopinfo(updatedShopinfo);
 				}
-				// Update Shop Categories
-				if (update.equals("categories")) {
-					List<Category> shopcategories = parseCategoryList(categories, (Shop) customer);
-					List<Category> updatedcategories = customerService.updateShopCategories((Shop) customer, shopcategories);
+				// Add Shop Categories
+				if (update.equals("addcategories")) {
+					List<Category> categoriesToAdd = parseCategoryList(categories, (Shop) customer);
+					List<Category> updatedcategories = customerService.addShopCategories((Shop) customer, categoriesToAdd);
 					((Shop) principal).setCategories(updatedcategories);
 				}
 			}
@@ -138,11 +139,13 @@ public class CustomerController {
 		} catch (Exception error) {
 			if (error instanceof UserAlreadyRegisteredException) {
 				model.addAttribute("error", error.getMessage());
-			} else {
+			} else if (error instanceof CategoryAlreadyRegisteredException) {
+				model.addAttribute("error", error.getMessage());
+			}
+			else {
 				model.addAttribute("error", "Eingegebene Formulardaten sind ungültig. Bitte überprüfen Sie ob die Daten ein gültiges Format besitzen oder ob Sie alle Daten ausgefüllt haben.");
 			}
 			model.addAttribute("customer", principal);
-			error.printStackTrace();
 			return "account";
 		}
 	}

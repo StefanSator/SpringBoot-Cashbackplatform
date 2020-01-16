@@ -1,6 +1,7 @@
 package de.othr.sw.cashbackplatform.entity;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
@@ -47,6 +48,15 @@ public class Category extends GeneratedIdEntity implements Serializable {
 	
 	public void setOwner(Shop owner) {
 		this.owner = owner;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if (o == null) return false;
+		if (getClass() != o.getClass()) return false;
+		final Category other = (Category) o;
+		if (Objects.equals(this.category, other.category) && Objects.equals(this.owner, other.owner)) return true;
+		return false;
 	}
 	
 }

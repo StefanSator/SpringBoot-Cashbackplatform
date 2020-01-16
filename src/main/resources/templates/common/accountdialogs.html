@@ -297,21 +297,21 @@
 <!-- Modal Dialog for changing categories of a shop -->
 <div th:fragment="changecategoriesdialog">
 		<!-- Modal -->
-		<form method="post" action="/customers/account?update=categories">
+		<form method="post" action="/customers/account?update=addcategories">
 			<div class="modal fade" id="changecategoriesModal" tabindex="-1" role="dialog" aria-labelledby="changecategoriesModalLabel" aria-hidden="true">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
-			        <h5 class="modal-title" id="changecategoriesModalLabel">Neue Kategorien eingeben</h5>
+			        <h5 class="modal-title" id="changecategoriesModalLabel">Neue Kategorien hinzufügen</h5>
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 			          <span aria-hidden="true">&times;</span>
 			        </button>
 			      </div>
 			      <div class="modal-body">
-			      	<p>Keine Kommas verwenden. Einzelne Kategorien trennen indem Sie eine neue Zeile beginnen.</p>
+			      	<p>Keine Kommas verwenden. Einzelne Kategorien trennen, indem Sie eine neue Zeile beginnen.</p>
 			        <div class="input-group">
 					  <div class="input-group-prepend">
-					    <span class="input-group-text bg-success text-white border-0">Meine Shopkategorien</span>
+					    <span class="input-group-text bg-success text-white border-0">Neue Kategorien</span>
 					  </div>
 					  <textarea class="form-control" aria-label="With textarea" id="categories" name="categories"></textarea>
 					</div>

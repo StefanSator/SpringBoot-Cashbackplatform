@@ -37,6 +37,11 @@ public class CashbackService implements CashbackServiceIF {
 	}
 	
 	@Override
+	public List<Cashback> getAllCashbacksOfShop(Shop shop) {
+		return cashbackRepo.findBySender(shop);
+	}
+	
+	@Override
 	public Cashback debitCashbackAccount(PurchaseDTO purchase) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println("Debit Account.");
@@ -56,7 +61,7 @@ public class CashbackService implements CashbackServiceIF {
 		List<Cashbackposition> cashbackpositions = new ArrayList<>();
 		Set<String> categories = purchase.getPrices().keySet();
 		for (String category : categories) {
-			Category cashbackCategory = customerService.getShopCategoryByName(category);
+			Category cashbackCategory = customerService.getShopCategory(category, sender);
 			double salesprice = purchase.getPrices().get(category);
 			long cashbackpoints = Math.round(salesprice) * sender.getDefaultCashbackPointsPerSale();
 			cashbackpositions.add(new Cashbackposition((int) cashbackpoints, cashbackCategory));
@@ -64,7 +69,7 @@ public class CashbackService implements CashbackServiceIF {
 		}
 		Cashback cashback = new Cashback(purchase.getDate(), purchase.getPurchaseIdentification(), cashbackpositions, receiver, sender, true);
 		cashbackRepo.save(cashback);
-		customerRepo.save(receiver); // TODO Ask Prof: Muss ich save aufrufen.
+		customerRepo.save(receiver);
 		
 		return cashback;
 	}

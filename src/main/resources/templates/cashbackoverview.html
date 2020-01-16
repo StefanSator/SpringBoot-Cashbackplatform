@@ -9,12 +9,51 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 </head>
 <body>
-	<p>Umsätze</p>
-	<div th:each="cashback : ${cashbacks}">
-		<p th:each="cashbackposition : ${cashback.getCashbackpositions()}">
-			<span th:text="${cashbackposition.getCashbackCategory().getCategory()}"></span>
-			<span th:text="${cashbackposition.getSingleCashbackPoints()}"></span>
-		</p>
+	<div th:replace="common/navbar :: navigation"/>
+	<div class="m-5">
+		<h1 class="display-10 text-primary">Eure Umsätze</h1>
+		<hr class="my-4 bg-primary">
+		
+		<div th:if="${cashbacks.size() == 0}">
+			<p>Im angegebenen Zeitraum keine Umsätze vorhanden.</p>
+		</div>
+		
+		<div th:if="${cashbacks}"class="w-50 mx-auto accordion bg-primary" id="cashbacksaccordion">
+			<div th:each="cashback : ${cashbacks}" class="card">
+			    <div class="card-header" th:classappend="${cashback.isTransferPositive()} ? bg-primary : bg-error" th:id="'heading' + ${cashback.getId()}">
+			      <h5 sec:authorize="hasRole('CUSTOMER')" class="row mb-0 ml-2 text-white"><span th:text="${cashback.getSender().getShopname()}"></span></h5>
+			      <h5 sec:authorize="hasRole('SHOP')" class="row mb-0 ml-2 text-white"><span th:text="${cashback.getReceiver().getSurname() + cashback.getReceiver().getName()}"></span></h5>
+			      <h6 class="row mb-0 ml-3 text-white"><span th:text="'Datum: ' + ${cashback.getDate()}"></span></h6>
+			      <h6 class="row mb-0 ml-3 text-white"><span th:text="'Verwendungszweck: ' + ${cashback.getPurchaseIdentification()}"></span></h6>
+			      <h2 class="mb-0">
+			        <button class="btn btn-info text-white float-right" type="button" data-toggle="collapse" th:data-target="'#collapse' + ${cashback.getId()}" aria-expanded="true" th:aria-controls="'collapse' + ${cashback.getId()}">
+			          Mehr Details
+			        </button>
+			      </h2>
+			    </div>
+			
+			    <div th:id="'collapse' + ${cashback.getId()}" class="collapse" th:aria-labelledby="'heading' + ${cashback.getId()}" data-parent="#cashbacksaccordion">
+			      <div class="card-body">
+			      	<div class="row">
+			      		<div class="col">
+			      			<p class="font-weight-bold">Kategorie</p>
+			      		</div>
+			      		<div class="col">
+			      			<p class="font-weight-bold">Punkte</p>
+			      		</div>
+			      	</div>
+			      	<div th:each="cashbackposition : ${cashback.getCashbackpositions()}" class="row">
+			      		<div class="col">
+			      			<p><span th:text="${cashbackposition.getCashbackCategory().getCategory()}"></span></p>
+			      		</div>
+			      		<div class="col">
+			      			<p><span th:text="${cashbackposition.getSingleCashbackPoints() + '°P'}"></span></p>
+			      		</div>
+			      	</div>
+			      </div>
+			    </div>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
