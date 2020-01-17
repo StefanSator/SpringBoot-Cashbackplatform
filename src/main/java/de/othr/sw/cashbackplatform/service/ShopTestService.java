@@ -31,7 +31,7 @@ public class ShopTestService {
 		String customerAccountIdentification = customer.getAccountIdentification();
 		String shopEmail = shop.getEmail();
 		double totalprice = 0.0;
-		for (int i = 0 ; i < 20 ; i++) {
+		for (int i = 0 ; i < 1 ; i++) {
 			calendar.add(Calendar.DATE, -5);
 			String purchaseIdentification = "123-123-12" + i;
 			Map<String, Double> prices = new HashMap<String, Double>();
@@ -45,11 +45,16 @@ public class ShopTestService {
 			}
 			PurchaseDTO purchase = new PurchaseDTO(calendar.getTime(), purchaseIdentification, customerAccountIdentification, custpassword,
 					   shopEmail, shoppassword, prices, totalprice);
-			CashbackDTO cashback = restServiceClient
+			try {
+				CashbackDTO cashback = restServiceClient
 									.postForObject("http://localhost:8080/restapi/cashback/accredit", 
 												   purchase, 
 												   CashbackDTO.class);
-			System.out.println("Account mit Nummer " + cashback.getAccountIdentification() + " " + cashback.getCashbackpoints() + " Punkte erfolgreich hinzugefügt.");
+				System.out.println("Account mit Nummer " + cashback.getAccountIdentification() + " " + cashback.getCashbackpoints() + " Punkte erfolgreich hinzugefügt.");
+			} catch (Exception ex) {
+				System.out.println(ex.getLocalizedMessage());
+				return;
+			}
 		}
 	}
 	

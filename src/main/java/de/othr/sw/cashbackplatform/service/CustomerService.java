@@ -149,7 +149,6 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	@Override
 	public List<Shop> getAllShops() {
 		List<Shop> shops = customerRepo.getAllShops();
-		System.out.println(shops.size());
 		return shops;
 	}
 	
@@ -166,14 +165,30 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	}
 	
 	@Override
-	public Category getShopCategory(Long categoryId) {
-		Category category = categoryRepo.findById(categoryId).orElseThrow();
+	public Shop getShop(String email) throws NoSuchElementException {
+		Customer shop = customerRepo.findByEmail(email).orElseThrow(() -> {
+			throw new NoSuchElementException();
+		});
+		if (shop instanceof Shop) {
+			return (Shop) shop;
+		} else {
+			throw new NoSuchElementException();
+		}
+	}
+	
+	@Override
+	public Category getShopCategory(Long categoryId) throws NoSuchElementException {
+		Category category = categoryRepo.findById(categoryId).orElseThrow(() -> {
+			throw new NoSuchElementException("Kategorie existiert nicht in unserem System.");
+		});
 		return category;
 	}
 	
 	@Override
-	public Category getShopCategory(String categoryName, Shop owner) {
-		Category category = categoryRepo.findByCategoryAndOwner(categoryName, owner).orElseThrow();
+	public Category getShopCategory(String categoryName, Shop owner) throws NoSuchElementException {
+		Category category = categoryRepo.findByCategoryAndOwner(categoryName, owner).orElseThrow(() -> {
+			throw new NoSuchElementException("Kategorie existiert nicht in unserem System.");
+		});
 		return category;
 	}
 	
@@ -184,8 +199,10 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	}
 	
 	@Override
-	public PrivateCustomer getPrivateCustomerWithAccountIdentification(String accountIdentification) throws Exception {
-		PrivateCustomer customer = customerRepo.findByAccountIdentification(accountIdentification).orElseThrow();
+	public PrivateCustomer getPrivateCustomerWithAccountIdentification(String accountIdentification) throws NoSuchElementException {
+		PrivateCustomer customer = customerRepo.findByAccountIdentification(accountIdentification).orElseThrow(() -> {
+			throw new NoSuchElementException("Privatkunde mit dieser Kontoidentifikation existiert nicht.");
+		});
 		return customer;
 	}
 

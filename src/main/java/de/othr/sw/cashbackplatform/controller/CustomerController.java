@@ -263,17 +263,6 @@ public class CustomerController {
 		return "shopdetail";
 	}
 	
-	@RequestMapping("/getall")
-	public String getAllCustomers() {
-		List<Customer> customers = customerService.getAllCustomer();
-		for (Customer customer : customers) {
-			System.out.println(customer.getEmail());
-			System.out.println(customer instanceof Shop);
-			System.out.println(customer instanceof PrivateCustomer);
-		}
-		return "index";
-	}
-	
 	// Private Functions
 	private List<Category> parseCategoryList(String categories, Shop owner) {
 		String[] categoryNames = categories.split("[\r\n]+");

@@ -36,11 +36,11 @@ public class Coupon extends GeneratedIdEntity implements Serializable {
 	private Integer cashbackPointsMultiplicator;
 	@NotNull
 	@ManyToOne
-	@OnDelete(action = OnDeleteAction.CASCADE) // TODO: Ask Prof
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Category couponCategory;
 	@NotNull
 	@ManyToOne
-	@OnDelete(action = OnDeleteAction.CASCADE) // TODO: Ask Prof
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Shop owner;
 	
 	public Coupon() { super(); }

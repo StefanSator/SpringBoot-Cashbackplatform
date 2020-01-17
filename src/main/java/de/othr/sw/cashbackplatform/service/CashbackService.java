@@ -3,6 +3,7 @@ package de.othr.sw.cashbackplatform.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -16,8 +17,10 @@ import de.othr.sw.cashbackplatform.dto.PurchaseDTO;
 import de.othr.sw.cashbackplatform.entity.Cashback;
 import de.othr.sw.cashbackplatform.entity.Cashbackposition;
 import de.othr.sw.cashbackplatform.entity.Category;
+import de.othr.sw.cashbackplatform.entity.Coupon;
 import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
 import de.othr.sw.cashbackplatform.entity.Shop;
+import de.othr.sw.cashbackplatform.exceptions.CashbackServiceException;
 import de.othr.sw.cashbackplatform.repository.CashbackRepository;
 import de.othr.sw.cashbackplatform.repository.CustomerRepository;
 
@@ -28,7 +31,9 @@ public class CashbackService implements CashbackServiceIF {
 	@Autowired
 	private CustomerRepository customerRepo;
 	@Autowired
-	private CustomerService customerService;
+	private CustomerServiceIF customerService;
+	@Autowired
+	private CouponServiceIF couponService;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
@@ -53,18 +58,40 @@ public class CashbackService implements CashbackServiceIF {
 	@Transactional(TxType.MANDATORY)
 	public Cashback accreditCashbackAccount(PurchaseDTO purchase) throws Exception {
 		System.out.println("Accredit Account.");
-		PrivateCustomer receiver = customerRepo.findByAccountIdentification(purchase.getCustomerAccountIdentification()).orElseThrow();
-		Shop sender = (Shop) customerRepo.findByEmail(purchase.getShopEmail()).orElseThrow();
+		PrivateCustomer receiver;
+		Shop sender;
+		try {
+			receiver = customerService.getPrivateCustomerWithAccountIdentification(purchase.getCustomerAccountIdentification());
+			sender = customerService.getShop(purchase.getShopEmail());
+		} catch (NoSuchElementException ex) {
+			throw new CashbackServiceException("Zugriff verweigert, da der Privatkunde oder Shop unserem System nicht bekannt ist.");
+		}
 		if (!passwordEncoder.matches(purchase.getCustomerPassword(), receiver.getPassword())
 				|| !passwordEncoder.matches(purchase.getShopPassword(), sender.getPassword())) {
-			throw new Exception("Zugriff verweigert, da Authentifizierung fehlgeschlagen.");
+			throw new CashbackServiceException("Zugriff verweigert, da Authentifizierung fehlgeschlagen.");
 		}
+		List<Coupon> currentShopCoupons = couponService.getAllCurrentCouponsOfShop(purchase.getDate(), sender);
 		List<Cashbackposition> cashbackpositions = new ArrayList<>();
 		Set<String> categories = purchase.getPrices().keySet();
 		for (String category : categories) {
-			Category cashbackCategory = customerService.getShopCategory(category, sender);
+			Category cashbackCategory;
+			try {
+				cashbackCategory = customerService.getShopCategory(category, sender);
+			} catch (NoSuchElementException ex) {
+				throw new CashbackServiceException("Ungültige Kategorien, bitte überprüfen Sie ob Sie die richtigen uns bekannten Kategorien angegeben haben.");
+			}
 			double salesprice = purchase.getPrices().get(category);
-			long cashbackpoints = Math.round(salesprice) * sender.getDefaultCashbackPointsPerSale();
+			// Check if a coupon for this category is active
+			Coupon couponForCategory = currentShopCoupons.stream()
+					.filter(coupon -> coupon.getCouponCategory().equals(cashbackCategory))        
+					.findAny()                                     
+					.orElse(null);
+			long cashbackpoints;
+			if (couponForCategory == null) {
+				cashbackpoints = Math.round(salesprice) * sender.getDefaultCashbackPointsPerSale();
+			} else {
+				cashbackpoints = Math.round(salesprice) * sender.getDefaultCashbackPointsPerSale() * couponForCategory.getCashbackPointsMultiplicator();
+			}
 			cashbackpositions.add(new Cashbackposition((int) cashbackpoints, cashbackCategory));
 			receiver.addToAccountBalance(cashbackpoints);
 		}

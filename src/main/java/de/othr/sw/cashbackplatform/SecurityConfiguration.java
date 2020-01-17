@@ -33,7 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	private static final String[] ALLOW_ACCESS_WITHOUT_AUTHENTICATION = {
 		"/css/**", "/image/**", "/fonts/**", "/", "/customers/login", "/customers/new", "/customers/new/**", "/customers/new/privatecustomer/**", 
-		"/customers/getall", "/restapi/**"
+		"/restapi/**", "/customers/shops", "/customers/shops/detail/**", "/coupons/display"
 	};
 
     @Bean
@@ -68,7 +68,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.deleteCookies("remember-me")
 				.permitAll()
 			.and()
-				.rememberMe();
+				.rememberMe()
+			.and()
+				.httpBasic();
 	}
 	
 	@Autowired

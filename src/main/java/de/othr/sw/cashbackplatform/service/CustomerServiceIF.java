@@ -18,8 +18,9 @@ public interface CustomerServiceIF {
 	public Customer getCustomerByID(long id) throws NoSuchElementException;
 	public Customer getCustomerByEmail(String email) throws NoSuchElementException;
 	public Shop getShop(Long id) throws NoSuchElementException;
-	public Category getShopCategory(Long categoryId);
-	public Category getShopCategory(String categoryname, Shop owner);
+	public Shop getShop(String email) throws NoSuchElementException;
+	public Category getShopCategory(Long categoryId) throws NoSuchElementException;
+	public Category getShopCategory(String categoryname, Shop owner) throws NoSuchElementException;
 	public List<Customer> getAllCustomer();
 	public String updateCustomerEmail(Customer customer, String email) throws UserAlreadyRegisteredException;
 	public String updateCustomerPassword(Customer customer, String password) throws Exception;
@@ -30,5 +31,5 @@ public interface CustomerServiceIF {
 	public int updateShopDefaultCashbackpoints(Shop customer, int cashbackpoints);
 	public String updateShopInformation(Shop customer, String shopinfo) throws Exception;
 	public List<Category> addShopCategories(Shop customer, List<Category> categories) throws CategoryAlreadyRegisteredException;
-	public PrivateCustomer getPrivateCustomerWithAccountIdentification(String accountidentification) throws Exception;
+	public PrivateCustomer getPrivateCustomerWithAccountIdentification(String accountidentification) throws NoSuchElementException;
 }

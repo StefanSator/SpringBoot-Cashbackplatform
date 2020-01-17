@@ -10,6 +10,7 @@ public class PurchaseDTO {
 	private String customerPassword;
 	private String shopEmail;
 	private String shopPassword;
+	// String for name of category, Double for price
 	private Map<String, Double> prices;
 	private Double totalPrice;
 	

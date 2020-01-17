@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import de.othr.sw.cashbackplatform.entity.Coupon;
 import de.othr.sw.cashbackplatform.entity.DailyRecommendation;
+import de.othr.sw.cashbackplatform.entity.Shop;
 import de.othr.sw.cashbackplatform.exceptions.CouponInvalidException;
 import de.othr.sw.cashbackplatform.repository.CouponRepository;
 import de.othr.sw.cashbackplatform.repository.DailyRecommendationRepository;
@@ -31,12 +32,12 @@ public class CouponService implements CouponServiceIF {
 		}
 		/* if (coupon.getBeginDate().compareTo(new Date()) < 0) {
 			throw new CouponInvalidException("Ungültige Eingabe. Das Beginndatum darf nicht in der Vergangenheit liegen.");
-		} */
+		} */ // TODO: ausklammern
 		// Check if there exists already a coupon for the specified category during the specified date interval
-		List<Coupon> existingCoupons = couponRepo.findByEndDateBetweenAndCouponCategoryIs(coupon.getBeginDate(), coupon.getEndDate(), coupon.getCouponCategory());
+		List<Coupon> existingCoupons = couponRepo.findByBeginDateLessThanEqualAndEndDateGreaterThanEqualAndCouponCategoryIs(coupon.getEndDate(), coupon.getBeginDate(), coupon.getCouponCategory());
 		if (existingCoupons.size() != 0) {
 			throw new CouponInvalidException("Ungültiger Coupon. Es existiert bereits ein Coupon für diese Kategorie im angegebenen Zeitintervall."
-					+ "Achten Sie bitte darauf, dass das Beginndatum nach dem Enddatum des aktuell noch laufenden Coupons liegt.");
+					+ " Achten Sie bitte darauf, dass das Beginndatum nach dem Enddatum des aktuell noch laufenden Coupons liegt.");
 		}
 		Coupon registeredCoupon = couponRepo.save(coupon);
 		return registeredCoupon;
@@ -68,6 +69,12 @@ public class CouponService implements CouponServiceIF {
 	@Override
 	public List<Coupon> getAllCurrentCoupons(Date date) {
 		List<Coupon> coupons = couponRepo.findByEndDateGreaterThanEqualAndBeginDateLessThanEqual(date, date);
+		return coupons;
+	}
+	
+	@Override
+	public List<Coupon> getAllCurrentCouponsOfShop(Date date, Shop shop) {
+		List<Coupon> coupons = couponRepo.findByEndDateGreaterThanEqualAndBeginDateLessThanEqualAndOwner(date, date, shop);
 		return coupons;
 	}
 	

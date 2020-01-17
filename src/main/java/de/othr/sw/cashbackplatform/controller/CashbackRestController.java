@@ -21,6 +21,7 @@ import de.othr.sw.cashbackplatform.entity.Authority;
 import de.othr.sw.cashbackplatform.entity.Cashback;
 import de.othr.sw.cashbackplatform.entity.Cashbackposition;
 import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
+import de.othr.sw.cashbackplatform.exceptions.CashbackServiceException;
 import de.othr.sw.cashbackplatform.service.CashbackServiceIF;
 import de.othr.sw.cashbackplatform.service.CustomerServiceIF;
 
@@ -32,34 +33,32 @@ public class CashbackRestController {
 	@Autowired
 	private CustomerServiceIF customerService;
 	
-	/* @RequestMapping(value="/cashback", method = RequestMethod.GET)
-	public Authority test() {
-		System.out.println("Test funktioniert.");
-		return new Authority("Hallo.");
-	} */
-	
 	@RequestMapping(value="/cashback/{accountnr}", method = RequestMethod.GET)
-	public BalanceDTO getCashbackBalance(@PathVariable("accountnr") String accountidentification) {
+	public BalanceDTO getCashbackBalance(@PathVariable("accountnr") String accountidentification) throws CashbackServiceException {
 		try {
 			PrivateCustomer customer = customerService.getPrivateCustomerWithAccountIdentification(accountidentification);
 			BalanceDTO balance = new BalanceDTO(new Date(), customer.getAccountIdentification(), customer.getSurname(), customer.getName(), customer.getAccountBalance());
 			return balance;
 		} catch (Exception ex) {
-			// TODO: Ask Prof how to send error to rest client
 			ex.printStackTrace();
-			return null;
+			if (ex instanceof CashbackServiceException) {
+				throw (CashbackServiceException) ex;
+			}
+			throw new CashbackServiceException("Leider konnten wir Ihre Anfrage nicht korrekt bearbeiten. Bitte überprüfen Sie "
+					+ "ob Sie unsere REST-API richtig verwenden oder versuchen Sie es zu einem späteren Zeitpunkt nocheinmal.");
 		}
 	}
 	
+	/* 
 	@RequestMapping(value="/cashback/debit", method = RequestMethod.POST)
 	public CashbackDTO debitCashbackAccount(@RequestBody PurchaseDTO purchase) {
 		//return cashbackService.debitCashbackAccount(purchase);
 		return null;
-	}
+	} */
 	
 	@RequestMapping(value="/cashback/accredit", method = RequestMethod.POST)
 	@Transactional
-	public CashbackDTO accreditCashbackAccount(@RequestBody PurchaseDTO purchase) {
+	public CashbackDTO accreditCashbackAccount(@RequestBody PurchaseDTO purchase) throws CashbackServiceException  {
 		try {
 			Cashback cashback = cashbackService.accreditCashbackAccount(purchase);
 			int grantedPoints = 0;
@@ -68,9 +67,12 @@ public class CashbackRestController {
 			}
 			return new CashbackDTO(cashback.getReceiver().getAccountIdentification(), grantedPoints, cashback.isTransferPositive());
 		} catch (Exception ex) {
-			// TODO
 			ex.printStackTrace();
-			return null;
+			if (ex instanceof CashbackServiceException) {
+				throw (CashbackServiceException) ex;
+			}
+			throw new CashbackServiceException("Leider konnten wir Ihre Anfrage nicht korrekt bearbeiten. Bitte überprüfen Sie "
+					+ "ob Sie unsere REST-API richtig verwenden oder versuchen Sie es zu einem späteren Zeitpunkt nocheinmal.");
 		}
 	}
 }
