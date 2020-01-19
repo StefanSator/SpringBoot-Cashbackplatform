@@ -31,7 +31,7 @@ public class ShopTestService {
 		String customerAccountIdentification = customer.getAccountIdentification();
 		String shopEmail = shop.getEmail();
 		double totalprice = 0.0;
-		for (int i = 0 ; i < 1 ; i++) {
+		for (int i = 0 ; i < 20 ; i++) {
 			calendar.add(Calendar.DATE, -5);
 			String purchaseIdentification = "123-123-12" + i;
 			Map<String, Double> prices = new HashMap<String, Double>();
@@ -47,7 +47,7 @@ public class ShopTestService {
 					   shopEmail, shoppassword, prices, totalprice);
 			try {
 				CashbackDTO cashback = restServiceClient
-									.postForObject("http://localhost:8080/restapi/cashback/accredit", 
+									.postForObject("http://localhost:8824/restapi/cashback/accredit", 
 												   purchase, 
 												   CashbackDTO.class);
 				System.out.println("Account mit Nummer " + cashback.getAccountIdentification() + " " + cashback.getCashbackpoints() + " Punkte erfolgreich hinzugefügt.");
@@ -65,7 +65,7 @@ public class ShopTestService {
 	public void testForGettingCustomerAccountBalance(PrivateCustomer customer) {
 		String accountIdentification = customer.getAccountIdentification();
 		BalanceDTO balance = restServiceClient
-								.getForObject("http://localhost:8080/restapi/cashback/{accountnr}", 
+								.getForObject("http://localhost:8824/restapi/cashback/{accountnr}", 
 											  BalanceDTO.class,
 											  accountIdentification);
 		System.out.println("" + balance.getAccountIdentification() + ": " + balance.getCashbackpoints());

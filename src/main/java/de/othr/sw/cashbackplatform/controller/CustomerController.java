@@ -231,6 +231,7 @@ public class CustomerController {
 			model.addAttribute("registration", "Du wurdest erfolgreich als Geschäftskunde registriert.");
 			return "login";
 		} catch (Exception error) {
+			error.printStackTrace();
 			if (error instanceof UserAlreadyRegisteredException) {
 				model.addAttribute("error", error.getMessage());
 			} else {

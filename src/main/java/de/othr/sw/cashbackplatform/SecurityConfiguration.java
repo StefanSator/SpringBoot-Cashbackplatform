@@ -54,6 +54,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 		http
 			.authorizeRequests()
+			.antMatchers("/coupons/manage/**").hasRole("SHOP")
 			.antMatchers(ALLOW_ACCESS_WITHOUT_AUTHENTICATION)
 			.permitAll().anyRequest().authenticated();
 		
@@ -68,9 +69,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.deleteCookies("remember-me")
 				.permitAll()
 			.and()
-				.rememberMe()
-			.and()
-				.httpBasic();
+				.rememberMe();
 	}
 	
 	@Autowired

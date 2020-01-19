@@ -16,6 +16,7 @@ public interface CouponRepository extends PagingAndSortingRepository<Coupon, Lon
 	List<Coupon> findByEndDateGreaterThanEqualAndBeginDateLessThanEqual(Date date1, Date date2);
 	Page<Coupon> findByEndDateGreaterThanEqualAndBeginDateLessThanEqual(Date date1, Date date2, Pageable pageable);
 	List<Coupon> findByEndDateGreaterThanEqualAndBeginDateLessThanEqualAndOwner(Date date1, Date date2, Shop shop);
+	List<Coupon> findByBeginDateAfterAndOwner(Date date, Shop shop);
 	List<Coupon> findByBeginDateAfter(Date date);
 	Long countByEndDateGreaterThanEqualAndBeginDateLessThanEqual(Date date1, Date date2);
 }

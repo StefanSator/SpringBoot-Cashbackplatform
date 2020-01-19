@@ -1,6 +1,7 @@
 package de.othr.sw.cashbackplatform.controller;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +48,14 @@ public class CouponController {
 		if (customer instanceof Shop && customer.getUsername() != null) {
 			List<Category> categories = ((Shop) customer).getCategories();
 			model.addAttribute("shopcategories", categories);
+			List<Coupon> current = couponService.getAllCurrentCouponsOfShop(new Date(), (Shop) customer);
+			model.addAttribute("currentcoupons", current);
+			List<Coupon> upcoming = couponService.getAllUpcomingCouponsOfShop(new Date(), (Shop) customer);
+			model.addAttribute("upcomingcoupons", upcoming);
+		} else {
+			model.addAttribute("shopcategories", new ArrayList<>());
+			model.addAttribute("currentcoupons", new ArrayList<>());
+			model.addAttribute("upcomingcoupons", new ArrayList<>());
 		}
 		return "couponmanagement";
 	}
@@ -66,12 +75,17 @@ public class CouponController {
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 			Date beginDateObject = formatter.parse(beginDate);
 			Date endDateObject = formatter.parse(endDate);
-			System.out.println(categoryId);
 			Category couponCategory = customerService.getShopCategory(categoryId);
 			Coupon coupon = new Coupon(couponname, beginDateObject, endDateObject, multiplicator, couponCategory, categoryOwner);
 			Coupon registeredCoupon = couponService.registerCoupon(coupon);
 			model.addAttribute("registration", "Wir haben Ihren eCoupon erfolgreich registriert.");
+			List<Coupon> current = couponService.getAllCurrentCouponsOfShop(new Date(), (Shop) customer);
+			model.addAttribute("currentcoupons", current);
+			List<Coupon> upcoming = couponService.getAllUpcomingCouponsOfShop(new Date(), (Shop) customer);
+			model.addAttribute("upcomingcoupons", upcoming);
 		} catch (Exception ex) {
+			model.addAttribute("currentcoupons", new ArrayList<>());
+			model.addAttribute("upcomingcoupons", new ArrayList<>());
 			if (ex instanceof CouponInvalidException) {
 				model.addAttribute("error", ex.getMessage());
 			} else {

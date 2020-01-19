@@ -43,10 +43,13 @@ public class CouponService implements CouponServiceIF {
 		return registeredCoupon;
 	}
 	
-	//Sekunde Minute Stunde Tag Monat Wochentag
-
+	/* 
+	 * Diese Funktion sollte normalerweise jeden Tag um 0 Uhr ausgeführt werden.
+	 * Zu Veranschaulichungszwecken habe ich es aber so eingestellt, das das Programm
+	 * nun alle 5 Minuten einen neuen Coupon als tägliche Empfehlung speichert.
+	 */
 	@Override
-	@Scheduled(cron = "0 0 0 * * *", zone="Europe/Berlin")
+	@Scheduled(cron = "0 0/1 * * * *", zone="Europe/Berlin")
 	public void recommendRandomDailyCoupon() {
 		Date currentDate = new Date();
 		Long countCurrentCoupons = couponRepo.countByEndDateGreaterThanEqualAndBeginDateLessThanEqual(currentDate, currentDate);
@@ -75,6 +78,12 @@ public class CouponService implements CouponServiceIF {
 	@Override
 	public List<Coupon> getAllCurrentCouponsOfShop(Date date, Shop shop) {
 		List<Coupon> coupons = couponRepo.findByEndDateGreaterThanEqualAndBeginDateLessThanEqualAndOwner(date, date, shop);
+		return coupons;
+	}
+	
+	@Override
+	public List<Coupon> getAllUpcomingCouponsOfShop(Date date, Shop shop) {
+		List<Coupon> coupons = couponRepo.findByBeginDateAfterAndOwner(date, shop);
 		return coupons;
 	}
 	

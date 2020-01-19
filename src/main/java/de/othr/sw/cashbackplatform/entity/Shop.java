@@ -20,6 +20,7 @@ public class Shop extends Customer implements Serializable {
 	//@Pattern(regexp="\\w+")
 	private String shopname;
 	private Integer defaultCashbackPerSale;
+	@Size(max = 400)
 	private String shopinfo;
 	@OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Category> categories;

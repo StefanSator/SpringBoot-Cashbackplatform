@@ -12,6 +12,7 @@ public interface CouponServiceIF {
 	public Coupon registerCoupon(Coupon coupon) throws CouponInvalidException;
 	public List<Coupon> getAllCurrentCoupons(Date date);
 	public List<Coupon> getAllCurrentCouponsOfShop(Date date, Shop shop);
+	public List<Coupon> getAllUpcomingCouponsOfShop(Date date, Shop shop);
 	public List<Coupon> getAllUpcomingCoupons(Date date);
 	public void recommendRandomDailyCoupon();
 	public DailyRecommendation getDailyRecommendation(Date currentdate);
