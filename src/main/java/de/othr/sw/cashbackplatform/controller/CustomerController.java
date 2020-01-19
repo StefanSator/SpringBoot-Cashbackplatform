@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -148,6 +149,20 @@ public class CustomerController {
 			model.addAttribute("customer", principal);
 			return "account";
 		}
+	}
+	
+	@RequestMapping("/account/statistics")
+	public String displayStatistics(Model model) {
+		model.addAttribute("isActive", 4);
+		try {
+			byte[] statisticImage = customerService.getStatistic();
+			// Encode byte array to Base64 String and add it as Model Attribute
+			String image = Base64Utils.encodeToString(statisticImage);
+			model.addAttribute("statistic", image);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "statistics";
 	}
 	
 	@RequestMapping("/new")

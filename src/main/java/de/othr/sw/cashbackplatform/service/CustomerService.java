@@ -11,12 +11,17 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
+import de.othr.sw.cashbackplatform.dto.CashbackDTO;
 import de.othr.sw.cashbackplatform.entity.Adress;
 import de.othr.sw.cashbackplatform.entity.Category;
 import de.othr.sw.cashbackplatform.entity.Customer;
 import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
 import de.othr.sw.cashbackplatform.entity.Shop;
+import de.othr.sw.cashbackplatform.entity.statisticrestservice.BusinessObject;
+import de.othr.sw.cashbackplatform.entity.statisticrestservice.BusinessObjectDTO;
+import de.othr.sw.cashbackplatform.entity.statisticrestservice.StatisticPackageDTO;
 import de.othr.sw.cashbackplatform.exceptions.CategoryAlreadyRegisteredException;
 import de.othr.sw.cashbackplatform.exceptions.UserAlreadyRegisteredException;
 import de.othr.sw.cashbackplatform.repository.CategoryRepository;
@@ -30,6 +35,8 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	private CategoryRepository categoryRepo;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+	@Autowired
+	private RestTemplate restServiceClient;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -204,6 +211,48 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 			throw new NoSuchElementException("Privatkunde mit dieser Kontoidentifikation existiert nicht.");
 		});
 		return customer;
+	}
+	
+	@Override
+	public byte[] getStatistic() throws Exception {
+		BusinessObject businessObject = new BusinessObject();
+
+        businessObject.setDataModelId(43L);
+
+        businessObject.setCustomerId(70L);
+
+        businessObject.addAttribute("cashbackpoints", 24);
+
+        businessObject.addAttribute("month", 1);
+
+
+
+        BusinessObject bo2 = new BusinessObject();
+
+        bo2.setDataModelId(43L);
+
+        bo2.setCustomerId(70L);
+
+        bo2.addAttribute("cashbackpoints", 25);
+
+        bo2.addAttribute("month", 2);
+
+
+        BusinessObjectDTO dto = new BusinessObjectDTO();
+
+        dto.addBusinessObject(businessObject);
+
+        dto.addBusinessObject(bo2);
+
+        dto.addStatisticStructureID(42L);
+        
+        StatisticPackageDTO statisticsPackage = restServiceClient
+        		.postForObject("http://im-codd:8836/restapi/sendBusinessObjectsAndReceiveStatisticPackageDTO", 
+							   dto,
+							   StatisticPackageDTO.class);
+        
+        Map<Long, byte[]> statistics = statisticsPackage.getStatisticAsByteArraysMap();
+        return statistics.get(42L);
 	}
 
 }
