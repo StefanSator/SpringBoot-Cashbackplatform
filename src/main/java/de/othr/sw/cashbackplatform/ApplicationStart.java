@@ -98,14 +98,14 @@ public class ApplicationStart implements CommandLineRunner {
 		couponService.recommendRandomDailyCoupon();
 		System.out.println("Daily Recommendation saved.");
 		
-		/* Generate Cashback from Online Shop
+		/* Generate Cashback from Online Shop */
 		cashbackTestService.testForGettingCustomerAccountBalance((PrivateCustomer) privateCustomer);
 		cashbackTestService.testForAccreditingCustomerAccountForPurchase((PrivateCustomer) privateCustomer, "1234", shop1, "1234");
 		cashbackTestService.testForAccreditingCustomerAccountForPurchase((PrivateCustomer) privateCustomer, "1234", shop2, "1234");
 		cashbackTestService.testForAccreditingCustomerAccountForPurchase((PrivateCustomer) privateCustomer, "1234", shop3, "1234");
 		cashbackTestService.testForGettingCustomerAccountBalance((PrivateCustomer) privateCustomer);
 		System.out.println("Cashback for Purchase accredited.");
-		System.out.println("Application Initialization completed."); */
+		System.out.println("Application Initialization completed.");
 	}
 
 }

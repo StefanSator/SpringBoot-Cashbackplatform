@@ -9,24 +9,24 @@
 	<div th:replace="common/navbar :: navigation"/>
 	<div sec:authorize="isAnonymous()">
 		<div class="row">
-		<div class="jumbotron bg-primary mx-5 mt-5 col">
-	  	  <h1 class="display-4 text-white">Möchtest du unsere Platform privat nutzen?</h1>
-		  <p class="lead text-white">Bei uns können Sie von Ihren Einkäufen profitieren. Sammeln Sie für jeden Ihrer Einkäufe Cashback-Punkte, die sie wiederrum bei 
-		  teilnehmenden Onlineshops einsetzen können um bei Ihren Einkäufen zu sparen. Aktivieren Sie außerdem eCoupons um noch mehr Cashback-Punkte für
-		  Ihre Einkäufe wiederzuerlangen. Unser Dienst ist vollkommen kostenlos, also fang jetzt gleich zum Sammeln an.</p>
-		  <hr class="my-4 bg-white">
-		  <a class="btn btn-primary btn-lg" href="customers/new/privatecustomer" role="button">Als Privatkunde Registrieren</a>
-		  <a class="btn btn-success btn-lg" href="customers/login" role="button">Einloggen</a>
-		</div>
-		<div class="jumbotron bg-info mx-5 mt-5 col">
-	  	  <h1 class="display-4 text-white">Möchtest du unsere Platform geschäftlich nutzen?</h1>
-		  <p class="lead text-white">Als Online-Shop können Sie von uns reichhaltig profitieren. Lassen Sie Ihre Kunden Cashback-Punkte sammeln. 
-		  Unsere Nutzer können Sie zudem in unserem Firmenkatalog finden, wodurch Sie neue Nutzer generieren können. Sehen sie sich außerdem Nutzungsstatistiken zu Ihrem Shop an.
-		  Durch das Erstellen von eCoupons können Sie Nutzer besonders zum Einkauf anregen.</p>
-		  <hr class="my-4 bg-white">
-		  <a class="btn btn-info btn-lg" href="customers/new/shop/" role="button">Als Onlineshop Registrieren</a>
-		  <a class="btn btn-success btn-lg" href="customers/login" role="button">Einloggen</a>
-		</div>
+			<div class="jumbotron bg-primary mx-5 mt-5 col">
+		  	  <h1 class="display-4 text-white">Möchtest du unsere Platform privat nutzen?</h1>
+			  <p class="lead text-white">Bei uns können Sie von Ihren Einkäufen profitieren. Sammeln Sie für jeden Ihrer Einkäufe Cashback-Punkte, die sie wiederrum bei 
+			  teilnehmenden Onlineshops einsetzen können um bei Ihren Einkäufen zu sparen. Aktivieren Sie außerdem eCoupons um noch mehr Cashback-Punkte für
+			  Ihre Einkäufe wiederzuerlangen. Unser Dienst ist vollkommen kostenlos, also fang jetzt gleich zum Sammeln an.</p>
+			  <hr class="my-4 bg-white">
+			  <a class="btn btn-primary btn-lg" href="customers/new/privatecustomer" role="button">Als Privatkunde Registrieren</a>
+			  <a class="btn btn-success btn-lg" href="customers/login" role="button">Einloggen</a>
+			</div>
+			<div class="jumbotron bg-info mx-5 mt-5 col">
+		  	  <h1 class="display-4 text-white">Möchtest du unsere Platform geschäftlich nutzen?</h1>
+			  <p class="lead text-white">Als Online-Shop können Sie von uns reichhaltig profitieren. Lassen Sie Ihre Kunden Cashback-Punkte sammeln. 
+			  Unsere Nutzer können Sie zudem in unserem Firmenkatalog finden, wodurch Sie neue Nutzer generieren können. Sehen sie sich außerdem Nutzungsstatistiken zu Ihrem Shop an.
+			  Durch das Erstellen von eCoupons können Sie Nutzer besonders zum Einkauf anregen.</p>
+			  <hr class="my-4 bg-white">
+			  <a class="btn btn-info btn-lg" href="customers/new/shop/" role="button">Als Onlineshop Registrieren</a>
+			  <a class="btn btn-success btn-lg" href="customers/login" role="button">Einloggen</a>
+			</div>
 		</div>
 		<div class="m-5">
 		  	<h1 class="display-4 text-primary">Ihre Vorzüge als Privatkunde</h1>
@@ -112,6 +112,37 @@
 			<h1 class="display-10 text-primary">Aktuelle eCoupons</h1>
 		  	<hr class="my-4 bg-primary">
 		  	<a class="btn btn-success btn-lg" href="/coupons/display" role="button">eCoupons ></a>
+		</div>
+	</div>
+	<h1 class="mx-5 mt-3 text-primary">Willkommen. Schön, dass Sie wieder zurück sind!</h1>
+	<div sec:authorize="isAuthenticated()">
+		<div class="row">
+			<div class="jumbotron bg-primary mx-5 mt-3 col">
+		  	  <h1 class="display-4 text-white">Shopkatalog</h1>
+			  <p class="lead text-white">Informieren Sie sich über die bei uns angemeldeten Shops. Vielleicht finden Sie einen Shop der Ihren Wünschen entspricht.</p>
+			  <hr class="my-4 bg-white">
+			  <a class="btn btn-success btn-lg" href="/customers/shops" role="button">Zum Shopkatalog</a>
+			</div>
+			<div class="jumbotron bg-primary mx-5 mt-3 col">
+		  	  <h1 class="display-4 text-white">eCoupons</h1>
+			  <p class="lead text-white">Informieren Sie sich welche eCoupons aktuell oder demnächst aktiv sind. Vielleicht finden Sie ein Angebot das Ihnen zusagt.</p>
+			  <hr class="my-4 bg-white">
+			  <a class="btn btn-success btn-lg" href="/coupons/display" role="button">Zu den eCoupons</a>
+			</div>
+		</div>
+		<div class="row">
+			<div class="jumbotron bg-primary mx-5 mt-5 col">
+		  	  <h1 class="display-4 text-white">Cashback-Umsätze</h1>
+			  <p class="lead text-white">Informieren Sie sich über Ihren Kontostand und Ihre Cashback-Umsätze und bleiben Sie so stets auf dem laufenden was Ihr Punktekonto angeht.</p>
+			  <hr class="my-4 bg-white">
+			  <a class="btn btn-success btn-lg" href="/cashbacks/display" role="button">Zu ihren Umsätzen</a>
+			</div>
+			<div class="jumbotron bg-primary mx-5 mt-5 col">
+		  	  <h1 class="display-4 text-white">Account</h1>
+			  <p class="lead text-white">Sehen Sie Ihre aktuellen Accountdaten ein und verwalten Sie diese ganz einfach über unser System.</p>
+			  <hr class="my-4 bg-white">
+			  <a class="btn btn-success btn-lg" href="/customers/account" role="button">Zu ihrem Account</a>
+			</div>
 		</div>
 	</div>
 </body>
