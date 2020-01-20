@@ -1,5 +1,8 @@
 package de.othr.sw.cashbackplatform.service;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,6 +29,7 @@ import de.othr.sw.cashbackplatform.entity.statisticrestservice.BusinessObjectDTO
 import de.othr.sw.cashbackplatform.entity.statisticrestservice.StatisticPackageDTO;
 import de.othr.sw.cashbackplatform.exceptions.CategoryAlreadyRegisteredException;
 import de.othr.sw.cashbackplatform.exceptions.UserAlreadyRegisteredException;
+import de.othr.sw.cashbackplatform.repository.CashbackRepository;
 import de.othr.sw.cashbackplatform.repository.CategoryRepository;
 import de.othr.sw.cashbackplatform.repository.CustomerRepository;
 
@@ -35,6 +39,8 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	private CustomerRepository customerRepo;
 	@Autowired
 	private CategoryRepository categoryRepo;
+	@Autowired
+	private CashbackRepository cashbackRepo;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	@Autowired
@@ -227,6 +233,41 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	}
 	
 	@Override
+	public byte[] getStatistic(Shop shop) throws Exception {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		calendar.set(Calendar.MONTH, 0);
+		// Get the count of Cashbacks Per Month of the current year for shop
+		List<Long> cashbacksPerMonthInCurrentYear = new ArrayList<>();
+		for (int i = 0 ; i < 12 ; i++) {
+			Date from = calendar.getTime();
+			calendar.add(Calendar.MONTH, 1);
+			Date to = calendar.getTime();
+			cashbacksPerMonthInCurrentYear.add(cashbackRepo.countBySenderAndDateBetween(shop, from, to));
+			System.out.println(cashbacksPerMonthInCurrentYear.get(i));
+		}
+		// Send Data to Statistic Service and receive Statistic which displays number of cashbacks per month of the shop
+		BusinessObjectDTO dto = new BusinessObjectDTO();
+		for (int i = 0 ; i < 12 ; i++) {
+			BusinessObject businessObject = new BusinessObject();
+	        businessObject.setDataModelId(49L);
+	        businessObject.setCustomerId(70L);
+	        businessObject.addAttribute("countofcashbacks", cashbacksPerMonthInCurrentYear.get(i));
+	        businessObject.addAttribute("month", i + 1);
+	        dto.addBusinessObject(businessObject);
+		}
+        dto.addStatisticStructureID(49L);
+        
+        StatisticPackageDTO statisticsPackage = restServiceClient
+        		.postForObject("http://im-codd:8836/restapi/sendBusinessObjectsAndReceiveStatisticPackageDTO", 
+							   dto,
+							   StatisticPackageDTO.class);
+        
+        Map<Long, byte[]> statistics = statisticsPackage.getStatisticAsByteArraysMap();
+        return statistics.get(49L);
+	}
+	
+	/* @Override
 	public byte[] getStatistic() throws Exception {
 		BusinessObject businessObject = new BusinessObject();
 
@@ -266,6 +307,6 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
         
         Map<Long, byte[]> statistics = statisticsPackage.getStatisticAsByteArraysMap();
         return statistics.get(42L);
-	}
+	} */
 
 }

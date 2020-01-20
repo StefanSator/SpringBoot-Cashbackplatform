@@ -34,5 +34,5 @@ public interface CustomerServiceIF {
 	public PrivateCustomer getPrivateCustomerWithAccountIdentification(String accountidentification) throws NoSuchElementException;
 	public PrivateCustomer chargeCashbackPoints(PrivateCustomer customer, long numberOfCashbackPoints) throws Exception;
 	
-	public byte[] getStatistic() throws Exception;
+	public byte[] getStatistic(Shop shop) throws Exception;
 }

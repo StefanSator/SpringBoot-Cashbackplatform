@@ -23,8 +23,7 @@ public class Coupon extends GeneratedIdEntity implements Serializable {
 	private static final long serialVersionUID = -915398441144397322L;
 	
 	@NotNull
-	@Size(max = 50)
-	@Pattern(regexp="\\w+")
+	@Size(max = 100)
 	private String couponName;
 	@NotNull
 	@Temporal(TemporalType.DATE)

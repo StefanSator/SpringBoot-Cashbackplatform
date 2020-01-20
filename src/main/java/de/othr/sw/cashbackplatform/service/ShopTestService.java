@@ -31,7 +31,7 @@ public class ShopTestService {
 		String customerAccountIdentification = customer.getAccountIdentification();
 		String shopEmail = shop.getEmail();
 		double totalprice = 0.0;
-		for (int i = 0 ; i < 1 ; i++) {
+		for (int i = 0 ; i < 2 ; i++) {
 			calendar.add(Calendar.DATE, -5);
 			String purchaseIdentification = "123-123-12" + i;
 			Map<String, Double> prices = new HashMap<String, Double>();
@@ -56,10 +56,6 @@ public class ShopTestService {
 				return;
 			}
 		}
-	}
-	
-	public void testForDebitingCustomerAccountForPurchase() {
-		// TODO
 	}
 	
 	public void testForGettingCustomerAccountBalance(PrivateCustomer customer) {

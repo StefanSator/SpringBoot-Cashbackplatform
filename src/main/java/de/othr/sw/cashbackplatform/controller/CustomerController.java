@@ -152,10 +152,11 @@ public class CustomerController {
 	}
 	
 	@RequestMapping("/account/statistics")
-	public String displayStatistics(Model model) {
+	public String displayStatistics(Principal principal, Model model) {
+		Customer customer = customerService.getCustomerByEmail(principal.getName());
 		model.addAttribute("isActive", 4);
 		try {
-			byte[] statisticImage = customerService.getStatistic();
+			byte[] statisticImage = customerService.getStatistic((Shop) customer);
 			// Encode byte array to Base64 String and add it as Model Attribute
 			String image = Base64Utils.encodeToString(statisticImage);
 			model.addAttribute("statistic", image);

@@ -42,15 +42,15 @@
 				<div class="card mt-2 mr-5" style="width: 18rem;">
 					<img src="https://images.unsplash.com/photo-1530037768512-3c9a22715452?ixlib=rb-1.2.1&auto=format&fit=crop&w=2250&q=80" class="card-img-top" alt="...">
 					<div class="card-body bg-primary">
-					  <h5 class="card-title text-white">Punkte nutzen</h5>
-					  <p class="card-text text-white">Nutzen Sie Ihre Punkte in allen bei uns teilnehmenden Online-shops zum Einkauf.</p>
+					  <h5 class="card-title text-white">Cashback</h5>
+					  <p class="card-text text-white">Lassen Sie sich Ihre gesammelten Punkte auf Ihr Bankkonto auszahlen.</p>
 					</div>
 				 </div>
 				 <div class="card mt-2 mr-5" style="width: 18rem;">
 					<img src="https://images.unsplash.com/photo-1542744095-291d1f67b221?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2250&q=80" class="card-img-top" alt="...">
 					<div class="card-body bg-primary">
 					  <h5 class="card-title text-white">eCoupons</h5>
-					  <p class="card-text text-white">Durchstöbern und Aktivieren Sie eCoupons um noch mehr auf Ihren Einkauf zu sparen.</p>
+					  <p class="card-text text-white">Durchstöbern Sie eCoupons um noch mehr Cashbackpunkte bei Ihren Einkäufen zu sammeln.</p>
 					</div>
 				 </div>
 				 <div class="card mt-2 mr-5" style="width: 18rem;">
@@ -76,8 +76,8 @@
 				<div class="card mt-2 mr-4" style="width: 18rem;">
 					<img src="https://images.unsplash.com/photo-1459257831348-f0cdd359235f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3300&q=80" class="card-img-top" alt="...">
 					<div class="card-body bg-info">
-					  <h5 class="card-title text-white">Sparen</h5>
-					  <p class="card-text text-white">Wir bieten Ihnen unsere Schnittstellen an mit der Nutzer Ihre Cashback-Punkte benutzen können um in Ihrem Online-Shop zu sparen.</p>
+					  <h5 class="card-title text-white">REST Schnittstelle</h5>
+					  <p class="card-text text-white">Wir bieten Ihnen unsere REST Schnittstelle um unseren Service zu nutzen.</p>
 					</div>
 				</div>
 				<div class="card mt-2 mr-4" style="width: 18rem;">
@@ -114,7 +114,7 @@
 		  	<a class="btn btn-success btn-lg" href="/coupons/display" role="button">eCoupons ></a>
 		</div>
 	</div>
-	<h1 class="mx-5 mt-3 text-primary">Willkommen. Schön, dass Sie wieder zurück sind!</h1>
+	<h1 sec:authorize="isAuthenticated()" class="mx-5 mt-3 text-primary">Willkommen. Schön, dass Sie wieder zurück sind!</h1>
 	<div sec:authorize="isAuthenticated()">
 		<div class="row">
 			<div class="jumbotron bg-primary mx-5 mt-3 col">

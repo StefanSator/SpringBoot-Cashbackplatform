@@ -84,8 +84,10 @@ public class CouponController {
 			List<Coupon> upcoming = couponService.getAllUpcomingCouponsOfShop(new Date(), (Shop) customer);
 			model.addAttribute("upcomingcoupons", upcoming);
 		} catch (Exception ex) {
-			model.addAttribute("currentcoupons", new ArrayList<>());
-			model.addAttribute("upcomingcoupons", new ArrayList<>());
+			List<Coupon> current = couponService.getAllCurrentCouponsOfShop(new Date(), (Shop) customer);
+			model.addAttribute("currentcoupons", current);
+			List<Coupon> upcoming = couponService.getAllUpcomingCouponsOfShop(new Date(), (Shop) customer);
+			model.addAttribute("upcomingcoupons", upcoming);
 			if (ex instanceof CouponInvalidException) {
 				model.addAttribute("error", ex.getMessage());
 			} else {

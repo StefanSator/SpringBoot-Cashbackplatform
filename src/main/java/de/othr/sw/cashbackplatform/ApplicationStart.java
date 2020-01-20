@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -27,9 +28,12 @@ public class ApplicationStart implements CommandLineRunner {
 	private CouponServiceIF couponService;
 	@Autowired
 	private ShopTestService cashbackTestService;
+	@Value("${application-config.firststart}")
+	private boolean firststart;
 
 	@Override
 	public void run(String... args) throws Exception {
+		if (firststart != true) return;
 		/* Generate Users */
 		// Generate Shop Customers
 		// Shop 1
@@ -77,22 +81,34 @@ public class ApplicationStart implements CommandLineRunner {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		// Coupon 1
 		Date begin1 = formatter.parse("2019-12-10");
-		Date end1 = formatter.parse("2020-01-25");
+		Date end1 = formatter.parse("2020-02-25");
 		Category cat1 = shop1.getCategory(0);
 		Coupon coupon1 = new Coupon("Jahresendeverkauf", begin1, end1, 2, cat1, shop1);
 		coupon1 = couponService.registerCoupon(coupon1);
 		// Coupon 2
 		Date begin2 = formatter.parse("2020-02-01");
-		Date end2 = formatter.parse("2020-02-10");
+		Date end2 = formatter.parse("2020-03-01");
 		Category cat2 = shop2.getCategory(0);
-		Coupon coupon2 = new Coupon("HappyNewYear", begin2, end2, 5, cat2, shop2);
+		Coupon coupon2 = new Coupon("Happy New Year", begin2, end2, 5, cat2, shop2);
 		coupon2 = couponService.registerCoupon(coupon2);
 		// Coupon 3
 		Date begin3 = formatter.parse("2019-12-10");
-		Date end3 = formatter.parse("2020-02-01");
+		Date end3 = formatter.parse("2020-03-01");
 		Category cat3 = shop3.getCategory(0);
 		Coupon coupon3 = new Coupon("Sale", begin3, end3, 3, cat3, shop3);
 		coupon3 = couponService.registerCoupon(coupon3);
+		// Coupon 4
+		Date begin4 = formatter.parse("2020-04-01");
+		Date end4 = formatter.parse("2020-05-01");
+		Category cat4 = shop1.getCategory(2);
+		Coupon coupon4 = new Coupon("Oster Sale", begin4, end4, 2, cat4, shop1);
+		coupon4 = couponService.registerCoupon(coupon4);
+		// Coupon 5
+		Date begin5 = formatter.parse("2020-03-01");
+		Date end5 = formatter.parse("2020-06-01");
+		Category cat5 = shop2.getCategory(1);
+		Coupon coupon5 = new Coupon("Halbjahrsangebot", begin5, end5, 3, cat5, shop2);
+		coupon5 = couponService.registerCoupon(coupon5);
 		System.out.println("Coupons created.");
 		// Choose at beginning daily recommendation
 		couponService.recommendRandomDailyCoupon();
