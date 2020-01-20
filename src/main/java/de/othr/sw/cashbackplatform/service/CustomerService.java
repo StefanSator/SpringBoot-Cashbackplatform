@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -210,6 +212,17 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 		PrivateCustomer customer = customerRepo.findByAccountIdentification(accountIdentification).orElseThrow(() -> {
 			throw new NoSuchElementException("Privatkunde mit dieser Kontoidentifikation existiert nicht.");
 		});
+		return customer;
+	}
+	
+	@Override
+	@Transactional
+	public PrivateCustomer chargeCashbackPoints(PrivateCustomer customer, long numberOfCashbackPoints) throws Exception {
+		customer.subtractFromAccountBalance(numberOfCashbackPoints);
+		if (customer.getAccountBalance() < 0) {
+			throw new Exception("Privatkunde hat nicht genug Punkte auf dem Konto.");
+		}
+		customer = customerRepo.save(customer);
 		return customer;
 	}
 	

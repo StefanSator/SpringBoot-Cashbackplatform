@@ -49,18 +49,11 @@ public class CashbackRestController {
 		}
 	}
 	
-	/* 
-	@RequestMapping(value="/cashback/debit", method = RequestMethod.POST)
-	public CashbackDTO debitCashbackAccount(@RequestBody PurchaseDTO purchase) {
-		//return cashbackService.debitCashbackAccount(purchase);
-		return null;
-	} */
-	
 	@RequestMapping(value="/cashback/accredit", method = RequestMethod.POST)
 	@Transactional
 	public CashbackDTO accreditCashbackAccount(@RequestBody PurchaseDTO purchase) throws CashbackServiceException  {
 		try {
-			Cashback cashback = cashbackService.accreditCashbackAccount(purchase);
+			Cashback cashback = cashbackService.accreditCashback(purchase);
 			int grantedPoints = 0;
 			for (Cashbackposition cashbackposition : cashback.getCashbackpositions()) {
 				grantedPoints += cashbackposition.getSingleCashbackPoints();

@@ -32,6 +32,7 @@ public interface CustomerServiceIF {
 	public String updateShopInformation(Shop customer, String shopinfo) throws Exception;
 	public List<Category> addShopCategories(Shop customer, List<Category> categories) throws CategoryAlreadyRegisteredException;
 	public PrivateCustomer getPrivateCustomerWithAccountIdentification(String accountidentification) throws NoSuchElementException;
+	public PrivateCustomer chargeCashbackPoints(PrivateCustomer customer, long numberOfCashbackPoints) throws Exception;
 	
 	public byte[] getStatistic() throws Exception;
 }

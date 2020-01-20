@@ -35,6 +35,8 @@ public class CashbackService implements CashbackServiceIF {
 	@Autowired
 	private CouponServiceIF couponService;
 	@Autowired
+	private PaymentServiceIF paymentService;
+	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
@@ -48,16 +50,20 @@ public class CashbackService implements CashbackServiceIF {
 	}
 	
 	@Override
-	public Cashback debitCashbackAccount(PurchaseDTO purchase) throws Exception {
-		// TODO Auto-generated method stub
-		System.out.println("Debit Account.");
-		return null;
+	@Transactional
+	public double grantMoneyForCashbackPointsOfCustomer(PrivateCustomer customer, String iban) throws Exception {
+		long cashbackpointsOfCustomer = ((PrivateCustomer) customer).getAccountBalance();
+		double moneyValueToTransferToCustomer = cashbackpointsOfCustomer * 0.01;
+		// Charge Account of Customer
+		customer = customerService.chargeCashbackPoints(customer, cashbackpointsOfCustomer);
+		// Transfer Money To customers bank account
+		paymentService.transferMoney(iban, moneyValueToTransferToCustomer);
+		return moneyValueToTransferToCustomer;
 	}
 	
 	@Override
 	@Transactional(TxType.MANDATORY)
-	public Cashback accreditCashbackAccount(PurchaseDTO purchase) throws Exception {
-		System.out.println("Accredit Account.");
+	public Cashback accreditCashback(PurchaseDTO purchase) throws Exception {
 		PrivateCustomer receiver;
 		Shop sender;
 		try {

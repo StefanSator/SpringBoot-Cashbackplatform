@@ -33,11 +33,11 @@ public class Cashback extends GeneratedIdEntity implements Serializable {
 	private List<Cashbackposition> cashbackpositions;
 	@NotNull
 	@ManyToOne
-	@OnDelete(action = OnDeleteAction.CASCADE) // TODO: Ask Prof
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private PrivateCustomer receiver;
 	@NotNull
 	@ManyToOne
-	@OnDelete(action = OnDeleteAction.CASCADE) // TODO: Ask Prof
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Shop sender;
 	@NotNull
 	private boolean transferIsPositive;
