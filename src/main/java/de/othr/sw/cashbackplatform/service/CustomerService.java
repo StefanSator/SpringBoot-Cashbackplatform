@@ -252,18 +252,17 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 		BusinessObjectDTO dto = new BusinessObjectDTO();
 		for (int i = 0 ; i < 12 ; i++) {
 			BusinessObject businessObject = new BusinessObject();
-	        businessObject.setDataModelId(61L);
-	        businessObject.setCustomerId(77L);
-	        businessObject.addAttribute("countofcashbacks", cashbacksPerMonthInCurrentYear.get(i));
+	        businessObject.setDataModelId(63L);
+	        businessObject.setCustomerId(78L);
+	        businessObject.addAttribute("purchases", cashbacksPerMonthInCurrentYear.get(i));
 	        businessObject.addAttribute("month", i + 1);
 	        dto.addBusinessObject(businessObject);
 		}
-        dto.addStatisticStructureID(58L);
+        dto.addStatisticStructureID(60L);
         
         StatisticPackageDTO statisticsPackage = statisticsProxy.sendBusinessObjectsAndReceiveStatisticPackageDTO(dto);
-        System.out.println(statisticsPackage);
         Map<Long, byte[]> statistics = statisticsPackage.getStatisticAsByteArraysMap();
-        return statistics.get(58L);
+        return statistics.get(60L);
 	}
 
 }

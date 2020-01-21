@@ -7,7 +7,6 @@ import org.springframework.web.client.RestTemplate;
 
 import de.othr.sw.cashbackplatform.entity.statisticrestservice.BusinessObjectDTO;
 import de.othr.sw.cashbackplatform.entity.statisticrestservice.StatisticPackageDTO;
-import de.othr.sw.cashbackplatform.service.ShopTestService;
 
 @Component
 @Qualifier("production")

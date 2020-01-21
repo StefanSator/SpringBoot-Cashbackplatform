@@ -41,12 +41,12 @@ public class CashbackService implements CashbackServiceIF {
 	
 	@Override
 	public List<Cashback> getAllCashbacksOfPrivateCustomer(PrivateCustomer customer, Date from, Date to) {
-		return cashbackRepo.findByReceiverAndDateBetween(customer, from, to);
+		return cashbackRepo.findByReceiverAndDateBetweenOrderByDateDesc(customer, from, to);
 	}
 	
 	@Override
 	public List<Cashback> getAllCashbacksOfShop(Shop shop, Date from, Date to) {
-		return cashbackRepo.findBySenderAndDateBetween(shop, from, to);
+		return cashbackRepo.findBySenderAndDateBetweenOrderByDateDesc(shop, from, to);
 	}
 	
 	@Override

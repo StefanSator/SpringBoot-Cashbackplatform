@@ -30,7 +30,7 @@ public class StatisticTestRestController {
 	@Autowired
     ResourceLoader resourceLoader;
 	
-	@RequestMapping(value="/statistic", method = RequestMethod.POST)
+	@RequestMapping(value="/sendBusinessObjectsAndReceiveStatisticPackageDTO", method = RequestMethod.POST)
 	public StatisticPackageDTO sendBusinessObjectsAndReceiveStatisticPackageDTO(@RequestBody BusinessObjectDTO businessObjectDTO) throws Exception {
 		Resource resource = resourceLoader.getResource("classpath:static/image/TestStatistic.png");
 		InputStream input = resource.getInputStream();

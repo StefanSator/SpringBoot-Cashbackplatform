@@ -42,12 +42,6 @@ public class ApplicationStart implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		if (firststart != true) {
-			/* try {
-				StatisticPackageDTO packageDTO = statisticsProxy.sendBusinessObjectsAndReceiveStatisticPackageDTO(new BusinessObjectDTO());
-				System.out.println(packageDTO);
-			} catch (Exception e) {
-				e.printStackTrace();
-			} */
 			return;
 		}
 		/* Generate Users */

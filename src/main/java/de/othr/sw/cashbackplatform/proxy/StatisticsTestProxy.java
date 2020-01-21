@@ -17,7 +17,7 @@ public class StatisticsTestProxy implements StatisticsProxyIF {
 	@Override
 	public StatisticPackageDTO sendBusinessObjectsAndReceiveStatisticPackageDTO(BusinessObjectDTO dto) throws Exception {
 		StatisticPackageDTO statisticsPackage = restServiceClient
-	    		.postForObject("http://localhost:8824/restapi/statistic", 
+	    		.postForObject("http://localhost:8824/restapi/sendBusinessObjectsAndReceiveStatisticPackageDTO", 
 							   dto,
 							   StatisticPackageDTO.class);
 		return statisticsPackage;
