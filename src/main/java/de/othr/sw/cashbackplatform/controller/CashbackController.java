@@ -108,7 +108,9 @@ public class CashbackController {
 		try {
 			Customer customer = customerService.getCustomerByEmail(principal.getEmail());
 			long cashbackbalance = ((PrivateCustomer) customer).getAccountBalance();
-			if (cashbackbalance != 0) {
+			if (iban.isBlank()) {
+				model.addAttribute("error", "Bitte füllen Sie das IBAN Formularfeld aus.");
+			} else if (cashbackbalance != 0) {
 				double amount = cashbackService.grantMoneyForCashbackPointsOfCustomer((PrivateCustomer) customer, iban);
 				model.addAttribute("success", "Wir haben Ihrem Konto erfolgreich " + amount + " € gutgeschrieben.");
 			} else {

@@ -14,9 +14,13 @@ import de.othr.sw.cashbackplatform.dto.BalanceDTO;
 import de.othr.sw.cashbackplatform.dto.CashbackDTO;
 import de.othr.sw.cashbackplatform.dto.PurchaseDTO;
 import de.othr.sw.cashbackplatform.entity.Category;
-import de.othr.sw.cashbackplatform.entity.Customer;
 import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
 import de.othr.sw.cashbackplatform.entity.Shop;
+
+/* 
+ * Dieser Service ist ein Service, den ich zum Testen
+ * meiner eigenen Rest-Schnittstelle verwendet habe.
+ */
 
 @Service
 public class ShopTestService {

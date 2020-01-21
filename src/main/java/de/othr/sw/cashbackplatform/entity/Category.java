@@ -21,7 +21,7 @@ public class Category extends GeneratedIdEntity implements Serializable {
 	@Size(max = 200)
 	public String category;
 	@NotNull
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne( fetch = FetchType.LAZY )
 	private Shop owner;
 	
 	public Category() { super(); }

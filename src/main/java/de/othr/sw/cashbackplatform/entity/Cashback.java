@@ -8,6 +8,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -29,14 +30,14 @@ public class Cashback extends GeneratedIdEntity implements Serializable {
 	@NotNull
 	private String purchaseIdentification;
 	@NotNull
-	@OneToMany( orphanRemoval = true, cascade = { CascadeType.PERSIST, CascadeType.REMOVE } )
+	@OneToMany( cascade = { CascadeType.PERSIST, CascadeType.REMOVE }, fetch = FetchType.LAZY )
 	private List<Cashbackposition> cashbackpositions;
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private PrivateCustomer receiver;
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Shop sender;
 	@NotNull

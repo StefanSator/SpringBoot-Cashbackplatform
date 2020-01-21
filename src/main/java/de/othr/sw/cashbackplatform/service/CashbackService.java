@@ -10,6 +10,7 @@ import javax.transaction.Transactional;
 import javax.transaction.Transactional.TxType;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +26,7 @@ import de.othr.sw.cashbackplatform.repository.CashbackRepository;
 import de.othr.sw.cashbackplatform.repository.CustomerRepository;
 
 @Service
+@Scope(value = "singleton")
 public class CashbackService implements CashbackServiceIF {
 	@Autowired
 	private CashbackRepository cashbackRepo;
@@ -50,7 +52,7 @@ public class CashbackService implements CashbackServiceIF {
 	}
 	
 	@Override
-	@Transactional
+	@Transactional(TxType.REQUIRES_NEW)
 	public double grantMoneyForCashbackPointsOfCustomer(PrivateCustomer customer, String iban) throws Exception {
 		long cashbackpointsOfCustomer = ((PrivateCustomer) customer).getAccountBalance();
 		double moneyValueToTransferToCustomer = cashbackpointsOfCustomer * 0.01;

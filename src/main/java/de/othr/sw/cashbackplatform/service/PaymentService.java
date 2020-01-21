@@ -2,6 +2,7 @@ package de.othr.sw.cashbackplatform.service;
 
 import javax.transaction.Transactional;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 /*
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
+@Scope(value = "singleton")
 public class PaymentService implements PaymentServiceIF {
 
 	@Override

@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -16,7 +17,7 @@ public class Cashbackposition extends GeneratedIdEntity implements Serializable 
 	
 	@NotNull
 	private Integer singleCashbackPoints;
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Category cashbackCategory;
 	
 	public Cashbackposition() { super(); }

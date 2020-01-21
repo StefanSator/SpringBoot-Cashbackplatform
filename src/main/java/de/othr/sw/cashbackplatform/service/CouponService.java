@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,6 +18,7 @@ import de.othr.sw.cashbackplatform.repository.CouponRepository;
 import de.othr.sw.cashbackplatform.repository.DailyRecommendationRepository;
 
 @Service
+@Scope(value = "singleton")
 public class CouponService implements CouponServiceIF {
 	@Autowired
 	private CouponRepository couponRepo;

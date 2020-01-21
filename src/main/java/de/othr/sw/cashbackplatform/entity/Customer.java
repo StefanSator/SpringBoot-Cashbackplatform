@@ -12,7 +12,7 @@ import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -38,7 +38,7 @@ public abstract class Customer extends GeneratedIdEntity implements UserDetails 
 	@Pattern(regexp="\\d{1,15}")
 	private String telephone;
 	@NotNull
-	@ManyToOne(cascade=CascadeType.ALL)
+	@OneToOne(orphanRemoval = true, cascade = CascadeType.PERSIST)
 	@Valid
 	private Adress adress;
 	

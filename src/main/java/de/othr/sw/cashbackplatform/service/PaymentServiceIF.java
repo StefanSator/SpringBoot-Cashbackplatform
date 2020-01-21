@@ -1,7 +1,5 @@
 package de.othr.sw.cashbackplatform.service;
 
-import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
-
 /*
  * Dieser Service ist nur ein Dummy, da wir in unserer Gruppe
  * keine echte Schnittstelle zu einem Payment Provider geplant haben.

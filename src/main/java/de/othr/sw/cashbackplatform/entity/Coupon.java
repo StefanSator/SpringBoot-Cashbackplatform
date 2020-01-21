@@ -6,11 +6,11 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -22,7 +22,6 @@ public class Coupon extends GeneratedIdEntity implements Serializable {
 	private static final long serialVersionUID = -915398441144397322L;
 	
 	@NotNull
-	@Size(max = 200)
 	private String couponName;
 	@NotNull
 	@Temporal(TemporalType.DATE)
@@ -33,11 +32,11 @@ public class Coupon extends GeneratedIdEntity implements Serializable {
 	@NotNull
 	private Integer cashbackPointsMultiplicator;
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Category couponCategory;
 	@NotNull
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Shop owner;
 	

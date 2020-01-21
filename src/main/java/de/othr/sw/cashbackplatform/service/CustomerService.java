@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -35,6 +36,7 @@ import de.othr.sw.cashbackplatform.repository.CategoryRepository;
 import de.othr.sw.cashbackplatform.repository.CustomerRepository;
 
 @Service
+@Scope(value = "singleton")
 public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	@Autowired
 	private CustomerRepository customerRepo;
@@ -43,7 +45,7 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	@Autowired
 	private CashbackRepository cashbackRepo;
 	@Autowired
-	@Qualifier("production")
+	@Qualifier("test")
 	private StatisticsProxyIF statisticsProxy;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;

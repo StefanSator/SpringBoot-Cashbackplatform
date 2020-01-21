@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Entity
 public class PrivateCustomer extends Customer implements Serializable {
@@ -13,11 +12,9 @@ public class PrivateCustomer extends Customer implements Serializable {
 	private static final long serialVersionUID = -3879548003144583603L;
 	
 	@NotNull
-	@Size(max = 30)
 	@Pattern(regexp="\\w+")
 	private String surname;
 	@NotNull
-	@Size(max = 30)
 	@Pattern(regexp="\\w+")
 	private String name;
 	@NotNull
