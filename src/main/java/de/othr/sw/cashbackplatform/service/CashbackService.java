@@ -62,7 +62,7 @@ public class CashbackService implements CashbackServiceIF {
 	}
 	
 	@Override
-	@Transactional(TxType.MANDATORY)
+	@Transactional(TxType.REQUIRES_NEW)
 	public Cashback accreditCashback(PurchaseDTO purchase) throws Exception {
 		PrivateCustomer receiver;
 		Shop sender;

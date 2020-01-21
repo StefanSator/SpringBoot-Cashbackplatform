@@ -21,6 +21,8 @@ import de.othr.sw.cashbackplatform.entity.Authority;
 import de.othr.sw.cashbackplatform.entity.Cashback;
 import de.othr.sw.cashbackplatform.entity.Cashbackposition;
 import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
+import de.othr.sw.cashbackplatform.entity.statisticrestservice.BusinessObjectDTO;
+import de.othr.sw.cashbackplatform.entity.statisticrestservice.StatisticPackageDTO;
 import de.othr.sw.cashbackplatform.exceptions.CashbackServiceException;
 import de.othr.sw.cashbackplatform.service.CashbackServiceIF;
 import de.othr.sw.cashbackplatform.service.CustomerServiceIF;
@@ -50,7 +52,6 @@ public class CashbackRestController {
 	}
 	
 	@RequestMapping(value="/cashback/accredit", method = RequestMethod.POST)
-	@Transactional
 	public CashbackDTO accreditCashbackAccount(@RequestBody PurchaseDTO purchase) throws CashbackServiceException  {
 		try {
 			Cashback cashback = cashbackService.accreditCashback(purchase);

@@ -156,8 +156,8 @@ public class CustomerController {
 		Customer customer = customerService.getCustomerByEmail(principal.getName());
 		model.addAttribute("isActive", 4);
 		try {
-			byte[] statisticImage = customerService.getStatistic((Shop) customer);
-			// Encode byte array to Base64 String and add it as Model Attribute
+			byte[] statisticImage = customerService.getStatisticForNumberOfCashbacksPerMonth((Shop) customer);
+			// Encode byte array to Base64 String and add it as Model Attribute to display the statistic on screen
 			String image = Base64Utils.encodeToString(statisticImage);
 			model.addAttribute("statistic", image);
 		} catch (Exception e) {

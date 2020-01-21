@@ -30,9 +30,9 @@ public class CouponService implements CouponServiceIF {
 		if (!(coupon.getEndDate().compareTo(coupon.getBeginDate()) >= 0)) {
 			throw new CouponInvalidException("Ungültige Eingabe. Das Enddatum darf nicht vor dem Beginndatum des Coupons liegen.");
 		}
-		/* if (coupon.getBeginDate().compareTo(new Date()) < 0) {
+		if (coupon.getBeginDate().compareTo(new Date()) < 0) {
 			throw new CouponInvalidException("Ungültige Eingabe. Das Beginndatum darf nicht in der Vergangenheit liegen.");
-		} */ // TODO: ausklammern
+		}
 		// Check if there exists already a coupon for the specified category during the specified date interval
 		List<Coupon> existingCoupons = couponRepo.findByBeginDateLessThanEqualAndEndDateGreaterThanEqualAndCouponCategoryIs(coupon.getEndDate(), coupon.getBeginDate(), coupon.getCouponCategory());
 		if (existingCoupons.size() != 0) {
@@ -46,7 +46,7 @@ public class CouponService implements CouponServiceIF {
 	/* 
 	 * Diese Funktion sollte normalerweise jeden Tag um 0 Uhr ausgeführt werden.
 	 * Zu Veranschaulichungszwecken habe ich es aber so eingestellt, das das Programm
-	 * nun alle 5 Minuten einen neuen Coupon als tägliche Empfehlung speichert.
+	 * nun jede Minute einen neuen Coupon als tägliche Empfehlung speichert.
 	 */
 	@Override
 	@Scheduled(cron = "0 0/1 * * * *", zone="Europe/Berlin")

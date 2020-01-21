@@ -11,17 +11,10 @@ import de.othr.sw.cashbackplatform.service.KundeServiceIF;
 
 @Controller
 public class HomeController {
-	@Autowired
-	private KundeServiceIF kundeService;
 	
 	@RequestMapping("/")
     public String starten(Model model) {
 		model.addAttribute("isActive", 0);
         return "index";
-    }
-	
-	@RequestMapping("/coupon")
-    public String coupon() {
-        return "coupon";
     }
 }

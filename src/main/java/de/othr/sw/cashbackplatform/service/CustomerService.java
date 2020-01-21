@@ -11,6 +11,7 @@ import java.util.NoSuchElementException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -29,6 +30,7 @@ import de.othr.sw.cashbackplatform.entity.statisticrestservice.BusinessObjectDTO
 import de.othr.sw.cashbackplatform.entity.statisticrestservice.StatisticPackageDTO;
 import de.othr.sw.cashbackplatform.exceptions.CategoryAlreadyRegisteredException;
 import de.othr.sw.cashbackplatform.exceptions.UserAlreadyRegisteredException;
+import de.othr.sw.cashbackplatform.proxy.StatisticsProxyIF;
 import de.othr.sw.cashbackplatform.repository.CashbackRepository;
 import de.othr.sw.cashbackplatform.repository.CategoryRepository;
 import de.othr.sw.cashbackplatform.repository.CustomerRepository;
@@ -42,9 +44,10 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	@Autowired
 	private CashbackRepository cashbackRepo;
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	@Qualifier("test")
+	private StatisticsProxyIF statisticsProxy;
 	@Autowired
-	private RestTemplate restServiceClient;
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -233,7 +236,7 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	}
 	
 	@Override
-	public byte[] getStatistic(Shop shop) throws Exception {
+	public byte[] getStatisticForNumberOfCashbacksPerMonth(Shop shop) throws Exception {
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.DAY_OF_MONTH, 1);
 		calendar.set(Calendar.MONTH, 0);
@@ -244,69 +247,23 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 			calendar.add(Calendar.MONTH, 1);
 			Date to = calendar.getTime();
 			cashbacksPerMonthInCurrentYear.add(cashbackRepo.countBySenderAndDateBetween(shop, from, to));
-			System.out.println(cashbacksPerMonthInCurrentYear.get(i));
 		}
 		// Send Data to Statistic Service and receive Statistic which displays number of cashbacks per month of the shop
 		BusinessObjectDTO dto = new BusinessObjectDTO();
 		for (int i = 0 ; i < 12 ; i++) {
 			BusinessObject businessObject = new BusinessObject();
-	        businessObject.setDataModelId(49L);
-	        businessObject.setCustomerId(70L);
+	        businessObject.setDataModelId(61L);
+	        businessObject.setCustomerId(77L);
 	        businessObject.addAttribute("countofcashbacks", cashbacksPerMonthInCurrentYear.get(i));
 	        businessObject.addAttribute("month", i + 1);
 	        dto.addBusinessObject(businessObject);
 		}
-        dto.addStatisticStructureID(49L);
+        dto.addStatisticStructureID(58L);
         
-        StatisticPackageDTO statisticsPackage = restServiceClient
-        		.postForObject("http://im-codd:8836/restapi/sendBusinessObjectsAndReceiveStatisticPackageDTO", 
-							   dto,
-							   StatisticPackageDTO.class);
-        
+        StatisticPackageDTO statisticsPackage = statisticsProxy.sendBusinessObjectsAndReceiveStatisticPackageDTO(dto);
+        System.out.println(statisticsPackage);
         Map<Long, byte[]> statistics = statisticsPackage.getStatisticAsByteArraysMap();
-        return statistics.get(49L);
+        return statistics.get(58L);
 	}
-	
-	/* @Override
-	public byte[] getStatistic() throws Exception {
-		BusinessObject businessObject = new BusinessObject();
-
-        businessObject.setDataModelId(43L);
-
-        businessObject.setCustomerId(70L);
-
-        businessObject.addAttribute("cashbackpoints", 24);
-
-        businessObject.addAttribute("month", 1);
-
-
-
-        BusinessObject bo2 = new BusinessObject();
-
-        bo2.setDataModelId(43L);
-
-        bo2.setCustomerId(70L);
-
-        bo2.addAttribute("cashbackpoints", 25);
-
-        bo2.addAttribute("month", 2);
-
-
-        BusinessObjectDTO dto = new BusinessObjectDTO();
-
-        dto.addBusinessObject(businessObject);
-
-        dto.addBusinessObject(bo2);
-
-        dto.addStatisticStructureID(42L);
-        
-        StatisticPackageDTO statisticsPackage = restServiceClient
-        		.postForObject("http://im-codd:8836/restapi/sendBusinessObjectsAndReceiveStatisticPackageDTO", 
-							   dto,
-							   StatisticPackageDTO.class);
-        
-        Map<Long, byte[]> statistics = statisticsPackage.getStatisticAsByteArraysMap();
-        return statistics.get(42L);
-	} */
 
 }

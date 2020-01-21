@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,6 +17,9 @@ import de.othr.sw.cashbackplatform.entity.Coupon;
 import de.othr.sw.cashbackplatform.entity.Customer;
 import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
 import de.othr.sw.cashbackplatform.entity.Shop;
+import de.othr.sw.cashbackplatform.entity.statisticrestservice.BusinessObjectDTO;
+import de.othr.sw.cashbackplatform.entity.statisticrestservice.StatisticPackageDTO;
+import de.othr.sw.cashbackplatform.proxy.StatisticsProxyIF;
 import de.othr.sw.cashbackplatform.service.CouponServiceIF;
 import de.othr.sw.cashbackplatform.service.CustomerServiceIF;
 import de.othr.sw.cashbackplatform.service.ShopTestService;
@@ -30,10 +34,22 @@ public class ApplicationStart implements CommandLineRunner {
 	private ShopTestService cashbackTestService;
 	@Value("${application-config.firststart}")
 	private boolean firststart;
+	
+	@Autowired
+	@Qualifier("test")
+	private StatisticsProxyIF statisticsProxy;
 
 	@Override
 	public void run(String... args) throws Exception {
-		if (firststart != true) return;
+		if (firststart != true) {
+			/* try {
+				StatisticPackageDTO packageDTO = statisticsProxy.sendBusinessObjectsAndReceiveStatisticPackageDTO(new BusinessObjectDTO());
+				System.out.println(packageDTO);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} */
+			return;
+		}
 		/* Generate Users */
 		// Generate Shop Customers
 		// Shop 1
