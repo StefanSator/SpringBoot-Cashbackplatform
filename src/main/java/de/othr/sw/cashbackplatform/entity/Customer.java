@@ -10,7 +10,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
@@ -28,23 +27,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 public abstract class Customer extends GeneratedIdEntity implements UserDetails {
 	
 	private static final long serialVersionUID = -3859631257104556158L;
-	/*
-	@Id
-	@NotNull
-	@Pattern(regexp="^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")
-	private String email; */
-	/*  Be between 8 and 40 characters long
-		Contain at least one digit.
-		Contain at least one lower case character.
-		Contain at least one upper case character.
-		Contain at least on special character from [ @ # $ % ! . ] */
 	
 	@NotNull
 	@Column(unique = true)
 	@Pattern(regexp="^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")
 	private String email;
 	@NotNull
-	//@Pattern(regexp="((?=.*[a-z])(?=.*\\d)(?=.*[A-Z])(?=.*[@#$%!]).{8,40})")
 	private String password;
 	@NotNull
 	@Pattern(regexp="\\d{1,15}")

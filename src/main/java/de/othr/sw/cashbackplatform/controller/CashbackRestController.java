@@ -1,13 +1,8 @@
 package de.othr.sw.cashbackplatform.controller;
 
 import java.util.Date;
-import java.util.NoSuchElementException;
-
-import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,12 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import de.othr.sw.cashbackplatform.dto.BalanceDTO;
 import de.othr.sw.cashbackplatform.dto.CashbackDTO;
 import de.othr.sw.cashbackplatform.dto.PurchaseDTO;
-import de.othr.sw.cashbackplatform.entity.Authority;
 import de.othr.sw.cashbackplatform.entity.Cashback;
 import de.othr.sw.cashbackplatform.entity.Cashbackposition;
 import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
-import de.othr.sw.cashbackplatform.entity.statisticrestservice.BusinessObjectDTO;
-import de.othr.sw.cashbackplatform.entity.statisticrestservice.StatisticPackageDTO;
 import de.othr.sw.cashbackplatform.exceptions.CashbackServiceException;
 import de.othr.sw.cashbackplatform.service.CashbackServiceIF;
 import de.othr.sw.cashbackplatform.service.CustomerServiceIF;

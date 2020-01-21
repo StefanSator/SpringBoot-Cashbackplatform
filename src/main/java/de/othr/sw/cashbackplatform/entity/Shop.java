@@ -16,8 +16,7 @@ public class Shop extends Customer implements Serializable {
 	private static final long serialVersionUID = 957657176908163338L;
 	
 	@NotNull
-	@Size(max = 60)
-	//@Pattern(regexp="\\w+")
+	@Size(max = 200)
 	private String shopname;
 	private Integer defaultCashbackPerSale;
 	@Size(max = 400)

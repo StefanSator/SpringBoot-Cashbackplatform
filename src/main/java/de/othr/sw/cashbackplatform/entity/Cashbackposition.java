@@ -8,10 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-import org.springframework.lang.Nullable;
-
 @Entity
 @Access(AccessType.FIELD)
 public class Cashbackposition extends GeneratedIdEntity implements Serializable {

@@ -7,7 +7,7 @@ import de.othr.sw.cashbackplatform.entity.PrivateCustomer;
  * keine echte Schnittstelle zu einem Payment Provider geplant haben.
  * Anstelle eines Payment Providers nutze ich eines Statistik Provider.
  * Für weitere Infos zu Schnittstellen in meinem Projekt, siehe Komponenten
- * Diagramm von Meilenstein 1.
+ * Diagramm.
  */
 
 public interface PaymentServiceIF {

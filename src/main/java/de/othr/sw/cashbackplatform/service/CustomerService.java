@@ -12,14 +12,13 @@ import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
-import de.othr.sw.cashbackplatform.dto.CashbackDTO;
 import de.othr.sw.cashbackplatform.entity.Adress;
 import de.othr.sw.cashbackplatform.entity.Category;
 import de.othr.sw.cashbackplatform.entity.Customer;
@@ -44,10 +43,17 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	@Autowired
 	private CashbackRepository cashbackRepo;
 	@Autowired
-	@Qualifier("test")
+	@Qualifier("production")
 	private StatisticsProxyIF statisticsProxy;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
+
+	@Value("${application-config.partnerserviceuserid}")
+	private Long partnerserviceUserid;
+	@Value("${application-config.partnerservicedatamodelid}")
+	private Long partnerserviceDatamodelid;
+	@Value("${application-config.partnerservicestatisticstructureid}")
+	private Long partnerserviceStatisticstructureid;
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -252,17 +258,17 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 		BusinessObjectDTO dto = new BusinessObjectDTO();
 		for (int i = 0 ; i < 12 ; i++) {
 			BusinessObject businessObject = new BusinessObject();
-	        businessObject.setDataModelId(63L);
-	        businessObject.setCustomerId(78L);
-	        businessObject.addAttribute("purchases", cashbacksPerMonthInCurrentYear.get(i));
+	        businessObject.setDataModelId(partnerserviceDatamodelid);
+	        businessObject.setCustomerId(partnerserviceUserid);
+	        businessObject.addAttribute("numberofpurchases", cashbacksPerMonthInCurrentYear.get(i));
 	        businessObject.addAttribute("month", i + 1);
 	        dto.addBusinessObject(businessObject);
 		}
-        dto.addStatisticStructureID(60L);
+        dto.addStatisticStructureID(partnerserviceStatisticstructureid);
         
         StatisticPackageDTO statisticsPackage = statisticsProxy.sendBusinessObjectsAndReceiveStatisticPackageDTO(dto);
         Map<Long, byte[]> statistics = statisticsPackage.getStatisticAsByteArraysMap();
-        return statistics.get(60L);
+        return statistics.get(partnerserviceStatisticstructureid);
 	}
 
 }

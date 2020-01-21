@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
  * keine echte Schnittstelle zu einem Payment Provider geplant haben.
  * Anstelle eines Payment Providers nutze ich einen Statistik Provider.
  * Für weitere Infos zu Schnittstellen in meinem Projekt, siehe Komponenten-
- * Diagramm von Meilenstein 1.
+ * Diagramm.
  */
 
 @Service

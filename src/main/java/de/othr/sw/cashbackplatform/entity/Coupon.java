@@ -10,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.OnDelete;
@@ -23,7 +22,7 @@ public class Coupon extends GeneratedIdEntity implements Serializable {
 	private static final long serialVersionUID = -915398441144397322L;
 	
 	@NotNull
-	@Size(max = 100)
+	@Size(max = 200)
 	private String couponName;
 	@NotNull
 	@Temporal(TemporalType.DATE)

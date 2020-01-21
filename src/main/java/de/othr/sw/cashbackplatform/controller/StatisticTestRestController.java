@@ -3,7 +3,6 @@ package de.othr.sw.cashbackplatform.controller;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.InputStream;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -33,7 +32,6 @@ public class StatisticTestRestController {
 	@RequestMapping(value="/sendBusinessObjectsAndReceiveStatisticPackageDTO", method = RequestMethod.POST)
 	public StatisticPackageDTO sendBusinessObjectsAndReceiveStatisticPackageDTO(@RequestBody BusinessObjectDTO businessObjectDTO) throws Exception {
 		Resource resource = resourceLoader.getResource("classpath:static/image/TestStatistic.png");
-		InputStream input = resource.getInputStream();
 		File file = resource.getFile();
 		BufferedImage bufferedImage = ImageIO.read(file);
 		ByteArrayOutputStream byteoutputstream = new ByteArrayOutputStream();

@@ -7,7 +7,6 @@ import javax.persistence.AccessType;
 import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 @Entity
 @Access(AccessType.FIELD)
@@ -16,15 +15,12 @@ public class Adress extends GeneratedIdEntity implements Serializable {
 	private static final long serialVersionUID = -2129653198171527470L;
 	
 	@NotNull
-	@Size(max=60)
 	@Pattern(regexp="^[A-Z][a-z]+[.]{0,1}")
 	private String street;
 	@NotNull
-	@Size(max=10)
 	@Pattern(regexp="^[1-9][0-9]*[a-z]{0,1}")
 	private String streetNumber;
 	@NotNull
-	@Size(max=60)
 	@Pattern(regexp="^[A-Z][a-z]+")
 	private String place;
 	@NotNull
