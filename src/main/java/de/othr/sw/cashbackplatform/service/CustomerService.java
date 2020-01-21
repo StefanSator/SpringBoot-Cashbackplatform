@@ -45,7 +45,7 @@ public class CustomerService implements CustomerServiceIF, UserDetailsService {
 	@Autowired
 	private CashbackRepository cashbackRepo;
 	@Autowired
-	@Qualifier("test")
+	@Qualifier("production")
 	private StatisticsProxyIF statisticsProxy;
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;

@@ -10,6 +10,19 @@
 </head>
 <body>
 	<div th:replace="common/navbar :: navigation"/>
-	<img th:src="${'data:image/png;base64,'+ statistic}" alt="Hat nicht geklappt." />
+	<div class="m-5">
+		<h1 class="display-10 text-primary">Nutzungstatistik</h1>
+		<hr class="my-4 bg-primary">
+		
+		<img th:src="${'data:image/png;base64,'+ statistic}" alt="Hat nicht geklappt." />
+		
+		<div class="mt-3 jumbotron jumbotron-fluid">
+		  <div class="container">
+		    <h1 class="display-4">Legende:</h1>
+		    <p class="lead">X-Achse: Monate des aktuellen Jahres</p>
+		    <p class="lead">Y-Achse: Anzahl der Nutzer die bei einem Einkauf in Ihrem Shop unseren Service genutzt haben.</p>
+		  </div>
+		</div>
+	</div>
 </body>
 </html>
